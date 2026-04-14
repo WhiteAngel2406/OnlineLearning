@@ -1,8 +1,8 @@
 package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineEnglishLearningSystem.model.*;
-import com.swp391.OnlineEnglishLearningSystem.model.dto.*;
-import com.swp391.OnlineEnglishLearningSystem.service.*;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.*;
+import com.swp391.OnlineLearning.service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;

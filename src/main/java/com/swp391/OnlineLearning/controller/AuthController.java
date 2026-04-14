@@ -1,13 +1,13 @@
 package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineEnglishLearningSystem.model.Course;
-import com.swp391.OnlineEnglishLearningSystem.model.Slider;
-import com.swp391.OnlineEnglishLearningSystem.model.Token;
-import com.swp391.OnlineEnglishLearningSystem.model.User;
-import com.swp391.OnlineEnglishLearningSystem.model.dto.BlogDTO;
-import com.swp391.OnlineEnglishLearningSystem.model.dto.CourseFeedbackStats;
-import com.swp391.OnlineEnglishLearningSystem.model.dto.UserDTO;
-import com.swp391.OnlineEnglishLearningSystem.service.*;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.Slider;
+import com.swp391.OnlineLearning.model.Token;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.dto.BlogDTO;
+import com.swp391.OnlineLearning.model.dto.CourseFeedbackStats;
+import com.swp391.OnlineLearning.model.dto.UserDTO;
+import com.swp391.OnlineLearning.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
