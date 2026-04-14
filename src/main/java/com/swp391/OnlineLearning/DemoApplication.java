@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.swp391.OnlineLearning;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
