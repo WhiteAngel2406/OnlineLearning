@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Cập nhật Người Dùng</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Cập nhật Người Dùng</h1>
+            <a th:href="@{/admin/users}" class="btn btn-outline">Quay lại</a>
+        </div>
+
+        <form th:action="@{/admin/users/update}" th:object="${user}" method="post" class="col-md-6 mx-auto">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" th:field="*{email}" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Họ tên</label>
+                <input type="text" th:field="*{fullName}" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="gender" class="form-label">Giới tính</label>
+                <input type="text" th:value="${user.gender != null ? user.gender.displayName : '-'}" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="mobile" class="form-label">Số điện thoại</label>
+                <input type="text" th:field="*{mobile}" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ</label>
+                <input type="text" th:field="*{address}" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="role" class="form-label">Vai trò *</label>
+                <select th:field="*{role.id}" class="form-select" required>
+                    <option value="">-- Chọn vai trò --</option>
+                    <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" th:field="*{enabled}" class="form-check-input">
+                    <label class="form-check-label">Hoạt động</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>
