@@ -15,7 +15,7 @@ import java.util.List;
 public class User extends BaseEntity implements UserDetails {
 
     public enum Gender {
-        MALE("Male"), FEMALE("Female"), OTHER("Other");
+        MALE("Nam"), FEMALE("Nữ"), OTHER("Khác");
         private final String displayName;
         Gender(String displayName) { this.displayName = displayName; }
         public String getDisplayName() { return displayName; }

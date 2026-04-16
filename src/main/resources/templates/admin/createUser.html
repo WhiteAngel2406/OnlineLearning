@@ -31,14 +31,14 @@
 
         <div class="form-group">
             <label class="required">Giới tính</label>
-            <select th:field="*{gender}" class="input-field">
+            <select name="gender" class="input-field">
                 <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender.displayName}"></option>
             </select>
         </div>
 
         <div class="form-group">
             <label class="required">Vai trò</label>
-            <select th:field="*{role.id}" class="input-field">
+            <select name="roleId" class="input-field">
                 <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
             </select>
         </div>
