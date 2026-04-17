@@ -1,7 +1,4 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
-
+package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 
@@ -10,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 public class QuizAttempt {
     @Id
     @GeneratedValue
@@ -127,4 +122,3 @@ public class QuizAttempt {
         this.questions = questions;
     }
 }
-

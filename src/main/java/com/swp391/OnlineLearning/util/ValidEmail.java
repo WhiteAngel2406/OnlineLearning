@@ -1,5 +1,4 @@
-package com.swp391.OnlineLearning.util;
-
+package com.swp391.OnlineLearning.Util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -18,3 +17,4 @@ public @interface ValidEmail {
 
     Class<? extends Payload>[] payload() default {};
 }
+

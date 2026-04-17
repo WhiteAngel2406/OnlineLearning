@@ -1,6 +1,4 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
+package com.swp391.OnlineLearning.Model;
 
 import com.swp391.OnlineLearning.util.ValidEmail;
 import jakarta.persistence.*;
@@ -18,8 +16,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 public class User extends BaseEntity implements UserDetails {
 
     public enum Gender {
@@ -226,3 +222,4 @@ public class User extends BaseEntity implements UserDetails {
         return enabled;
     }
 }
+

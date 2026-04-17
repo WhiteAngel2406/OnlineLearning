@@ -1,6 +1,4 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
+package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -13,8 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "questions")
-@Getter
-@Setter
 public class Question extends BaseEntity{
     public enum QuestionType {
         MULTIPLE_CHOICE("Trắc nghiệm nhiều lựa chọn"),

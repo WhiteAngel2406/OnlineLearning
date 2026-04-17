@@ -1,6 +1,4 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
+package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -16,8 +14,6 @@ import java.util.List;
 @Table(name = "enrollments", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id", "course_id"})
 })
-@Getter
-@Setter
 public class Enrollment {
 
     public enum EnrollmentStatus {

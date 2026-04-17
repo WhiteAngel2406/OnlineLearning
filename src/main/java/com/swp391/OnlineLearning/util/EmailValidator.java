@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.util;
+package com.swp391.OnlineLearning.Util;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -28,3 +28,4 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
         return matcher.matches();
     }
 }
+

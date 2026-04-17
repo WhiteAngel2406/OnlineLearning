@@ -1,12 +1,8 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
+package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Getter
-@Setter
 public class QuizAttemptSelectedOption {
     @Id @GeneratedValue
     private Long id;
@@ -59,4 +55,5 @@ public class QuizAttemptSelectedOption {
         this.selectedValue = selectedValue;
     }
 }
+
 

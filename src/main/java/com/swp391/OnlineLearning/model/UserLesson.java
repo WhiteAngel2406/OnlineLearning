@@ -1,6 +1,4 @@
-package com.swp391.OnlineLearning.model;
-import lombok.Getter;
-import lombok.Setter;
+package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,8 +10,6 @@ import java.time.LocalDateTime;
         // Ensure only one progress record per user, per lesson, per enrollment
         @UniqueConstraint(columnNames = {"user_id", "lesson_id", "enrollment_id"})
 })
-@Getter
-@Setter
 public class UserLesson {
 
     @Id
