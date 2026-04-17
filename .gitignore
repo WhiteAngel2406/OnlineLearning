@@ -35,3 +35,5 @@ buildNumber.properties
 test.txt
 HELP.md
 openspec/
+.agents/
+.agent/
