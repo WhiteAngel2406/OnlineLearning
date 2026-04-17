@@ -2,6 +2,7 @@ package com.swp391.OnlineLearning.service;
 
 import com.swp391.OnlineLearning.Model.CourseCategory;
 import com.swp391.OnlineLearning.repository.CourseCategoryRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,11 @@ public class CourseCategoryService {
     }
 
     public void deleteCategory(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Không thể xóa danh mục này vì đang có khóa học thuộc danh mục.");
+        }
     }
 
     public CourseCategory update(CourseCategory category) {

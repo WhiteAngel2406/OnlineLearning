@@ -149,8 +149,12 @@ public class AdminController {
 
     @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable Long id, RedirectAttributes ra) {
-        userService.deleteUser(id);
-        ra.addFlashAttribute("success", "Xóa người dùng thành công!");
+        try {
+            userService.deleteUser(id);
+            ra.addFlashAttribute("success", "Xóa người dùng thành công!");
+        } catch (IllegalStateException e) {
+            ra.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/admin/users";
     }
 
@@ -210,8 +214,12 @@ public class AdminController {
 
     @GetMapping("/admin/course_categories/delete/{id}")
     public String deleteCategory(@PathVariable Long id, RedirectAttributes ra) {
-        categoryService.deleteCategory(id);
-        ra.addFlashAttribute("success", "Xóa danh mục thành công!");
+        try {
+            categoryService.deleteCategory(id);
+            ra.addFlashAttribute("success", "Xóa danh mục thành công!");
+        } catch (IllegalStateException e) {
+            ra.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/admin/course_categories";
     }
 
@@ -359,8 +367,12 @@ public class AdminController {
 
     @GetMapping("/admin/sliders/delete/{id}")
     public String deleteSlider(@PathVariable Long id, RedirectAttributes ra) {
-        sliderService.deleteSlider(id);
-        ra.addFlashAttribute("success", "Xóa slider thành công!");
+        try {
+            sliderService.deleteSlider(id);
+            ra.addFlashAttribute("success", "Xóa slider thành công!");
+        } catch (IllegalArgumentException e) {
+            ra.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/admin/sliders";
     }
 

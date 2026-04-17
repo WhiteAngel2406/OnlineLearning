@@ -3,6 +3,7 @@ package com.swp391.OnlineLearning.service;
 import com.swp391.OnlineLearning.Model.User;
 import com.swp391.OnlineLearning.repository.RoleRepository;
 import com.swp391.OnlineLearning.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -87,7 +88,11 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Không thể xóa người dùng này vì đang có dữ liệu liên quan (khóa học hoặc đơn hàng).");
+        }
     }
 
     public User update(User user) {
