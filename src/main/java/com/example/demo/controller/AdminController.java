@@ -148,7 +148,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("/admin/users/delete/{id}")
+    @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable Long id, RedirectAttributes ra) {
         userService.deleteUser(id);
         ra.addFlashAttribute("success", "Xóa người dùng thành công!");
@@ -209,7 +209,7 @@ public class AdminController {
         return "redirect:/admin/course_categories";
     }
 
-    @PostMapping("/admin/course_categories/delete/{id}")
+    @GetMapping("/admin/course_categories/delete/{id}")
     public String deleteCategory(@PathVariable Long id, RedirectAttributes ra) {
         categoryService.deleteCategory(id);
         ra.addFlashAttribute("success", "Xóa danh mục thành công!");
@@ -358,7 +358,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/admin/sliders/delete/{id}")
+    @GetMapping("/admin/sliders/delete/{id}")
     public String deleteSlider(@PathVariable Long id, RedirectAttributes ra) {
         sliderService.deleteSlider(id);
         ra.addFlashAttribute("success", "Xóa slider thành công!");

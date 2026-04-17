@@ -10,7 +10,7 @@
             <a th:href="@{/admin/course_categories}" class="btn btn-outline">Quay lại</a>
         </div>
 
-        <form th:action="@{/admin/course_categories/update}" th:object="${category}" method="post" class="col-md-6 mx-auto">
+        <form th:action="@{/admin/course_categories/update/{id}(id=${category.id})}" th:object="${category}" method="post" class="col-md-6 mx-auto">
             <input type="hidden" th:field="*{id}">
 
             <div class="form-group">
