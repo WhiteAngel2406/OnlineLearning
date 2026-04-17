@@ -1,10 +1,9 @@
 package com.swp391.OnlineLearning;
 
-import com.swp391.OnlineLearning.config.StorageProperties;
+import com.swp391.OnlineLearning.Config.StorageProperties;
 import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.repository.RoleRepository;
-import com.swp391.OnlineLearning.repository.UserRepository;
+import com.swp391.OnlineLearning.Repository.RoleRepository;
+import com.swp391.OnlineLearning.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

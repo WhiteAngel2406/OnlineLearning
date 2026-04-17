@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Model;
 
-import com.swp391.OnlineLearning.util.ValidEmail;
+import com.swp391.OnlineLearning.Util.ValidEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

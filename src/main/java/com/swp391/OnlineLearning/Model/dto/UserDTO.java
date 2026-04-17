@@ -1,7 +1,7 @@
 package com.swp391.OnlineLearning.Model.dto;
 
-import com.swp391.OnlineLearning.util.PasswordMatches;
-import com.swp391.OnlineLearning.util.ValidEmail;
+import com.swp391.OnlineLearning.Util.PasswordMatches;
+import com.swp391.OnlineLearning.Util.ValidEmail;
 import jakarta.validation.constraints.NotBlank;
 
 @PasswordMatches(message = "Mật khẩu nhập lại không giống")

@@ -2,8 +2,8 @@ package com.swp391.OnlineLearning.Model.dto;
 
 import com.swp391.OnlineLearning.Model.AnswerOption;
 import com.swp391.OnlineLearning.Model.Question;
-import com.swp391.OnlineLearning.util.AtLeastOneCorrectAnswer;
-import com.swp391.OnlineLearning.util.ValidMediaType;
+import com.swp391.OnlineLearning.Util.AtLeastOneCorrectAnswer;
+import com.swp391.OnlineLearning.Util.ValidMediaType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,7 +1,7 @@
 package com.swp391.OnlineLearning.Model.dto;
 
 import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.util.ValidMediaType;
+import com.swp391.OnlineLearning.Util.ValidMediaType;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
