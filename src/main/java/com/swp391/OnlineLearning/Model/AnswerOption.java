@@ -1,9 +1,14 @@
 package com.swp391.OnlineLearning.Model;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "answer_options")
 public class AnswerOption extends BaseEntity{
@@ -27,11 +32,6 @@ public class AnswerOption extends BaseEntity{
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
-
-    public AnswerOption() {
-        super();
-    }
-
     public AnswerOption(String content, Boolean correct, String explanation, Question question) {
         this.content = content;
         this.correct = correct;
@@ -39,43 +39,4 @@ public class AnswerOption extends BaseEntity{
         this.question = question;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
-    }
-
-    public String getExplanation() {
-        return explanation;
-    }
-
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 }
