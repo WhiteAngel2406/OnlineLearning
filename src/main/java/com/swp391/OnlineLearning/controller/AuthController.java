@@ -51,4 +51,12 @@ public class AuthController {
         return "auth/login";
     }
 
+    // ---------------- REGISTER ----------------
+
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("user", new UserDTO());
+        return "auth/register";
+    }
+
 }
