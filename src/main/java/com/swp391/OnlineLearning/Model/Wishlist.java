@@ -2,10 +2,14 @@ package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "wishlist", uniqueConstraints = {
         // Ensure a user adds a course to their wishlist only once
@@ -31,45 +35,10 @@ public class Wishlist {
     @Column(name = "added_date", nullable = false, updatable = false)
     private LocalDateTime addedDate;
 
-    // Default constructor (required by JPA)
-    public Wishlist() {
-    }
-
     // Convenience constructor
     public Wishlist(User user, Course course) {
         this.user = user;
         this.course = course;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public LocalDateTime getAddedDate() {
-        return addedDate;
-    }
-
-    public void setAddedDate(LocalDateTime addedDate) {
-        this.addedDate = addedDate;
-    }
 }

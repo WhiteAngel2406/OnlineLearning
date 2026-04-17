@@ -2,7 +2,11 @@ package com.swp391.OnlineLearning.Model;
 
 import com.swp391.OnlineLearning.Model.dto.NoteRequest;
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "notes")
 public class Note extends BaseEntity{
@@ -20,9 +24,6 @@ public class Note extends BaseEntity{
     @JoinColumn(name = "user_lesson_id")
     private UserLesson userLesson;
 
-    public Note() {
-    }
-
     public Note(UserLesson userLesson, NoteRequest noteRequest) {
         this.timeAtLesson = noteRequest.getTimeAtLesson();
         this.content = noteRequest.getContent();
@@ -35,35 +36,4 @@ public class Note extends BaseEntity{
         this.userLesson = userLesson;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTimeAtLesson() {
-        return timeAtLesson;
-    }
-
-    public void setTimeAtLesson(String timeAtLesson) {
-        this.timeAtLesson = timeAtLesson;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public UserLesson getUserLesson() {
-        return userLesson;
-    }
-
-    public void setUserLesson(UserLesson userLesson) {
-        this.userLesson = userLesson;
-    }
 }

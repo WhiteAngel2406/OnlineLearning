@@ -2,9 +2,13 @@ package com.swp391.OnlineLearning.Model;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "confirmation_tokens")
 public class Token {
@@ -30,8 +34,6 @@ public class Token {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    public Token() {
-    }
 
     public Token(String token, LocalDateTime created_at, LocalDateTime expired_at) {
         this.token = token;
@@ -46,51 +48,4 @@ public class Token {
         this.user = user;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
-    public LocalDateTime getExpired_at() {
-        return expired_at;
-    }
-
-    public void setExpired_at(LocalDateTime expired_at) {
-        this.expired_at = expired_at;
-    }
-
-    public LocalDateTime getConfirmed_at() {
-        return confirmed_at;
-    }
-
-    public void setConfirmed_at(LocalDateTime confirmed_at) {
-        this.confirmed_at = confirmed_at;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

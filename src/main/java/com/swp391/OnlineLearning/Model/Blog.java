@@ -3,7 +3,11 @@ package com.swp391.OnlineLearning.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "blogs")
 public class Blog extends BaseEntity{
@@ -44,10 +48,6 @@ public class Blog extends BaseEntity{
     @JoinColumn(name = "author_id") // Tên cột Foreign Key trong CSDL
     private User author;
 
-    public Blog() {
-        super();
-    }
-
     public Blog(Long id, String title, String thumbnail, String shortDescription, String content, BlogCategory blogCategory, User author) {
         super();
         this.id = id;
@@ -59,67 +59,4 @@ public class Blog extends BaseEntity{
         this.author = author;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public BlogCategory getBlogCategory() {
-        return blogCategory;
-    }
-
-    public void setBlogCategory(BlogCategory blogCategory) {
-        this.blogCategory = blogCategory;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public BlogStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BlogStatus status) {
-        this.status = status;
-    }
 }

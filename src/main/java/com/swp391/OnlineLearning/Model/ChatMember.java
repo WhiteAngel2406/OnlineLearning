@@ -1,9 +1,13 @@
 package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "chat_members",
         uniqueConstraints = @UniqueConstraint(columnNames = {"chat_id", "user_id"}))
@@ -32,9 +36,6 @@ public class ChatMember {
     @Column(nullable = false, updatable = false)
     private LocalDateTime joinedAt = LocalDateTime.now();
 
-    public ChatMember() {
-    }
-
     public ChatMember(Long id, Chat chat, User user, Role role, LocalDateTime joinedAt) {
         this.id = id;
         this.chat = chat;
@@ -50,44 +51,5 @@ public class ChatMember {
         this.joinedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public LocalDateTime getJoinedAt() {
-        return joinedAt;
-    }
-
-    public void setJoinedAt(LocalDateTime joinedAt) {
-        this.joinedAt = joinedAt;
-    }
 }
 
