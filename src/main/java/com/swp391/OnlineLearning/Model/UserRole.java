@@ -1,39 +1,30 @@
 package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "course_categories")
-public class CourseCategory extends BaseEntity {
-
+@Table(name = "user_roles")
+public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, columnDefinition = "NVARCHAR(100)")
+    @NotBlank
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(columnDefinition = "NVARCHAR(1000)")
+    @NotBlank
+    @Column(nullable = false, columnDefinition = "NVARCHAR(1000)")
     private String description;
 
-    private boolean active = true;
-
-    public CourseCategory() {}
-
-    public CourseCategory(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    public UserRole() {}
+    public UserRole(String name, String description) { this.name = name; this.description = description; }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
 }

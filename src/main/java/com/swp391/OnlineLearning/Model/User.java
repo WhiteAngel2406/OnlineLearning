@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Model;
 
-import com.swp391.OnlineLearning.util.ValidEmail;
+import com.swp391.OnlineLearning.Util.ValidEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -68,9 +68,6 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "author")
     private List<Course> courses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "author")
-    private List<Blog> blogs = new ArrayList<>();
 
     public User() {
     }
