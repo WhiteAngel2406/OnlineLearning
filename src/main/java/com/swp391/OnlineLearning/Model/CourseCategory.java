@@ -1,7 +1,11 @@
 package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "course_categories")
 public class CourseCategory extends BaseEntity {
@@ -18,22 +22,8 @@ public class CourseCategory extends BaseEntity {
 
     private boolean active = true;
 
-    public CourseCategory() {}
-
     public CourseCategory(String name, String description) {
         this.name = name;
         this.description = description;
     }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
 }

@@ -99,6 +99,13 @@
 			<artifactId>jave-nativebin-win64</artifactId>
 			<version>3.5.0</version>
 		</dependency>
+		<!-- Source: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.42</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
