@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.config;
+package com.swp391.OnlineLearning.Config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

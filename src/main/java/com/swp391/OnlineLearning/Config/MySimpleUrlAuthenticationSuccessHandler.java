@@ -1,7 +1,7 @@
 package com.swp391.OnlineLearning.Config;
 
-import com.swp391.OnlineLearning.service.SessionService;
-import com.swp391.OnlineLearning.service.UserService;
+import com.swp391.OnlineLearning.Service.SessionService;
+import com.swp391.OnlineLearning.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

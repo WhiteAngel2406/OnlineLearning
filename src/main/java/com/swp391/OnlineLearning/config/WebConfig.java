@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.config;
+package com.swp391.OnlineLearning.Config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

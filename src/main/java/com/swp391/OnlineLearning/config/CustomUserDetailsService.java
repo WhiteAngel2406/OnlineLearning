@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Config;
 
-import com.swp391.OnlineLearning.repository.UserRepository;
+import com.swp391.OnlineLearning.Repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

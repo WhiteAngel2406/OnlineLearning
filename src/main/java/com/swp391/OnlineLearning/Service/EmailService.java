@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.service;
+package com.swp391.OnlineLearning.Service;
 
 //import com.swp391.OnlineLearning.Model.Enrollment;
 import org.springframework.beans.factory.annotation.Value;
