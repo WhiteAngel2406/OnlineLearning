@@ -23,29 +23,31 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     @Query("SELECT DISTINCT e FROM Enrollment e " +
             "JOIN FETCH e.course c " +
+            "LEFT JOIN FETCH c.chapters chap " +
+            "LEFT JOIN FETCH chap.lessons l " +
             "WHERE e.id = :enrollmentId AND e.user.id = :userId") // Thêm check userId cho an toàn
     Optional<Enrollment> findByIdAndUserIdWithFullCourseStructure(@Param("enrollmentId") long enrollmentId, @Param("userId") long userId);
 
     List<Enrollment> findByUserId(long userId);
 
-//    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO( " +
-//            "    e.id, " +
-//            "    c.name, " +
-//            "    c.thumbnail, " +
-//            "    c.shortDescription, " +
-//            "    e.completedAt, " +
-//            "    e.lastAccessAt, " +
-//            "    e.enrolledAt, " +
-//            "    COALESCE(COUNT(ul), 0), " +
-//            "    COALESCE(SUM(CASE WHEN ul.isCompleted = true THEN 1 ELSE 0 END), 0) " +
-//            ") " +
-//            "FROM Enrollment e " +
-//            "JOIN e.course c " +
-//            "JOIN e.user u " +
-//            "LEFT JOIN e.userLessons ul " +
-//            "WHERE u.id = :userId " +
-//            "GROUP BY e.id, c.name, c.thumbnail, c.shortDescription, e.completedAt, e.lastAccessAt, e.enrolledAt")
-//    List<EnrollmentInfoDTO> findEnrollmentInfoByUserId(@Param("userId") Long userId);
+    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO( " +
+            "    e.id, " +
+            "    c.name, " +
+            "    c.thumbnail, " +
+            "    c.shortDescription, " +
+            "    e.completedAt, " +
+            "    e.lastAccessAt, " +
+            "    e.enrolledAt, " +
+            "    COALESCE(COUNT(ul), 0), " +
+            "    COALESCE(SUM(CASE WHEN ul.isCompleted = true THEN 1 ELSE 0 END), 0) " +
+            ") " +
+            "FROM Enrollment e " +
+            "JOIN e.course c " +
+            "JOIN e.user u " +
+            "LEFT JOIN e.userLessons ul " +
+            "WHERE u.id = :userId " +
+            "GROUP BY e.id, c.name, c.thumbnail, c.shortDescription, e.completedAt, e.lastAccessAt, e.enrolledAt")
+    List<EnrollmentInfoDTO> findEnrollmentInfoByUserId(@Param("userId") Long userId);
 
     @Query("""
         SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END
@@ -62,4 +64,3 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     """)
     Enrollment findByUserIdAndCourseId(@Param("userId") Long userId, @Param("courseId") Long courseId);
 }
-

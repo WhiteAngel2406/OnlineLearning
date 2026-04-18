@@ -3,12 +3,16 @@ package com.swp391.OnlineLearning.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "courses")
-public class Course extends BaseEntity {
+public class    Course extends BaseEntity{
     public enum CourseStatus {
         PUBLISHED("Đã duyệt"),
         DRAFT("Đang sửa"),
@@ -21,7 +25,6 @@ public class Course extends BaseEntity {
             return displayName;
         }
     }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -66,10 +69,14 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "category_id")
     private CourseCategory category;
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Chapter> chapters = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User author;
 
+    // Constructors - ĐÃ ĐƯỢC TỐI ƯU
     public Course() {
         this.status = CourseStatus.DRAFT;
         this.featured = false;
@@ -78,9 +85,9 @@ public class Course extends BaseEntity {
     }
 
     public Course(String name, String description, String prerequisite,
-                 String thumbnail, double price, double discount,
-                 boolean featured, CourseStatus status) {
-        this();
+                  String thumbnail, double price, double discount,
+                  boolean featured, CourseStatus status) {
+        this(); // Gọi constructor mặc định
         this.name = name;
         this.description = description;
         this.prerequisite = prerequisite;
@@ -104,6 +111,7 @@ public class Course extends BaseEntity {
         this.category = category;
     }
 
+    // Thêm constructor tiện ích
     public Course(String name, String description, double price) {
         this();
         this.name = name;
@@ -111,28 +119,4 @@ public class Course extends BaseEntity {
         this.price = price;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getPrerequisite() { return prerequisite; }
-    public void setPrerequisite(String prerequisite) { this.prerequisite = prerequisite; }
-    public String getThumbnail() { return thumbnail; }
-    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
-    public Double getPrice() { return price; }
-    public void setPrice(Double price) { this.price = price; }
-    public Double getDiscount() { return discount; }
-    public void setDiscount(Double discount) { this.discount = discount; }
-    public boolean isFeatured() { return featured; }
-    public void setFeatured(boolean featured) { this.featured = featured; }
-    public CourseStatus getStatus() { return status; }
-    public void setStatus(CourseStatus status) { this.status = status; }
-    public CourseCategory getCategory() { return category; }
-    public void setCategory(CourseCategory category) { this.category = category; }
-    public String getShortDescription() { return shortDescription; }
-    public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
-    public User getAuthor() { return author; }
-    public void setAuthor(User author) { this.author = author; }
 }

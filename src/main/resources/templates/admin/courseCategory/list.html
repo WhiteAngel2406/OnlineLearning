@@ -1,66 +1,126 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
-<head><title>Quản lý Danh Mục</title></head>
+      th:replace="~{layout/admin_layout :: layout(
+        pageTitle = ~{::title},
+        pageContent = ~{::.page-content-wrapper},
+        pageScripts = ~{::.page-scripts-wrapper}
+      )}">
+<head>
+    <title>Quản lý Danh Mục</title>
+</head>
 <body>
-<div class="page-content-wrapper">
+<div class="page-content-wrapper content-area">
     <div class="container">
         <div class="header">
-            <h1>Quản lý Danh Mục</h1>
-            <a th:href="@{/admin/course_categories/create}" class="btn btn-primary">
-                <span>+</span> Tạo Danh Mục
+            <h1>📊 Quản lý danh mục</h1>
+            <a href="/admin/course_categories/create" class="btn btn-primary">
+                <span>+</span> Thêm danh mục mới
             </a>
         </div>
 
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        <div class="filters">
+            <div class="filter-group">
+                <label>Trạng thái</label>
+                <select id="activeFilter" onchange="applyFilters()">
+                    <option value="ALL">Tất cả trạng thái</option>
+                    <option value="true" th:selected="${param.active == 'true'}">Đang hoạt động</option>
+                    <option value="false" th:selected="${param.active == 'false'}">Không hoạt động</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Tìm kiếm</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="Tìm theo từ khóa..."
+                           th:value="${param.search}">
+                </div>
+            </div>
+        </div>
 
         <div class="table-container">
-            <table>
+            <table id="usersTable">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên</th>
-                        <th>Mô tả</th>
-                        <th>Trạng thái</th>
-                        <th>Ngày tạo</th>
-                        <th>Hành động</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Mô tả</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="cat : ${categories}">
-                        <td th:text="${cat.id}">1</td>
-                        <td th:text="${cat.name}">Programming</td>
-                        <td th:text="${cat.description != null ? #strings.abbreviate(cat.description, 50) : '-'}">Description</td>
-                        <td>
-                            <span th:if="${cat.active}" class="status-active">Hoạt động</span>
-                            <span th:unless="${cat.active}" class="status-inactive">Không hoạt động</span>
-                        </td>
-                        <td th:text="${#temporals.format(cat.createdAt, 'dd/MM/yyyy')}">01/01/2024</td>
-                        <td>
-                            <div class="actions">
-                                <a th:href="@{/admin/course_categories/update/{id}(id=${cat.id})}" class="btn btn-outline btn-sm">Sửa</a>
-                                <form th:action="@{/admin/course_categories/delete/{id}(id=${cat.id})}" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr th:if="${categories.content == null || categories.content.isEmpty()}">
-                        <td colspan="6" class="no-data">Không tìm thấy danh mục nào</td>
-                    </tr>
+                <tr th:each="courseCategory : ${courseCategoryPage.content}" th:unless="${courseCategoryPage.content == null or courseCategoryPage.content.isEmpty()}">
+                    <td th:text="${courseCategory.id}"></td>
+                    <td th:text="${courseCategory.name}"></td>
+                    <td th:text="${courseCategory.description}"></td>
+                    <td>
+                        <span th:if="${courseCategory.active}" class="status-active">Đang hoạt động</span>
+                        <span th:unless="${courseCategory.active}" class="status-inactive">Không hoạt động</span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a th:href="@{/admin/course_categories/update/{id}(id=${courseCategory.id})}"
+                               class="btn btn-outline btn-sm">✏️ Sửa</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${courseCategoryPage.content == null || courseCategoryPage.content.isEmpty()}">
+                    <td colspan="8" class="no-data">
+                        📝 Không tìm thấy danh mục nào
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
 
-        <div th:if="${categories.totalPages > 1}" class="pagination">
-            <a th:each="pageNumber : ${#numbers.sequence(0, categories.totalPages - 1)}"
-               th:href="@{/admin/course_categories(page=${pageNumber})}"
-               th:text="${pageNumber + 1}"
-               th:class="${pageNumber == currentPage} ? 'active' : ''"></a>
+        <div th:if="${courseCategoryPage.totalPages > 0}" class="pagination">
+            <a th:each="pageNumber : ${pageNumbers}"
+               th:href="@{/admin/course_categories(
+                   size=${courseCategoryPage.size},
+                   page=${pageNumber - 1},
+                   search=${param.search},
+                   active=${param.active}
+               )}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == courseCategoryPage.number + 1} ? 'active' : ''"></a>
         </div>
     </div>
 </div>
-<th:block class="page-scripts-wrapper"></th:block>
+
+<th:block class="page-scripts-wrapper">
+    <script>
+        function applyFilters() {
+            const active = document.getElementById('activeFilter').value;
+            const search = document.getElementById('searchInput').value;
+
+            const urlParams = new URLSearchParams();
+
+            if (active !== 'ALL') urlParams.set('active', active);
+            if (search) urlParams.set('search', search);
+
+            window.location.href = '/admin/course_categories?' + urlParams.toString();
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+
+        // Auto-select current filter values from URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Set values from URL parameters
+            const active = urlParams.get('active');
+            const search = urlParams.get('search');
+
+            if (active) document.getElementById('activeFilter').value = active;
+            if (search) document.getElementById('searchInput').value = search;
+        });
+    </script>
+</th:block>
 </body>
 </html>

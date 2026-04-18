@@ -1,21 +1,114 @@
 package com.swp391.OnlineLearning.Model.dto;
 
-import com.swp391.OnlineLearning.Model.enums.OrderStatus;
+import com.swp391.OnlineLearning.Model.Order;
+
+import java.time.LocalDateTime;
 
 public class OrderFilter {
-    private String keyword;
-    private OrderStatus status;
-    private String startDate;
-    private String endDate;
+    private String status;
+    private Double minAmount;
+    private Double maxAmount;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime startUpdate;
+    private LocalDateTime endUpdate;
+    private String sortBy; // amount, createdAt, updatedAt
+    private String sortDir; // asc, desc
+    private String search;
 
-    public OrderFilter() {}
+    public OrderFilter() {
+    }
 
-    public String getKeyword() { return keyword; }
-    public void setKeyword(String keyword) { this.keyword = keyword; }
-    public OrderStatus getStatus() { return status; }
-    public void setStatus(OrderStatus status) { this.status = status; }
-    public String getStartDate() { return startDate; }
-    public void setStartDate(String startDate) { this.startDate = startDate; }
-    public String getEndDate() { return endDate; }
-    public void setEndDate(String endDate) { this.endDate = endDate; }
+    public OrderFilter(String status, Double minAmount, Double maxAmount, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime startUpdate, LocalDateTime endUpdate, String sortBy, String sortDir, String search) {
+        this.status = status;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startUpdate = startUpdate;
+        this.endUpdate = endUpdate;
+        this.sortBy = sortBy;
+        this.sortDir = sortDir;
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(Double minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public Double getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDateTime getStartUpdate() {
+        return startUpdate;
+    }
+
+    public void setStartUpdate(LocalDateTime startUpdate) {
+        this.startUpdate = startUpdate;
+    }
+
+    public LocalDateTime getEndUpdate() {
+        return endUpdate;
+    }
+
+    public void setEndUpdate(LocalDateTime endUpdate) {
+        this.endUpdate = endUpdate;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public String getSortDir() {
+        return sortDir;
+    }
+
+    public void setSortDir(String sortDir) {
+        this.sortDir = sortDir;
+    }
 }

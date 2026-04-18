@@ -1,102 +1,35 @@
 package com.swp391.OnlineLearning.Service;
 
+
 import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Repository.CourseRepository;
-import lombok.RequiredArgsConstructor;
+import com.swp391.OnlineLearning.Model.dto.CourseDTO;
+import com.swp391.OnlineLearning.Model.dto.UpdateCourseDTO;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class CourseService {
+public interface CourseService {
+    Course buildNewCourse(@Valid CourseDTO courseDTO, Long authorId);
 
-    private final CourseRepository courseRepository;
+    void save(Course newCourse);
 
-    public Page<Course> findForAdmin(String keyword, Course.CourseStatus status, Long categoryId,
-                                     Long expertId, Boolean isFeatured, Pageable pageable) {
-        return courseRepository.findForAdmin(keyword, status, categoryId, expertId, isFeatured, pageable);
-    }
+    Course findById(Long id);
 
-    public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
-    }
+    Page<Course> findCoursesByAuthorAndFilters(Long userId, Course.CourseStatus status, Long categoryId, String keyword, Pageable pageable);
 
-    public Page<Course> findByAuthorId(Long expertId, Pageable pageable) {
-        return courseRepository.findByAuthorId(expertId, pageable);
-    }
+    Course updateCourse(Long id, @Valid UpdateCourseDTO updateDto);
 
-    public Page<Course> findByCategoryId(Long categoryId, Pageable pageable) {
-        return courseRepository.findByCategoryId(categoryId, pageable);
-    }
+    void sendSubmitReview(Long courseId);
 
-    public Page<Course> findByStatus(Course.CourseStatus status, Pageable pageable) {
-        return courseRepository.findByStatus(status, pageable);
-    }
+    Course deleteById(Long courseId);
 
-    @Transactional
-    public Course createCourse(Course course) {
-        return courseRepository.save(course);
-    }
+    Course handleChangingCourseStatus(Long courseId, String respond);
 
-    @Transactional
-    public Course updateCourse(Long id, Course courseDetails) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Course not found"));
+    void updateFeaturedStatus(Long courseId, Boolean featured);
 
-        course.setName(courseDetails.getName());
-        course.setDescription(courseDetails.getDescription());
-        course.setThumbnail(courseDetails.getThumbnail());
-        course.setPrice(courseDetails.getPrice());
-        course.setCategory(courseDetails.getCategory());
+    List<Course> findFeaturedCourses(int quantity);
 
-        return courseRepository.save(course);
-    }
-
-    @Transactional
-    public Course approveCourse(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        course.setStatus(Course.CourseStatus.PUBLISHED);
-        return courseRepository.save(course);
-    }
-
-    @Transactional
-    public Course rejectCourse(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        course.setStatus(Course.CourseStatus.DRAFT);
-        return courseRepository.save(course);
-    }
-
-    @Transactional
-    public Course toggleFeatured(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        course.setFeatured(!course.isFeatured());
-        return courseRepository.save(course);
-    }
-
-    @Transactional
-    public void deleteCourse(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        course.setStatus(Course.CourseStatus.DRAFT);
-        courseRepository.save(course);
-    }
-
-    public long countCourses() {
-        return courseRepository.count();
-    }
-
-    public long countByStatus(Course.CourseStatus status) {
-        return courseRepository.findByStatus(status, Pageable.unpaged()).getTotalElements();
-    }
-
-    public long countByExpert(Long expertId) {
-        return courseRepository.findByAuthorId(expertId, Pageable.unpaged()).getTotalElements();
-    }
+    void cancelReview(Long courseId);
 }
