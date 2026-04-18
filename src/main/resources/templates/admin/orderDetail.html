@@ -62,7 +62,7 @@
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Giá:</span>
-                            <span class="detail-value" th:text="${#numbers.formatDecimal(order.course?.price, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</span>
+                            <span class="detail-value" th:text="${order.course?.price != null ? #numbers.formatDecimal(order.course?.price, 1, 'POINT', 0, 'POINT') + ' VNĐ' : '0 VNĐ'}">0 VNĐ</span>
                         </div>
                     </div>
                 </div>
