@@ -1,5 +1,6 @@
 package com.swp391.OnlineLearning.Model;
 
+import com.swp391.OnlineLearning.Model.enums.SliderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "sliders")
-public class Slider {
+public class Slider extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,4 +56,3 @@ public class Slider {
     }
 
 }
-

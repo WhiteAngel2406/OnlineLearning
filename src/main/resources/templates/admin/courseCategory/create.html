@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cập nhật người dùng</title>
+    <title>Tạo thể loại mới</title>
     <style>
         :root {
             --primary-color: #6c63ff;
@@ -60,37 +60,6 @@
             font-size: 16px;
         }
 
-        .user-info {
-            background: var(--bg-light);
-            padding: 20px;
-            border-radius: var(--radius);
-            margin-bottom: 25px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .info-label {
-            font-size: 12px;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .info-value {
-            font-size: 14px;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
         .form-group {
             margin-bottom: 20px;
         }
@@ -102,7 +71,12 @@
             color: var(--text-color);
         }
 
-        input, select {
+        .required::after {
+            content: " *";
+            color: #dc3545;
+        }
+
+        input, select, textarea {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid var(--border-color);
@@ -116,12 +90,6 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
-        }
-
-        input[readonly] {
-            background: var(--bg-light);
-            color: var(--text-light);
-            cursor: not-allowed;
         }
 
         .error {
@@ -174,6 +142,20 @@
             color: white;
         }
 
+        .file-input {
+            padding: 12px;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-light);
+        }
+
         @media (max-width: 768px) {
             .form-container {
                 padding: 30px 20px;
@@ -182,81 +164,38 @@
             .form-actions {
                 flex-direction: column;
             }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
 <div class="form-container">
     <div class="form-header">
-        <h1>✏️ Cập nhật người dùng</h1>
-        <p>Chỉnh sửa thông tin vai trò và trạng thái người dùng</p>
+        <h1>👤 Tạo danh mục mới </h1>
+        <p>Thêm thông tin danh mục mới vào hệ thống</p>
     </div>
 
-    <div class="user-info">
-        <div class="info-grid">
-            <div class="info-item">
-                <span class="info-label">ID</span>
-                <span class="info-value" th:text="${user.id}"></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Email</span>
-                <span class="info-value" th:text="${user.email}"></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Họ tên</span>
-                <span class="info-value" th:text="${user.fullName}"></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Giới tính</span>
-                <span class="info-value" th:text="${user.gender.displayName}"></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Số điện thoại</span>
-                <span class="info-value" th:text="${user.mobile ?: 'N/A'}"></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Địa chỉ</span>
-                <span class="info-value" th:text="${user.address ?: 'N/A'}"></span>
-            </div>
-        </div>
-    </div>
-
-    <form th:action="@{/admin/users/update}" th:object="${user}" method="post">
-        <input type="hidden" th:field="*{id}">
-        <input type="hidden" th:field="*{email}">
-        <input type="hidden" th:field="*{password}">
-        <input type="hidden" th:field="*{fullName}">
-        <input type="hidden" th:field="*{gender}">
-        <input type="hidden" th:field="*{mobile}">
-        <input type="hidden" th:field="*{address}">
-
+    <form th:action="@{/admin/course_categories/create}" th:object="${courseCategory}" method="post">
         <div class="form-group">
-            <label for="role">Vai trò</label>
-            <select th:field="*{role}" id="role">
-                <option th:each="role : ${roles}"
-                        th:value="${role.id}"
-                        th:text="${role.name}"
-                        th:selected="${user.role.id == role.id}"></option>
-            </select>
+            <label for="name" class="required">Name</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Nhập tên danh mục">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="description" class="required">Description</label>
+            <textarea name="description" id="description" cols="80" rows="5" placeholder="Nhập mô tả" th:field="*{description}"></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="active" class="required">Active</label>
+            <input type="checkbox" id="active" th:field="*{active}" class="form-check-input " style="width: 20px; height: 20px; margin-right: 10px;">
         </div>
 
-        <div class="form-group">
-            <label for="enabled">Trạng thái</label>
-            <select th:field="*{enabled}" id="enabled">
-                <option th:value="true" th:selected="${user.enabled}">Đang hoạt động</option>
-                <option th:value="false" th:selected="${!user.enabled}">Không hoạt động</option>
-            </select>
-        </div>
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-                <span>✓</span> Cập nhật
+                <span>✓</span> Tạo danh mục
             </button>
-            <a href="/admin/users" class="btn btn-outline">
+            <a href="/admin/course_categories" class="btn btn-outline">
                 <span>←</span> Quay lại
             </a>
         </div>

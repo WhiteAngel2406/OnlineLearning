@@ -1,10 +1,273 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(
+        pageTitle = ~{::title},
+        pageContent = ~{::.page-content-wrapper},
+        pageScripts = ~{::.page-scripts-wrapper}
+      )}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Quản lý Người dùng</title>
 </head>
 <body>
+<div class="page-content-wrapper content-area">
+    <div class="container">
+        <div class="header">
+            <h1>📊 Quản lý Người dùng</h1>
+            <a href="/admin/users/create" class="btn btn-primary">
+                <span>+</span> Thêm người dùng mới
+            </a>
+        </div>
 
+        <div class="filters">
+            <div class="filter-group">
+                <label>Giới tính</label>
+                <select id="genderFilter" onchange="applyFilters()">
+                    <option value="ALL">Tất cả giới tính</option>
+                    <option th:each="gender : ${genders}"
+                            th:value="${gender}"
+                            th:text="${gender.displayName}"
+                            th:selected="${param.gender == gender}"></option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Vai trò</label>
+                <select id="roleFilter" onchange="applyFilters()">
+                    <option value="ALL">Tất cả vai trò</option>
+                    <option th:each="role : ${roles}"
+                            th:value="${role.name}"
+                            th:text="${role.name}"
+                            th:selected="${param.role == role.name}"></option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Trạng thái</label>
+                <select id="enabledFilter" onchange="applyFilters()">
+                    <option value="ALL">Tất cả trạng thái</option>
+                    <option value="true" th:selected="${param.enabled == 'true'}">Đang hoạt động</option>
+                    <option value="false" th:selected="${param.enabled == 'false'}">Không hoạt động</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Tìm kiếm</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="Tìm theo tên, email hoặc số điện thoại..."
+                           th:value="${param.search}">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="usersTable">
+                <thead>
+                <tr>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='id',
+                            direction=${(currentSort == 'id' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            ID
+                            <span th:if="${currentSort == 'id'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='fullName',
+                            direction=${(currentSort == 'fullName' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            Họ tên
+                            <span th:if="${currentSort == 'fullName'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='gender',
+                            direction=${(currentSort == 'gender' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            Giới tính
+                            <span th:if="${currentSort == 'gender'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='email',
+                            direction=${(currentSort == 'email' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            Email
+                            <span th:if="${currentSort == 'email'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='mobile',
+                            direction=${(currentSort == 'mobile' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            Số điện thoại
+                            <span th:if="${currentSort == 'mobile'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/admin/users(
+                            page=0,
+                            size=${userPage.size},
+                            sort='role',
+                            direction=${(currentSort == 'role' and currentDirection == 'asc') ? 'desc' : 'asc'},
+                            search=${param.search},
+                            gender=${param.gender},
+                            role=${param.role},
+                            enabled=${param.enabled}
+                        )}">
+                            Vai trò
+                            <span th:if="${currentSort == 'role'}" class="sort-icon">
+                                <span th:text="${currentDirection == 'asc'} ? '↑' : '↓'"></span>
+                            </span>
+                        </a>
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${userPage.content}" th:unless="${userPage.content == null or userPage.content.isEmpty()}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.gender.displayName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.mobile ?: 'N/A'}"></td>
+                    <td th:text="${user.role.name}"></td>
+                    <td>
+                        <span th:if="${user.enabled}" class="status-active">Đang hoạt động</span>
+                        <span th:unless="${user.enabled}" class="status-inactive">Không hoạt động</span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a th:href="@{/admin/users/update/{id}(id=${user.id})}"
+                               class="btn btn-outline btn-sm">✏️ Sửa</a>
+                            <a th:href="@{/admin/users/delete/{id}(id=${user.id})}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')">🗑️ Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${userPage.content == null || userPage.content.isEmpty()}">
+                    <td colspan="8" class="no-data">
+                        📝 Không tìm thấy người dùng nào
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${userPage.totalPages > 0}" class="pagination">
+            <a th:each="pageNumber : ${pageNumbers}"
+               th:href="@{/admin/users(
+                   size=${userPage.size},
+                   page=${pageNumber - 1},
+                   sort=${currentSort},
+                   direction=${currentDirection},
+                   search=${param.search},
+                   gender=${param.gender},
+                   role=${param.role},
+                   enabled=${param.enabled}
+               )}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == userPage.number + 1} ? 'active' : ''"></a>
+        </div>
+    </div>
+</div>
+
+<th:block class="page-scripts-wrapper">
+    <script>
+        function applyFilters() {
+            const gender = document.getElementById('genderFilter').value;
+            const role = document.getElementById('roleFilter').value;
+            const enabled = document.getElementById('enabledFilter').value;
+            const search = document.getElementById('searchInput').value;
+
+            const urlParams = new URLSearchParams();
+
+            if (gender !== 'ALL') urlParams.set('gender', gender);
+            if (role !== 'ALL') urlParams.set('role', role);
+            if (enabled !== 'ALL') urlParams.set('enabled', enabled);
+            if (search) urlParams.set('search', search);
+
+            // Giữ lại sort parameters nếu có
+            const currentUrl = new URL(window.location.href);
+            const currentSort = currentUrl.searchParams.get('sort');
+            const currentDirection = currentUrl.searchParams.get('direction');
+
+            if (currentSort) urlParams.set('sort', currentSort);
+            if (currentDirection) urlParams.set('direction', currentDirection);
+
+            window.location.href = '/admin/users?' + urlParams.toString();
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+
+        // Auto-select current filter values from URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Set values from URL parameters
+            const gender = urlParams.get('gender');
+            const role = urlParams.get('role');
+            const enabled = urlParams.get('enabled');
+            const search = urlParams.get('search');
+
+            if (gender) document.getElementById('genderFilter').value = gender;
+            if (role) document.getElementById('roleFilter').value = role;
+            if (enabled) document.getElementById('enabledFilter').value = enabled;
+            if (search) document.getElementById('searchInput').value = search;
+        });
+    </script>
+</th:block>
 </body>
 </html>

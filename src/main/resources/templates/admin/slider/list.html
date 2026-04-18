@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Quản lý Slider</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Slider</h1>
+            <a th:href="@{/admin/sliders/create}" class="btn btn-primary">
+                <span>+</span> Tạo Slider
+            </a>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <form th:action="@{/admin/sliders}" method="get" class="filters mb-4">
+            <div class="filter-group">
+                <label>Tìm slider</label>
+                <input type="text" name="keyword" class="input-field" placeholder="Tìm slider..." th:value="${keyword}">
+            </div>
+            <div class="filter-group">
+                <label>Trạng thái</label>
+                <select name="status" class="input-field">
+                    <option value="">Trạng thái</option>
+                    <option th:each="s : ${T(com.swp391.OnlineLearning.Model.enums.SliderStatus).values()}"
+                            th:value="${s}" th:text="${s}" th:selected="${status == s}">Status</option>
+                </select>
+            </div>
+            <div class="filter-group" style="justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a th:href="@{/admin/sliders}" class="btn btn-outline">Đặt lại</a>
+            </div>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Hình Ảnh</th>
+                        <th>Tiêu Đề</th>
+                        <th>Link</th>
+                        <th>Thứ Tự</th>
+                        <th>Trạng Thái</th>
+                        <th>Ngày Tạo</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="slider : ${sliders.content}">
+                        <td th:text="${slider.id}">1</td>
+                        <td>
+                            <img th:src="@{/uploads/{path}(path=${slider.imageUrl})}" alt="Slider"
+                                 style="width: 100px; height: 50px; object-fit: cover; border-radius: 8px;"
+                                 th:if="${slider.imageUrl != null}">
+                            <span th:if="${slider.imageUrl == null}">No Image</span>
+                        </td>
+                        <td th:text="${slider.title}">Slider Title</td>
+                        <td>
+                            <a th:href="${slider.linkUrl}" th:text="${slider.linkUrl != null ? #strings.abbreviate(slider.linkUrl, 30) : '-'}" target="_blank" th:if="${slider.linkUrl != null}">Link</a>
+                            <span th:if="${slider.linkUrl == null}">-</span>
+                        </td>
+                        <td th:text="${slider.orderNumber}">1</td>
+                        <td>
+                            <span th:if="${slider.status == 'APPROVED'}" class="status-active">Đã duyệt</span>
+                            <span th:if="${slider.status == 'REJECTED'}" class="status-inactive">Từ chối</span>
+                            <span th:if="${slider.status == 'TAKEN_DOWN'}" class="status-inactive">Đã gỡ</span>
+                            <span th:if="${slider.status == 'PENDING'}" class="status-pending">Chờ duyệt</span>
+                        </td>
+                        <td th:text="${#temporals.format(slider.createdAt, 'dd/MM/yyyy')}">01/01/2024</td>
+                        <td>
+                            <div class="actions">
+                                <a th:href="@{/admin/sliders/update/{id}(id=${slider.id})}" class="btn btn-outline btn-sm">Sửa</a>
+                                <form th:action="@{/admin/sliders/approve/{id}(id=${slider.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-success" th:if="${slider.status == 'PENDING'}">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/admin/sliders/reject/{id}(id=${slider.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" th:if="${slider.status == 'PENDING'}">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/admin/sliders/delete/{id}(id=${slider.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${sliders.totalPages > 1}" class="pagination">
+            <a th:each="pageNumber : ${#numbers.sequence(0, sliders.totalPages - 1)}"
+               th:href="@{/admin/sliders(page=${pageNumber}, keyword=${keyword}, status=${status})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber == sliders.number} ? 'active' : ''"></a>
+        </div>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>

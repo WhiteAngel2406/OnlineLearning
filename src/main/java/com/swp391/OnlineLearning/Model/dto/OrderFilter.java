@@ -1,5 +1,7 @@
 package com.swp391.OnlineLearning.Model.dto;
 
+import com.swp391.OnlineLearning.Model.Order;
+
 import java.time.LocalDateTime;
 
 public class OrderFilter {
