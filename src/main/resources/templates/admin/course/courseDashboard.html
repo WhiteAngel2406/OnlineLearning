@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Quản lý Khóa học</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Khóa học</h1>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <form th:action="@{/courses/admin}" method="get" class="filters mb-4">
+            <div class="filter-group">
+                <label>Tìm kiếm</label>
+                <input type="text" name="keyword" class="input-field" placeholder="Tìm kiếm khóa học..." th:value="${keyword}">
+            </div>
+            <div class="filter-group">
+                <label>Trạng thái</label>
+                <select name="status" class="input-field">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="PENDING" th:selected="${status == 'PENDING'}">Chờ duyệt</option>
+                    <option value="APPROVED" th:selected="${status == 'APPROVED'}">Đã duyệt</option>
+                    <option value="REJECTED" th:selected="${status == 'REJECTED'}">Từ chối</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Danh mục</label>
+                <select name="categoryId" class="input-field">
+                    <option value="">Tất cả danh mục</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" th:selected="${categoryId == cat.id}">Danh mục</option>
+                </select>
+            </div>
+            <div class="filter-group" style="justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a th:href="@{/courses/admin}" class="btn btn-outline">Reset</a>
+            </div>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên khóa học</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Trạng thái</th>
+                        <th>Nổi bật</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="course : ${courses.content}">
+                        <td th:text="${course.id}">1</td>
+                        <td th:text="${#strings.abbreviate(course.name, 40)}">Tên khóa học</td>
+                        <td th:text="${course.category?.name}">Danh mục</td>
+                        <td th:text="${#numbers.formatDecimal(course.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">99,000 VNĐ</td>
+                        <td>
+                            <span th:if="${course.status == 'APPROVED'}" class="status-active">Đã duyệt</span>
+                            <span th:if="${course.status == 'REJECTED'}" class="status-inactive">Từ chối</span>
+                            <span th:if="${course.status == 'PENDING'}" class="status-pending">Chờ duyệt</span>
+                        </td>
+                        <td>
+                            <span th:if="${course.isFeatured}" class="badge" style="background: var(--primary-color); color: white;">Nổi bật</span>
+                            <span th:unless="${course.isFeatured}" class="badge" style="background: var(--bg-light); color: var(--text-light);">Bình thường</span>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <form th:action="@{/courses/admin/approve/{id}(id=${course.id})}" method="post" style="display:inline;"
+                                      th:if="${course.status == 'PENDING'}">
+                                    <button type="submit" class="btn btn-sm btn-success" title="Duyệt">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/courses/admin/reject/{id}(id=${course.id})}" method="post" style="display:inline;"
+                                      th:if="${course.status == 'PENDING'}">
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Từ chối">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/courses/admin/featured/{id}(id=${course.id})}" method="post" style="display:inline;"
+                                      th:if="${course.status == 'APPROVED'}">
+                                    <button type="submit" class="btn btn-sm" style="background: #ffc107; color: #333;" title="Chuyển nổi bật">
+                                        <i class="bi bi-star"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${courses.content == null || courses.content.isEmpty()}">
+                        <td colspan="7" class="no-data">Không có khóa học nào</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${courses.totalPages > 1}" class="pagination">
+            <a th:each="pageNumber : ${#numbers.sequence(0, courses.totalPages - 1)}"
+               th:href="@{/courses/admin(page=${pageNumber}, keyword=${keyword}, status=${status}, categoryId=${categoryId})}"
+               th:text="${pageNumber + 1}"
+               th:class="${courses.number == pageNumber} ? 'active' : ''"></a>
+        </div>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>

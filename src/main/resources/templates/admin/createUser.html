@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tạo người dùng mới</title>
+    <link rel="stylesheet" th:href="@{/css/authen.css}">
+</head>
+<body>
+<div class="form-container" style="max-width: 600px;">
+    <div class="form-header">
+        <h1>Tạo người dùng mới</h1>
+        <p>Thêm thông tin người dùng vào hệ thống</p>
+    </div>
+
+    <form th:action="@{/admin/users/create}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="required">Email</label>
+            <input type="email" th:field="*{email}" class="input-field" placeholder="Nhập địa chỉ email">
+        </div>
+
+        <div class="form-group">
+            <label class="required">Mật khẩu</label>
+            <input type="password" th:field="*{password}" class="input-field" placeholder="Nhập mật khẩu">
+        </div>
+
+        <div class="form-group">
+            <label class="required">Họ và tên</label>
+            <input type="text" th:field="*{fullName}" class="input-field" placeholder="Nhập họ và tên đầy đủ">
+        </div>
+
+        <div class="form-group">
+            <label class="required">Giới tính</label>
+            <select name="gender" class="input-field">
+                <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender.displayName}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Vai trò</label>
+            <select name="roleId" class="input-field">
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" th:field="*{mobile}" class="input-field" placeholder="Nhập số điện thoại">
+        </div>
+
+        <div class="form-group">
+            <label>Địa chỉ</label>
+            <input type="text" th:field="*{address}" class="input-field" placeholder="Nhập địa chỉ">
+        </div>
+
+        <input type="checkbox" th:field="*{enabled}" th:value="true" hidden>
+
+        <button type="submit" class="submit-btn">Tạo người dùng</button>
+    </form>
+
+    <div class="form-footer">
+        <a th:href="@{/admin/users}">Quay lại danh sách</a>
+    </div>
+</div>
+</body>
+</html>

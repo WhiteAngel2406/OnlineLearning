@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Tạo Danh Mục</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Tạo Danh Mục Mới</h1>
+            <a th:href="@{/admin/course_categories}" class="btn btn-outline">Quay lại</a>
+        </div>
+
+        <form th:action="@{/admin/course_categories/create}" th:object="${category}" method="post" class="col-md-6 mx-auto">
+            <div class="form-group">
+                <label class="required">Tên danh mục</label>
+                <input type="text" th:field="*{name}" class="input-field" placeholder="Nhập tên danh mục" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mô tả</label>
+                <textarea th:field="*{description}" class="input-field" rows="3" placeholder="Nhập mô tả danh mục"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" th:field="*{active}" th:value="true" checked>
+                    <span>Hoạt động</span>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">Tạo</button>
+        </form>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>

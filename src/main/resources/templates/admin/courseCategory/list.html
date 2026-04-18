@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Quản lý Danh Mục</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Danh Mục</h1>
+            <a th:href="@{/admin/course_categories/create}" class="btn btn-primary">
+                <span>+</span> Tạo Danh Mục
+            </a>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cat : ${categories}">
+                        <td th:text="${cat.id}">1</td>
+                        <td th:text="${cat.name}">Programming</td>
+                        <td th:text="${cat.description != null ? #strings.abbreviate(cat.description, 50) : '-'}">Description</td>
+                        <td>
+                            <span th:if="${cat.active}" class="status-active">Hoạt động</span>
+                            <span th:unless="${cat.active}" class="status-inactive">Không hoạt động</span>
+                        </td>
+                        <td th:text="${#temporals.format(cat.createdAt, 'dd/MM/yyyy')}">01/01/2024</td>
+                        <td>
+                            <div class="actions">
+                                <a th:href="@{/admin/course_categories/update/{id}(id=${cat.id})}" class="btn btn-outline btn-sm">Sửa</a>
+                                <a th:href="@{/admin/course_categories/delete/{id}(id=${cat.id})}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${categories.content == null || categories.content.isEmpty()}">
+                        <td colspan="6" class="no-data">Không tìm thấy danh mục nào</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${categories.totalPages > 1}" class="pagination">
+            <a th:each="pageNumber : ${#numbers.sequence(0, categories.totalPages - 1)}"
+               th:href="@{/admin/course_categories(page=${pageNumber})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber == currentPage} ? 'active' : ''"></a>
+        </div>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>

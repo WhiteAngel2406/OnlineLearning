@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Chi Tiết Đơn Hàng</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Chi Tiết Đơn Hàng</h1>
+            <a th:href="@{/admin/orders}" class="btn btn-outline">
+                <i class="bi bi-arrow-left"></i> Quay Lại
+            </a>
+        </div>
+
+        <div th:if="${order != null}">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="detail-card">
+                        <h3 class="detail-card-title">Thông Tin Đơn Hàng</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Mã Đơn:</span>
+                            <span class="detail-value" th:text="${order.orderCode}">ORD-001</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Số Tiền:</span>
+                            <span class="detail-value" th:text="${#numbers.formatDecimal(order.amount, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Trạng Thái:</span>
+                            <span th:if="${order.status == 'SUCCESS'}" class="status-active">Đã thanh toán</span>
+                            <span th:if="${order.status == 'FAILED'}" class="status-inactive">Thất bại</span>
+                            <span th:if="${order.status == 'REFUNDED'}" class="status-pending">Đã hoàn tiền</span>
+                            <span th:if="${order.status == 'PENDING'}" class="status-pending">Chờ xử lý</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Ngày Đặt:</span>
+                            <span class="detail-value" th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Mã Giao Dịch:</span>
+                            <span class="detail-value" th:text="${order.vnpTransactionNo ?: '-'}">VNPAY123</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail-card">
+                        <h3 class="detail-card-title">Thông Tin Khách Hàng</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Tên:</span>
+                            <span class="detail-value" th:text="${order.user?.fullName}">Nguyen Van A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value" th:text="${order.user?.email}">email@example.com</span>
+                        </div>
+                    </div>
+                    <div class="detail-card mt-3">
+                        <h3 class="detail-card-title">Thông Tin Khóa Học</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Tên Khóa Học:</span>
+                            <span class="detail-value" th:text="${order.course?.name}">Course Name</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Giá:</span>
+                            <span class="detail-value" th:text="${#numbers.formatDecimal(order.course?.price, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-card mt-4">
+                <h3 class="detail-card-title">Cập Nhật Trạng Thái</h3>
+                <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post" class="filter-group-inline">
+                    <select name="status" class="input-field">
+                        <option th:each="s : ${T(com.example.demo.model.enums.OrderStatus).values()}"
+                                th:value="${s}" th:text="${s}">Status</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${order == null}" class="alert alert-warning">
+            Không tìm thấy đơn hàng!
+        </div>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>

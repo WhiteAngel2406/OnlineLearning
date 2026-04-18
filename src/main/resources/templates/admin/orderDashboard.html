@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
+<head><title>Quản lý Đơn Hàng</title></head>
+<body>
+<div class="page-content-wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Đơn Hàng</h1>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+        <div class="stats-grid mb-4">
+            <div class="stat-card stat-revenue">
+                <h3>Tổng Doanh Thu</h3>
+                <h2 th:text="${#numbers.formatDecimal(totalRevenue, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">0 VNĐ</h2>
+            </div>
+        </div>
+
+        <form th:action="@{/admin/orders}" method="get" class="filters mb-4">
+            <div class="filter-group">
+                <label>Tìm mã đơn hàng</label>
+                <input type="text" name="keyword" class="input-field" placeholder="Tìm mã đơn hàng..." th:value="${filter?.keyword}">
+            </div>
+            <div class="filter-group">
+                <label>Trạng thái</label>
+                <select name="status" class="input-field">
+                    <option value="">Trạng thái</option>
+                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${filter?.status == s}">Status</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Từ ngày</label>
+                <input type="date" name="startDate" class="input-field" th:value="${filter?.startDate}">
+            </div>
+            <div class="filter-group">
+                <label>Đến ngày</label>
+                <input type="date" name="endDate" class="input-field" th:value="${filter?.endDate}">
+            </div>
+            <div class="filter-group" style="justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a th:href="@{/admin/orders}" class="btn btn-outline">Đặt lại</a>
+            </div>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Mã Đơn</th>
+                        <th>Khách Hàng</th>
+                        <th>Khóa Học</th>
+                        <th>Số Tiền</th>
+                        <th>Trạng Thái</th>
+                        <th>Ngày Đặt</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders.content}">
+                        <td th:text="${order.id}">1</td>
+                        <td th:text="${order.orderCode}">ORD-001</td>
+                        <td th:text="${order.user?.fullName}">Nguyen Van A</td>
+                        <td th:text="${#strings.abbreviate(order.course?.name, 30)}">Course Name</td>
+                        <td th:text="${#numbers.formatDecimal(order.amount, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</td>
+                        <td>
+                            <span th:if="${order.status == 'SUCCESS'}" class="status-active">Đã thanh toán</span>
+                            <span th:if="${order.status == 'FAILED'}" class="status-inactive">Thất bại</span>
+                            <span th:if="${order.status == 'REFUNDED'}" class="status-pending">Đã hoàn tiền</span>
+                            <span th:if="${order.status == 'PENDING'}" class="status-pending">Chờ xử lý</span>
+                        </td>
+                        <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</td>
+                        <td>
+                            <div class="actions">
+                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" class="btn btn-outline btn-sm">Xem</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${orders.totalPages > 1}" class="pagination">
+            <a th:each="pageNumber : ${#numbers.sequence(0, orders.totalPages - 1)}"
+               th:href="@{/admin/orders(page=${pageNumber}, keyword=${filter?.keyword}, status=${filter?.status}, startDate=${filter?.startDate}, endDate=${filter?.endDate})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber == orders.number} ? 'active' : ''"></a>
+        </div>
+    </div>
+</div>
+<th:block class="page-scripts-wrapper"></th:block>
+</body>
+</html>
