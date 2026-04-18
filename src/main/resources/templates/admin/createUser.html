@@ -45,15 +45,13 @@
 
         <div class="form-group">
             <label>Số điện thoại</label>
-            <input type="text" th:field="*{mobile}" class="input-field" placeholder="Nhập số điện thoại">
+            <input type="text" name="mobile" class="input-field" placeholder="Nhập số điện thoại">
         </div>
 
         <div class="form-group">
             <label>Địa chỉ</label>
-            <input type="text" th:field="*{address}" class="input-field" placeholder="Nhập địa chỉ">
+            <input type="text" name="address" class="input-field" placeholder="Nhập địa chỉ">
         </div>
-
-        <input type="checkbox" th:field="*{enabled}" th:value="true" hidden>
 
         <button type="submit" class="submit-btn">Tạo người dùng</button>
     </form>

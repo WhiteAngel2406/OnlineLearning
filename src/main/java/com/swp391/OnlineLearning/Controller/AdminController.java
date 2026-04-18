@@ -50,6 +50,7 @@ public class AdminController {
         model.addAttribute("totalOrders", orderService.countOrders());
         model.addAttribute("totalSliders", sliderService.countSliders());
         model.addAttribute("totalCourses", courseService.countCourses());
+        model.addAttribute("totalRevenue", orderService.getTotalRevenue() != null ? orderService.getTotalRevenue() : 0);
         return "admin/dashboard";
     }
 
@@ -78,12 +79,19 @@ public class AdminController {
     @GetMapping("/users/create")
     public String createUserForm(Model model) {
         model.addAttribute("user", new UserDTO());
+        var roles = roleRepository.findAll();
+        model.addAttribute("roles", roles != null ? roles : java.util.Collections.emptyList());
+        model.addAttribute("genders", java.util.Arrays.asList(User.Gender.values()));
         return "admin/createUser";
     }
 
     @PostMapping("/users/create")
-    public String createUser(@ModelAttribute UserDTO userDTO) {
-        User user = userService.buildNewUser(userDTO);
+    public String createUser(@ModelAttribute UserDTO userDTO,
+                             @RequestParam Long roleId,
+                             @RequestParam User.Gender gender,
+                             @RequestParam(required = false) String mobile,
+                             @RequestParam(required = false) String address) {
+        User user = userService.buildNewUser(userDTO, roleId, gender, mobile, address);
         userService.save(user);
         return "redirect:/admin/users";
     }
@@ -92,6 +100,7 @@ public class AdminController {
     public String updateUserForm(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleRepository.findAll());
         return "admin/updateUser";
     }
 
@@ -127,8 +136,11 @@ public class AdminController {
         Page<Order> orders = orderService.findWithFilters(keyword, status, startDate, endDate, pageable);
         model.addAttribute("orders", orders);
         model.addAttribute("filter", new OrderFilter(keyword, status, startDate, endDate));
+        model.addAttribute("statuses", OrderStatus.values());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", orders.getTotalPages());
+        Double totalRevenue = orderService.getTotalRevenue();
+        model.addAttribute("totalRevenue", totalRevenue != null ? totalRevenue : 0);
         return "admin/orderDashboard";
     }
 
@@ -208,13 +220,14 @@ public class AdminController {
     @GetMapping("/sliders/create")
     public String createSliderForm(Model model) {
         model.addAttribute("slider", new Slider());
+        model.addAttribute("statuses", SliderStatus.values());
         return "admin/slider/create";
     }
 
     @PostMapping("/sliders/create")
-    public String createSlider(@ModelAttribute Slider slider, @RequestParam(required = false) MultipartFile image) throws IOException {
-        if (image != null && !image.isEmpty()) {
-            String imageUrl = uploadService.uploadSlider(image);
+    public String createSlider(@ModelAttribute Slider slider, @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imageUrl = uploadService.uploadSlider(imageFile);
             slider.setImageUrl(imageUrl);
         }
         sliderService.createSlider(slider);
@@ -224,13 +237,14 @@ public class AdminController {
     @GetMapping("/sliders/update/{id}")
     public String updateSliderForm(@PathVariable Long id, Model model) {
         sliderService.findById(id).ifPresent(slider -> model.addAttribute("slider", slider));
+        model.addAttribute("statuses", SliderStatus.values());
         return "admin/slider/update";
     }
 
     @PostMapping("/sliders/update/{id}")
-    public String updateSlider(@PathVariable Long id, @ModelAttribute Slider slider, @RequestParam(required = false) MultipartFile image) throws IOException {
-        if (image != null && !image.isEmpty()) {
-            String imageUrl = uploadService.uploadSlider(image);
+    public String updateSlider(@PathVariable Long id, @ModelAttribute Slider slider, @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imageUrl = uploadService.uploadSlider(imageFile);
             slider.setImageUrl(imageUrl);
         }
         sliderService.updateSlider(id, slider);

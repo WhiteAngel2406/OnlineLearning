@@ -14,7 +14,7 @@
         <div class="stats-grid mb-4">
             <div class="stat-card stat-revenue">
                 <h3>Tổng Doanh Thu</h3>
-                <h2 th:text="${#numbers.formatDecimal(totalRevenue, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">0 VNĐ</h2>
+                <h2 th:text="${totalRevenue != null ? #numbers.formatDecimal(totalRevenue, 1, 'POINT', 0, 'POINT') + ' VNĐ' : '0 VNĐ'}">0 VNĐ</h2>
             </div>
         </div>
 

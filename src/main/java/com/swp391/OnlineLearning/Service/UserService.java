@@ -67,12 +67,18 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    public User buildNewUser(@Valid UserDTO userDTO) {
+    public User buildNewUser(@Valid UserDTO userDTO, Long roleId, User.Gender gender, String mobile, String address) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setFullName(userDTO.getFullName());
+        user.setGender(gender);
+        user.setMobile(mobile);
+        user.setAddress(address);
         user.setEnabled(true);
+        if (roleId != null) {
+            roleRepository.findById(roleId).ifPresent(user::setRole);
+        }
         return user;
     }
 
