@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.service;
+package com.swp391.OnlineLearning.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

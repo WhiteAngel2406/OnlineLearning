@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.service;
+package com.swp391.OnlineLearning.Service;
 
 import com.swp391.OnlineLearning.Model.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class SessionService {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null || !currentUser.getEmail().equals(email)) {
             // Load user từ database và lưu vào session
-            User user = userService.findByEmail(email);
+            User user = userService.findByEmailAndEnabledTrue(email).orElse(null);
             if (user != null) {
                 session.setAttribute("currentUserId", user.getId());
                 System.out.println("✅ User stored in session: " + user.getEmail() +
