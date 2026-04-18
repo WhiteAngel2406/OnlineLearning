@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.repository;
+package com.swp391.OnlineLearning.Repository;
 
 import com.swp391.OnlineLearning.Model.User;
 import com.swp391.OnlineLearning.Model.UserRole;
