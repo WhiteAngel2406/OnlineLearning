@@ -1,9 +1,15 @@
 package com.swp391.OnlineLearning.Controller;
 
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Model.dto.*;
+import com.swp391.OnlineLearning.Model.ApiResponse;
+import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.Model.CourseCategory;
+import com.swp391.OnlineLearning.Model.Enrollment;
+import com.swp391.OnlineLearning.Model.dto.CourseDTO;
+import com.swp391.OnlineLearning.Model.dto.CourseFeedbackStats;
+import com.swp391.OnlineLearning.Model.dto.FeedbackDTO;
+import com.swp391.OnlineLearning.Model.dto.UpdateCourseDTO;
 import com.swp391.OnlineLearning.Service.*;
-import com.swp391.OnlineLearning.Service.impl.*;
+import com.swp391.OnlineLearning.Service.impl.EnrollmentServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -29,24 +35,60 @@ public class CourseController {
     private final CourseCategoryService courseCategoryService;
     private final CourseService courseService;
     private final UserService userService;
-//    private final EnrollmentServiceImpl enrollmentService;
-//    private final WishlistService wishlistService;
-//    private final FeedbackService feedbackService;
-//
-//    public CourseController(CourseCategoryService courseCategoryService, CourseService courseService, UserService userService, EnrollmentServiceImpl enrollmentService, WishlistService wishlistService, FeedbackService feedbackService) {
-//        this.courseCategoryService = courseCategoryService;
-//        this.courseService = courseService;
-//        this.userService = userService;
-//        this.enrollmentService = enrollmentService;
-//        this.wishlistService = wishlistService;
-//        this.feedbackService = feedbackService;
-//    }
+    private final EnrollmentServiceImpl enrollmentService;
+    private final WishlistService wishlistService;
+    private final FeedbackService feedbackService;
 
-
-    public CourseController(CourseCategoryService courseCategoryService, CourseService courseService, UserService userService) {
+    public CourseController(CourseCategoryService courseCategoryService, CourseService courseService, UserService userService, EnrollmentServiceImpl enrollmentService, WishlistService wishlistService, FeedbackService feedbackService) {
         this.courseCategoryService = courseCategoryService;
         this.courseService = courseService;
         this.userService = userService;
+        this.enrollmentService = enrollmentService;
+        this.wishlistService = wishlistService;
+        this.feedbackService = feedbackService;
+    }
+
+    // ===================== GET COURSES =========================
+    @GetMapping("/learner")
+    public String getCoursesLearnerPage(@RequestParam(required = false) Long categoryId,
+                                        @RequestParam(required = false) String keyword,
+                                        @PageableDefault(page = 0, size = 6, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                                        HttpSession session, Model model){
+        Page<Course> coursePage = this.courseService.findCoursesByAuthorAndFilters(null, Course.CourseStatus.PUBLISHED, categoryId, keyword, pageable);
+        List<Course> featuredCourses = this.courseService.findFeaturedCourses(3);
+
+        model.addAttribute("coursePage", coursePage);
+        model.addAttribute("allCategories", this.courseCategoryService.findAll());
+        model.addAttribute("featuredCourses", featuredCourses);
+        model.addAttribute("currentCategoryId", categoryId); // For highlighting active category
+        model.addAttribute("currentKeyword", keyword); // For search box value
+
+        return "user/viewCourseList";
+    }
+
+    //show course details for learner
+    @GetMapping("/{courseId}/learner")
+    public String getCourseDetailsForLearner(@PathVariable("courseId") Long courseId,
+                                             HttpSession session,
+                                             Model model){
+        try{
+            Course course = this.courseService.findById(courseId);
+            Long userId = (Long) session.getAttribute("currentUserId");
+            Enrollment e = this.enrollmentService.findByUserIdAndCourseId(userId, courseId);
+            boolean inWishlist = this.wishlistService.findByUserIdAndCourseId(userId, courseId).isPresent();
+            Page<FeedbackDTO> initialFeedbacks = this.feedbackService.getApprovedFeedbacks(courseId, PageRequest.of(0, 5, Sort.by("rating").descending()));
+            CourseFeedbackStats courseFeedbackStats = this.feedbackService.getFeedbackStats(courseId);
+
+            if (e != null) model.addAttribute("currentEnrollmentId", e.getId());
+            model.addAttribute("courseFeedbackStats", courseFeedbackStats);
+            model.addAttribute("initialFeedbacks", initialFeedbacks);
+            model.addAttribute("inWishlist", inWishlist);
+            model.addAttribute("isEnrolled", e != null);
+            model.addAttribute("course", course);
+            return "user/viewCourseDetails";
+        }catch (Exception e){
+            return "home";
+        }
     }
 
     @GetMapping("/admin")
@@ -255,22 +297,22 @@ public class CourseController {
         }
     }
 
-//    @GetMapping("/api/{courseId}/feedback-fragment")
-//    public String getCourseFeedbackFragment(@PathVariable("courseId") Long courseId,
-//                                            @RequestParam(value = "page", defaultValue = "0") int page,
-//                                            @RequestParam(value = "ratingFilter", required = false) Integer ratingFilter,
-//                                            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
-//                                            Model model){
-//
-//        try{
-//            Pageable pageable = PageRequest.of(page, 5, Sort.by("createdAt").descending());
-//            Page<FeedbackDTO> feedbacks = this.feedbackService.getApprovedFeedbacksWithSpecs(courseId, pageable, ratingFilter, searchKeyword);
-//
-//            model.addAttribute("feedbacks", feedbacks);
-//            model.addAttribute("newTotalPages", feedbacks.getTotalPages());
-//            return "components/_feedback_cards :: feedbackCardList";
-//        }catch (Exception e){
-//            return ""; //tạm thời
-//        }
-//    }
+    @GetMapping("/api/{courseId}/feedback-fragment")
+    public String getCourseFeedbackFragment(@PathVariable("courseId") Long courseId,
+                                            @RequestParam(value = "page", defaultValue = "0") int page,
+                                            @RequestParam(value = "ratingFilter", required = false) Integer ratingFilter,
+                                            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                                            Model model){
+
+        try{
+            Pageable pageable = PageRequest.of(page, 5, Sort.by("createdAt").descending());
+            Page<FeedbackDTO> feedbacks = this.feedbackService.getApprovedFeedbacksWithSpecs(courseId, pageable, ratingFilter, searchKeyword);
+
+            model.addAttribute("feedbacks", feedbacks);
+            model.addAttribute("newTotalPages", feedbacks.getTotalPages());
+            return "components/_feedback_cards :: feedbackCardList";
+        }catch (Exception e){
+            return ""; //tạm thời
+        }
+    }
 }
