@@ -21,76 +21,398 @@
             --radius: 12px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg-light); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .container { max-width: 1400px; margin: 0 5%; padding: 2rem 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+        }
+
+        /* Header */
+
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 5%;
+            padding: 2rem 0;
+        }
 
         /* Hero Slider */
-        .hero-slider { position: relative; height: 500px; border-radius: var(--radius); overflow: hidden; margin-bottom: 3rem; box-shadow: var(--shadow); }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .slide.active { opacity: 1; }
-        .slide-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
-        .slide-content h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
-        .slide-content p { font-size: 1.2rem; margin-bottom: 1.5rem; opacity: 0.9; }
-        .slide-btn { background: var(--primary-color); color: white; padding: 0.8rem 2rem; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s ease; }
-        .slide-btn:hover { background: var(--primary-hover); }
-        .slider-nav { position: absolute; bottom: 2rem; right: 2rem; display: flex; gap: 0.5rem; }
-        .slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.3s ease; }
-        .slider-dot.active { background: white; }
+        .hero-slider {
+            position: relative;
+            height: 500px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+
+        .slide-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .slide-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slide-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: white;
+        }
 
         /* Featured Sections */
-        .section { margin-bottom: 4rem; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .section-title { font-size: 2rem; font-weight: 700; color: var(--text-color); }
-        .view-all { color: var(--primary-color); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-        .view-all:hover { color: var(--primary-hover); }
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .view-all:hover {
+            color: var(--primary-hover);
+        }
 
         /* Courses Grid */
-        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .course-card { background: var(--bg-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; text-decoration: none; }
-        .course-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        .course-thumbnail { width: 100%; height: 200px; object-fit: cover; }
-        .course-content { padding: 1.5rem; }
-        .course-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-color); }
-        .course-tagline { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1rem; }
-        .course-meta { display: flex; align-items: center; font-size: 0.9rem; color: var(--text-light); }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .course-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .course-tagline {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-meta {
+            display: flex;
+            /*justify-content: space-between;*/
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
 
         /* Posts Grid */
-        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-        .post-card { background: var(--bg-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease; cursor: pointer; }
-        .post-card:hover { transform: translateY(-3px); }
-        .post-thumbnail { width: 100%; height: 200px; object-fit: cover; }
-        .post-content { padding: 1.5rem; }
-        .post-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-color); }
-        .post-date { color: var(--text-light); font-size: 0.9rem; }
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .post-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .post-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
 
         /* Layout */
-        .main-layout { display: grid; grid-template-columns: 1fr 350px; gap: 3rem; }
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 3rem;
+        }
 
         /* Sidebar */
-        .sidebar { background: var(--bg-color); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); height: fit-content; position: sticky; top: 100px; }
-        .sidebar-section { margin-bottom: 2.5rem; }
-        .sidebar-section:last-child { margin-bottom: 0; }
-        .sidebar-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-color); padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-color); }
-        .latest-posts { list-style: none; }
-        .latest-post { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.3s ease; }
-        .latest-post:hover { background: var(--bg-light); margin: 0 -1rem; padding: 1rem; }
-        .latest-post:last-child { border-bottom: none; }
-        .post-small-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
-        .post-small-content { flex: 1; }
-        .post-small-title { font-weight: 600; margin-bottom: 0.3rem; font-size: 0.95rem; }
-        .post-small-date { color: var(--text-light); font-size: 0.8rem; }
-        .contact-info { list-style: none; }
-        .contact-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 0; color: var(--text-light); }
-        .contact-item i { width: 20px; color: var(--primary-color); }
-        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
-        .social-link { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-light); display: flex; align-items: center; justify-content: center; color: var(--text-color); text-decoration: none; transition: all 0.3s ease; }
-        .social-link:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
-        .post-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .post-link:hover { opacity: 0.8; }
-        .chat-float-btn { position: fixed; bottom: 25px; right: 25px; background-color: #1e90ff; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; transition: 0.2s; z-index: 9999; }
-        .chat-float-btn:hover { background-color: #0d6efd; transform: scale(1.1); }
+        .sidebar {
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .latest-posts {
+            list-style: none;
+        }
+
+        .latest-post {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .latest-post:hover {
+            background: var(--bg-light);
+            margin: 0 -1rem;
+            padding: 1rem;
+        }
+
+        .latest-post:last-child {
+            border-bottom: none;
+        }
+
+        .post-small-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .post-small-content {
+            flex: 1;
+        }
+
+        .post-small-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .post-small-date {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            color: var(--text-light);
+        }
+
+        .contact-item i {
+            width: 20px;
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+
+        .post-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column
+        }
+        .post-link:hover {
+            opacity: 0.8;
+        }
+
+        .chat-float-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #1e90ff;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 9999;
+        }
+
+        .chat-float-btn:hover {
+            background-color: #0d6efd;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+
     </style>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
@@ -103,21 +425,33 @@
 <div class="container">
     <!-- Hero Slider -->
     <div class="hero-slider" th:if="${sliders != null and !sliders.isEmpty()}">
-        <div th:each="slider, iter : ${sliders}" class="slide" th:classappend="${iter.first} ? ' active' : ''" th:style="|background-image: url('${slider.imageUrl}');|">
+
+        <div th:each="slider, iter : ${sliders}"
+             class="slide"
+             th:classappend="${iter.first} ? ' active' : ''"
+             th:style="|background-image: url('${slider.imageUrl}');|">
+
             <div class="slide-content">
                 <h2 th:text="${slider.title}"></h2>
                 <p th:text="${slider.description}"></p>
+
                 <a th:href="${slider.linkUrl != null ? ('/sliders/view/' + slider.id) : '#'}">
                     <button class="slide-btn">Xem chi tiết</button>
                 </a>
             </div>
         </div>
+
+        <!-- Dots -->
         <div class="slider-nav">
-            <div th:each="slider, iter : ${sliders}" class="slider-dot" th:classappend="${iter.first} ? ' active' : ''" th:onclick="|showSlide(${iter.index})|"></div>
+            <div th:each="slider, iter : ${sliders}"
+                 class="slider-dot"
+                 th:classappend="${iter.first} ? ' active' : ''"
+                 th:onclick="|showSlide(${iter.index})|">
+            </div>
         </div>
     </div>
 
-    <div class="hero-slider" th:if="${sliders == null or sliders.isEmpty()}">
+    <div class="hero-slider"  th:if="${sliders == null or sliders.isEmpty()}">
         <div class="slide active">
             <div class="slide-content">
                 <h2>Học Tiếng Anh Hiệu Quả</h2>
@@ -153,8 +487,7 @@
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">Khóa Học Nổi Bật</h2>
-                    <a th:href="@{/courses/learner}" class="view-all">Xem tất cả</a>
-                </div>
+                    <a th:href="@{/courses/learner}" class="view-all">Xem tất cả</a> </div>
                 <div class="courses-grid">
                     <a th:each="course : ${featuredCourses}" th:href="@{'/courses/' + ${course.id} + '/learner'}" class="course-card">
                         <img th:src="@{'/uploads/' + ${course.thumbnail}}" alt="Course Thumbnail" class="course-thumbnail">
@@ -170,15 +503,17 @@
                     <p th:if="${#lists.isEmpty(featuredCourses)}" class="text-muted w-100 text-center">Chưa có khóa học nổi bật nào.</p>
                 </div>
             </section>
+
         </div>
 
         <!-- Sidebar -->
         <aside class="sidebar">
+            <!-- Latest Posts -->
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Bài Viết Gần Đây</h3>
                 <ul class="latest-posts">
                     <li class="latest-post" th:each="blog : ${latestBlogs}">
-                        <a th:href="@{'/blogs/' + ${blog.id}}" class="post-link"><img th:src="'/uploads/' + ${blog.thumbnail}" alt="Blog thumbnail" class="post-small-thumb"></a>
+                        <a th:href="@{'/blogs/' + ${blog.id}}" class="post-link"><img th:src="'/uploads/' + ${blog.thumbnail}" alt="Mẹo học từ vựng" class="post-small-thumb"></a>
                         <div class="post-small-content">
                             <h4 class="post-small-title" th:text="${blog.title}">5 Mẹo Học Từ Vựng Hiệu Quả</h4>
                             <p class="post-small-date" th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}">30/09/2024</p>
@@ -187,16 +522,29 @@
                 </ul>
             </div>
 
-            <a href="/chats/consultant" class="chat-float-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Chat với tôi">
-                <i class="bi bi-chat-right-dots"></i>
+            <!-- Contact Info -->
+
+            <a href="/chats/consultant" class="chat-float-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+               data-bs-custom-class="custom-tooltip"
+               data-bs-title="Chat với tôi">
+                <i class="bi bi-chat-right-dots" ></i>
             </a>
 
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Liên Hệ</h3>
                 <ul class="contact-info">
-                    <li class="contact-item"><i class="fas fa-envelope"></i><span>contact@oels.edu.vn</span></li>
-                    <li class="contact-item"><i class="fas fa-phone"></i><span>+84 123 456 789</span></li>
-                    <li class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Hà Nội, Việt Nam</span></li>
+                    <li class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@oels.edu.vn</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+84 123 456 789</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Hà Nội, Việt Nam</span>
+                    </li>
                 </ul>
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -213,6 +561,7 @@
 <div th:replace="~{components/footer :: footer}"></div>
 
 <script>
+    // Slider functionality
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.slider-dot');
@@ -220,17 +569,53 @@
     function showSlide(n) {
         slides.forEach(slide => slide.classList.remove('active'));
         dots.forEach(dot => dot.classList.remove('active'));
+
         currentSlide = (n + slides.length) % slides.length;
+
         slides[currentSlide].classList.add('active');
         dots[currentSlide].classList.add('active');
     }
 
-    setInterval(() => { showSlide(currentSlide + 1); }, 5000);
-    dots.forEach((dot, index) => { dot.addEventListener('click', () => { showSlide(index); }); });
+    // Auto slide
+    setInterval(() => {
+        showSlide(currentSlide + 1);
+    }, 5000);
 
-    document.addEventListener("DOMContentLoaded", function() {
+    // Dot click events
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSlide(index);
+        });
+    });
+    //
+    document.addEventListener("DOMContentLoaded", function () {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        tooltipTriggerList.forEach(tooltipTriggerEl => { new bootstrap.Tooltip(tooltipTriggerEl); });
+        tooltipTriggerList.forEach(tooltipTriggerEl => {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    // Card click events (redirect functionality)
+    /*document.querySelectorAll('.course-card, .post-card, .latest-post').forEach(card => {
+        card.addEventListener('click', function() {
+            // In real implementation, you would redirect to the actual page
+            alert('Redirecting to details page...');
+            // window.location.href = '/course-details'; // Example
+        });
+    });*/
+
+    // Slide buttons click events
+    document.querySelectorAll('.slide-btn').forEach((btn, index) => {
+        btn.addEventListener('click', function() {
+            // Different actions for different slides
+            const actions = [
+                '/register',
+                '/courses',
+                '/community'
+            ];
+            // window.location.href = actions[index]; // Example
+            alert(`Redirecting to: ${actions[index]}`);
+        });
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
