@@ -118,5 +118,42 @@ public class AuthController {
         return "redirect:/forgotPassword";
     }
 
+    // ---------------- RESET PASSWORD ----------------
+    @GetMapping("/resetPassword")
+    public String showResetForm(@RequestParam("token") String token, Model model) {
+        model.addAttribute("token", token);
+        return "auth/resetPassword";
+    }
+
+    @PostMapping("/resetPassword")
+    public String processReset(@RequestParam("token") String tokenValue,
+                               @RequestParam("password") String password,
+                               @RequestParam("confirmedPassword") String confirmedPassword,
+                               RedirectAttributes redirectAttributes,
+                               Model model) {
+        try {
+            if (!password.equals(confirmedPassword)) {
+                throw new IllegalArgumentException("Passwords do not match!");
+            }
+            Token token = tokenService.checkValidToken(tokenValue);
+            token.setConfirmed_at(LocalDateTime.now());
+            tokenService.save(token);
+
+            User user = token.getUser();
+            userService.updatePassword(user, password);
+
+            tokenService.delete(token);
+            userService.save(user);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "Password updated successfully. Please login with your new password.");
+            return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("token", tokenValue);
+            return "auth/resetPassword";
+        }
+    }
+
 
 }
