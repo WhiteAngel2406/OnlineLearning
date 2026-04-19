@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Question Bank - ' + ${quiz.title}">Question Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --danger-color: #dc2626;
+            --success-color: #16a34a;
+            --border-color: #e5e7eb;
+            --background-color: #f3f4f6;
+            --text-color: #111827;
+            --text-secondary-color: #4b5563;
+            --card-background: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .left-panel, .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+
+        .quiz-info-card h3 {
+            margin: 0 0 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .quiz-info-card p {
+            margin: 0.5rem 0;
+            color: var(--text-secondary-color);
+        }
+
+        .quiz-info-card p strong {
+            color: var(--text-color);
+        }
+
+        .action-links a {
+            display: block;
+            padding: 0.75rem 1rem;
+            background-color: var(--background-color);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .action-links a:hover {
+            background-color: #e0e7ff;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-bar input, .filter-bar select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .question-header {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            word-break: break-word;
+        }
+
+        /* === CSS MỚI CHO MEDIA === */
+        .question-media-container {
+            margin-bottom: 1.5rem;
+        }
+        .question-media-image, .question-media-video {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        .question-media-audio {
+            width: 100%;
+        }
+        /* ======================== */
+
+
+        .question-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.8; }
+        .btn-edit { background-color: #3b82f6; color: white; }
+        .btn-delete { background-color: #ef4444; color: white; }
+
+        .answer-list { list-style-type: none; padding: 0; margin: 0; }
+        .answer-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
+        }
+        .answer-option.correct {
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            color: #15803d;
+        }
+        .answer-option.incorrect {
+            background-color: #f3f4f6;
+            color: var(--text-secondary-color);
+        }
+
+        .short-answer-display {
+            background-color: #e0e7ff;
+            border: 1px solid #a5b4fc;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <aside class="left-panel">
+        <div class="card quiz-info-card">
+            <h3>Thông tin Quiz</h3>
+            <p><strong>Tên Quiz:</strong> <span th:text="${quiz.title}">Quiz Name</span></p>
+            <p><strong>Tỉ lệ đậu:</strong> <span th:text="${quiz.passRate} + '%'">80%</span></p>
+            <p><strong>Thời gian:</strong> <span th:text="${quiz.timeLimitInMinutes} + ' phút'">30 phút</span></p>
+            <p><strong>Số câu hỏi:</strong> <span th:text="${quiz.numberOfQuestions}">15</span></p>
+            <hr style="border: 1px solid var(--border-color); margin: 1.5rem 0;">
+            <p style="font-size: 1.25rem;"><strong>Tổng số câu hỏi:</strong> <span th:text="${questions.size()}">0</span></p>
+        </div>
+
+        <div class="card action-links">
+            <a th:href="@{/courses/{courseId}/quizzes/{quizId}/questions/multiple-choice/create(courseId=${courseId},quizId=${quiz.id})}">+ Thêm câu hỏi trắc nghiệm</a>
+            <a th:href="@{/courses/{courseId}/quizzes/{quizId}/questions/short-answer/create(courseId=${courseId},quizId=${quiz.id})}">+ Thêm câu hỏi trả lời ngắn</a>
+            <a th:href="@{/courses/{courseId}(courseId=${courseId})}">Trở về</a>
+        </div>
+    </aside>
+
+    <main class="right-panel">
+        <div class="card filter-bar">
+            <form th:action="@{/courses/{courseId}/quizzes/{quizId}/questions(courseId=${courseId}, quizId=${quizId})}"
+                  method="get">
+                <label for="filter-type-input">Loại câu hỏi</label>
+                <select name="type" id="filter-type-input" onchange="this.form.submit()">
+                    <option value="">-- All --</option>
+                    <option value="MULTIPLE_CHOICE"
+                            th:selected="${type == 'MULTIPLE_CHOICE'}">Multiple Choice</option>
+                    <option value="SHORT_ANSWER"
+                            th:selected="${type == 'SHORT_ANSWER'}">Short Answer</option>
+                </select>
+            </form>
+
+            <input type="text" id="search-content-input" placeholder="Tìm kiếm theo nội dung câu hỏi...">
+        </div>
+
+        <div class="card question-list">
+            <div th:each="question, stat : ${questions}" class="question-card" th:data-question-type="${question.questionType.name()}">
+
+                <div class="question-header" th:text="'Câu ' + ${stat.count} + ': ' + ${question.content}"></div>
+
+                <div th:if="${question.mediaUrl != null && !question.mediaUrl.isEmpty()}" class="question-media-container">
+                    <div th:switch="${question.mediaType.name()}">
+                        <div th:case="'IMAGE'">
+                            <img th:src="@{'/uploads/' + ${question.mediaUrl}}" alt="Question media" class="question-media-image"/>
+                        </div>
+                        <div th:case="'AUDIO'">
+                            <audio controls class="question-media-audio">
+                                <source th:src="@{'/uploads/' + ${question.mediaUrl}}">
+                                Trình duyệt không hỗ trợ file âm thanh này.
+                            </audio>
+                        </div>
+                        <div th:case="'VIDEO'">
+                            <video controls class="question-media-video">
+                                <source th:src="@{'/uploads/' + ${question.mediaUrl}}">
+                                Trình duyệt không hỗ trợ file video này.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <div th:switch="${question.questionType.name()}">
+                    <div th:case="'MULTIPLE_CHOICE'">
+                        <ul class="answer-list">
+                            <li th:each="option : ${question.answerOptions}" th:classappend="${option.correct} ? 'correct' : 'incorrect'" class="answer-option">
+                                <span th:if="${option.correct}">✔️</span>
+                                <span th:unless="${option.correct}">❌</span>
+                                <span th:text="${option.content}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div th:case="'SHORT_ANSWER'">
+                        <div class="short-answer-display">
+                            <strong>Đáp án đúng: </strong>
+                            <span th:text="${question.shortAnswerOption.solutionText}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-actions">
+                    <a th:href="@{/courses/{courseId}/quizzes/{quizId}/questions/{questionId}/{questionType}/update(courseId=${courseId}, quizId=${quiz.id}, questionId=${question.id}, questionType=${question.questionType.name() == 'MULTIPLE_CHOICE' ? 'multiple-choice' : 'short-answer'})}" class="btn btn-edit">Chỉnh sửa</a>
+                    <form th:action="@{/courses/{courseId}/quizzes/{quizId}/questions/{questionId}/delete(courseId=${courseId}, quizId=${quiz.id}, questionId=${question.id})}" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa câu hỏi này không?');">
+                        <button type="submit" class="btn btn-delete">Xóa</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(quiz.questions)}" id="no-questions-message">
+                <p>Chưa có câu hỏi nào trong quiz này. Hãy thêm câu hỏi mới!</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeInput = document.getElementById('filter-type-input');
+        const contentInput = document.getElementById('search-content-input');
+        const questionCards = document.querySelectorAll('.question-card');
+
+        function applyFilters() {
+            const typeFilter = typeInput.value.toLowerCase();
+            const contentFilter = contentInput.value.toLowerCase();
+
+            questionCards.forEach(card => {
+                const questionType = card.dataset.questionType.toLowerCase();
+                const questionContent = card.querySelector('.question-header').textContent.toLowerCase();
+
+                const typeMatch = questionType.includes(typeFilter);
+                const contentMatch = questionContent.includes(contentFilter);
+
+                if (typeMatch && contentMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        typeInput.addEventListener('input', applyFilters);
+        contentInput.addEventListener('input', applyFilters);
+    });
+</script>
+
+</body>
+</html>
