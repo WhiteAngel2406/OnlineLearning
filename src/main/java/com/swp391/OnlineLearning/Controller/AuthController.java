@@ -95,4 +95,28 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    // ---------------- FORGOT PASSWORD ----------------
+    @GetMapping("/forgotPassword")
+    public String showForgotPasswordForm() {
+        return "auth/forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String processForgotPasswordForm(@RequestParam("email") String email,
+                                            RedirectAttributes redirectAttributes) {
+        try{
+            User user = userService.findByEmailAndEnabledTrue(email).orElseThrow();
+            Token token = tokenService.create(user);
+            emailService.sendTokenEmail(user.getEmail(), token.getToken(), EmailService.EmailType.FORGOT_PASSWORD);
+            redirectAttributes.addFlashAttribute("message",
+                    "Please check your email for resetting your password!");
+
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("error",
+                    "Email is not registered or not activated!");
+        }
+        return "redirect:/forgotPassword";
+    }
+
+
 }
