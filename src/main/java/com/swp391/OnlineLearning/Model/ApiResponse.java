@@ -1,9 +1,13 @@
 package com.swp391.OnlineLearning.Model;
 
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class ApiResponse<T> {
     private String status;
     private String message;
@@ -19,4 +23,4 @@ public class ApiResponse<T> {
         this.timestamp = LocalDateTime.now();
     }
 
-    }
+}

@@ -30,7 +30,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     List<Enrollment> findByUserId(long userId);
 
-    @Query("SELECT NEW com.swp391.OnlineEnglishLearningSystem.model.dto.EnrollmentInfoDTO( " +
+    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO( " +
             "    e.id, " +
             "    c.name, " +
             "    c.thumbnail, " +
@@ -64,4 +64,3 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     """)
     Enrollment findByUserIdAndCourseId(@Param("userId") Long userId, @Param("courseId") Long courseId);
 }
-

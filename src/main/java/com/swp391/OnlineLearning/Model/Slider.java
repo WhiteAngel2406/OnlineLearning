@@ -2,7 +2,13 @@ package com.swp391.OnlineLearning.Model;
 
 import com.swp391.OnlineLearning.Model.enums.SliderStatus;
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "sliders")
 public class Slider extends BaseEntity {
@@ -11,39 +17,42 @@ public class Slider extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 200)
+    // Quan hệ N-1: Mỗi Slider thuộc về 1 User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)  // liên kết với khóa ngoại users.id
+    private User user;
+
+    @Column(nullable = false, columnDefinition = "NVARCHAR(100)")
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
-    @Column(name = "link_url", length = 500)
-    private String linkUrl;
+    @Column(name = "order_number", nullable = false)
+    private Integer orderNumber = 1;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private SliderStatus status = SliderStatus.PENDING;
+    @Column(nullable = false, columnDefinition = "VARCHAR(10)")
+    private String status; //  ("ACTIVE", "INACTIVE")
 
-    @Column(name = "order_number")
-    private Integer orderNumber;
-
-    @Column(name = "image_url", nullable = false, length = 500)
+    @Column(name = "image_url")
     private String imageUrl;
 
-    public Slider() {}
+    @Column(name = "link_url")
+    private String linkUrl;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getLinkUrl() { return linkUrl; }
-    public void setLinkUrl(String linkUrl) { this.linkUrl = linkUrl; }
-    public SliderStatus getStatus() { return status; }
-    public void setStatus(SliderStatus status) { this.status = status; }
-    public Integer getOrderNumber() { return orderNumber; }
-    public void setOrderNumber(Integer orderNumber) { this.orderNumber = orderNumber; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Column(name = "view_count")
+    private Long viewCount = 0L;
+
+    // --- Optional: cập nhật thời gian mỗi khi thay đổi ---
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }

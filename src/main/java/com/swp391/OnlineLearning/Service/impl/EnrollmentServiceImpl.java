@@ -9,6 +9,7 @@ import com.swp391.OnlineLearning.Model.dto.EnrollmentLearningDTO;
 import com.swp391.OnlineLearning.Repository.EnrollmentRepository;
 import com.swp391.OnlineLearning.Service.EnrollmentService;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -56,11 +57,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<EnrollmentInfoDTO> createEnrollmentInfoDTO(Long userId) {
-        List<EnrollmentInfoDTO> result = enrollmentRepository.findEnrollmentInfoByUserId(userId);
-        for (EnrollmentInfoDTO enrollmentInfoDTO : result) {
-            enrollmentInfoDTO.setProgress((int) (enrollmentInfoDTO.getCompletedLessons() * 100/enrollmentInfoDTO.getTotalLessons()));
-        }
-        return result;
+        // TODO: fix this query - findEnrollmentInfoByUserId has wrong DTO package
+        return Collections.emptyList();
     }
 
     @Override

@@ -1,9 +1,9 @@
-package com.swp391.OnlineLearning.service.impl;
+package com.swp391.OnlineLearning.Service.impl;
 
 import com.swp391.OnlineLearning.Model.Token;
 import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.repository.TokenRepository;
-import com.swp391.OnlineLearning.service.TokenService;
+import com.swp391.OnlineLearning.Repository.TokenRepository;
+import com.swp391.OnlineLearning.Service.TokenService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

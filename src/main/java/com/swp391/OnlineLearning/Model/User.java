@@ -72,6 +72,9 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "author")
     private List<Course> courses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "author")
+    private List<Blog> blogs = new ArrayList<>();
+
     public User(String email,
                 String password,
                 String fullName,
@@ -95,7 +98,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
         return List.of(authority);
     }
 

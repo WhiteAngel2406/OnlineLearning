@@ -1,0 +1,16 @@
+package com.swp391.OnlineLearning.Service;
+
+import com.swp391.OnlineLearning.Model.Wishlist;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface WishlistService {
+    Wishlist createNew(Long userId, Long courseId);
+
+    List<Wishlist> findByUserId(Long userId);
+
+    void delete(Long wishlistId);
+
+    Optional<Wishlist> findByUserIdAndCourseId(Long userId, Long courseId);
+}
