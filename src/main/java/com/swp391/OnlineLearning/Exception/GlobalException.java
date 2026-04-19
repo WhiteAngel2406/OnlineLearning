@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Exception;
 
-import com.swp391.OnlineLearning.Model.ApiResponse;
+import com.swp391.OnlineLearning.model.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -22,7 +22,7 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
-    //xử lí lỗi trả về do @Valid
+    //xá»­ lÃ­ lá»—i tráº£ vá» do @Valid
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         List<String> errorList = ex.getBindingResult().getFieldErrors().stream()
@@ -37,7 +37,7 @@ public class GlobalException {
     public ResponseEntity<ApiResponse<Object>> handleIllegalArgument(IllegalArgumentException ex) {
         ApiResponse<Object> response = new ApiResponse<>(
                 HttpStatus.BAD_REQUEST,
-                ex.getMessage(), // chỉ lấy message, không có field errors
+                ex.getMessage(), // chá»‰ láº¥y message, khÃ´ng cÃ³ field errors
                 null,
                 "BAD_REQUEST"
         );
@@ -45,7 +45,7 @@ public class GlobalException {
     }
 
 
-    //xử lí lỗi chung
+    //xá»­ lÃ­ lá»—i chung
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handleAllExceptions(Exception ex) {
         ApiResponse<?> body = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), null, null);
@@ -55,15 +55,15 @@ public class GlobalException {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ModelAndView handleAccessDenied(AccessDeniedException ex) {
-        // Tạo một đối tượng ModelAndView
+        // Táº¡o má»™t Ä‘á»‘i tÆ°á»£ng ModelAndView
         ModelAndView modelAndView = new ModelAndView();
 
-        // Đặt tên của view (file HTML) mà bạn muốn hiển thị
-        // Tương ứng với file: templates/error/403.html
+        // Äáº·t tÃªn cá»§a view (file HTML) mÃ  báº¡n muá»‘n hiá»ƒn thá»‹
+        // TÆ°Æ¡ng á»©ng vá»›i file: templates/error/403.html
         modelAndView.setViewName("error/403");
 
-        // (Tùy chọn) Thêm thông tin lỗi vào Model để hiển thị trên trang
-        modelAndView.addObject("errorMessage", "Rất tiếc, bạn không có quyền truy cập trang này.");
+        // (TÃ¹y chá»n) ThÃªm thÃ´ng tin lá»—i vÃ o Model Ä‘á»ƒ hiá»ƒn thá»‹ trÃªn trang
+        modelAndView.addObject("errorMessage", "Ráº¥t tiáº¿c, báº¡n khÃ´ng cÃ³ quyá»n truy cáº­p trang nÃ y.");
 
         return modelAndView;
     }

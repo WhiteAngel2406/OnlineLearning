@@ -1,8 +1,8 @@
 package com.swp391.OnlineLearning.service.Specification;
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.User.Gender;
-import com.swp391.OnlineLearning.Model.User_;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.User.Gender;
+import com.swp391.OnlineLearning.model.User_;
 import org.springframework.data.jpa.domain.Specification;
 
 public class UserSpecs {
@@ -54,7 +54,7 @@ public class UserSpecs {
         };
     }
 
-    // Method để kết hợp tất cả các specifications
+    // Method Ä‘á»ƒ káº¿t há»£p táº¥t cáº£ cÃ¡c specifications
     public static Specification<User> withFilters(String keyword, String gender, String role, Boolean enabled) {
         return Specification.allOf(searchByContainingEmailOrFullNameOrMobileKeyword(keyword))
                 .and(searchByGender(gender))

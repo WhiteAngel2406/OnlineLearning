@@ -1,8 +1,8 @@
 package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Model.dto.UserDTO;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
+import com.swp391.OnlineLearning.model.dto.UserDTO;
 import com.swp391.OnlineLearning.repository.RoleRepository;
 import com.swp391.OnlineLearning.repository.UserRepository;
 import com.swp391.OnlineLearning.service.Specification.UserSpecs;
@@ -60,7 +60,7 @@ public class UserService {
 
     public void createUser(User user, Long roleId) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("Email đã tồn tại!");
+            throw new IllegalArgumentException("Email Ä‘Ã£ tá»“n táº¡i!");
         }
         user.setRole(roleRepository.findById(roleId)
                 .orElseThrow(() -> new IllegalArgumentException("Role not found")));
@@ -121,7 +121,7 @@ public class UserService {
         try {
             userRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalStateException("Không thể xóa người dùng này vì đang có dữ liệu liên quan (khóa học hoặc đơn hàng).");
+            throw new IllegalStateException("KhÃ´ng thá»ƒ xÃ³a ngÆ°á»i dÃ¹ng nÃ y vÃ¬ Ä‘ang cÃ³ dá»¯ liá»‡u liÃªn quan (khÃ³a há»c hoáº·c Ä‘Æ¡n hÃ ng).");
         }
     }
 

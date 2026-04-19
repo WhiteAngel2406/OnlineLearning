@@ -1,7 +1,7 @@
 package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,17 +1,17 @@
 package com.swp391.OnlineLearning.Util;
 
-import com.swp391.OnlineLearning.Model.Question;
-import com.swp391.OnlineLearning.Model.dto.CourseDTO;
-import com.swp391.OnlineLearning.Model.dto.MultipleChoiceQuestionFormDTO;
-import com.swp391.OnlineLearning.Model.dto.ShortAnswerQuestionFormDTO;
+import com.swp391.OnlineLearning.model.Question;
+import com.swp391.OnlineLearning.model.dto.CourseDTO;
+import com.swp391.OnlineLearning.model.dto.MultipleChoiceQuestionFormDTO;
+import com.swp391.OnlineLearning.model.dto.ShortAnswerQuestionFormDTO;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
-// Logic cho annotation @ValidMediaType, áp dụng cho class DTO
-public class ValidMediaTypeValidator implements ConstraintValidator<ValidMediaType, Object> { // Dùng Object để có thể tái sử dụng cho các DTO khác
+// Logic cho annotation @ValidMediaType, Ã¡p dá»¥ng cho class DTO
+public class ValidMediaTypeValidator implements ConstraintValidator<ValidMediaType, Object> { // DÃ¹ng Object Ä‘á»ƒ cÃ³ thá»ƒ tÃ¡i sá»­ dá»¥ng cho cÃ¡c DTO khÃ¡c
 
     private static final Set<String> ALLOWED_IMAGE_EXTENSIONS = Set.of("jpg", "jpeg", "png", "gif", "bmp", "webp");
     private static final Set<String> ALLOWED_VIDEO_EXTENSIONS = Set.of("mp4", "avi", "mkv", "mov", "webm");
@@ -19,11 +19,11 @@ public class ValidMediaTypeValidator implements ConstraintValidator<ValidMediaTy
 
     @Override
     public boolean isValid(Object dto, ConstraintValidatorContext context) {
-        // Lấy các giá trị thuộc tính từ DTO bằng reflection hoặc ép kiểu
+        // Láº¥y cÃ¡c giÃ¡ trá»‹ thuá»™c tÃ­nh tá»« DTO báº±ng reflection hoáº·c Ã©p kiá»ƒu
         Question.MediaType mediaType = null;
         MultipartFile mediaFile = null;
 
-        // Giả sử DTO là MultipleChoiceQuestionFormDTO
+        // Giáº£ sá»­ DTO lÃ  MultipleChoiceQuestionFormDTO
         if (dto instanceof MultipleChoiceQuestionFormDTO) {
             MultipleChoiceQuestionFormDTO questionDTO = (MultipleChoiceQuestionFormDTO) dto;
             mediaType = questionDTO.getMediaType();
@@ -38,21 +38,21 @@ public class ValidMediaTypeValidator implements ConstraintValidator<ValidMediaTy
             mediaFile = courseDTO.getThumbnailFile();
         }
 
-        // 1. Nếu người dùng chọn NONE, hoặc không upload file, thì luôn hợp lệ
+        // 1. Náº¿u ngÆ°á»i dÃ¹ng chá»n NONE, hoáº·c khÃ´ng upload file, thÃ¬ luÃ´n há»£p lá»‡
         if (mediaType == Question.MediaType.NONE) {
             return true;
         }else if (mediaFile == null || mediaFile.isEmpty()) {
             return false;
         }
 
-        // 2. Lấy phần mở rộng của file (extension)
+        // 2. Láº¥y pháº§n má»Ÿ rá»™ng cá»§a file (extension)
         String originalFilename = mediaFile.getOriginalFilename();
         if (originalFilename == null || !originalFilename.contains(".")) {
-            return false; // Không có tên file hoặc không có extension -> không hợp lệ
+            return false; // KhÃ´ng cÃ³ tÃªn file hoáº·c khÃ´ng cÃ³ extension -> khÃ´ng há»£p lá»‡
         }
         String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
 
-        // 3. So sánh extension với MediaType đã chọn
+        // 3. So sÃ¡nh extension vá»›i MediaType Ä‘Ã£ chá»n
         switch (mediaType) {
             case IMAGE:
                 return ALLOWED_IMAGE_EXTENSIONS.contains(extension);
@@ -61,7 +61,7 @@ public class ValidMediaTypeValidator implements ConstraintValidator<ValidMediaTy
             case AUDIO:
                 return ALLOWED_AUDIO_EXTENSIONS.contains(extension);
             default:
-                return false; // Trường hợp không xác định
+                return false; // TrÆ°á»ng há»£p khÃ´ng xÃ¡c Ä‘á»‹nh
         }
     }
 }

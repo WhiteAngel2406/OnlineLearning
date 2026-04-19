@@ -1,15 +1,15 @@
 package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.Order;
-import com.swp391.OnlineLearning.Model.Slider;
-import com.swp391.OnlineLearning.Model.dto.OrderFilter;
-import com.swp391.OnlineLearning.Model.Course.CourseStatus;
-import com.swp391.OnlineLearning.Model.enums.OrderStatus;
-import com.swp391.OnlineLearning.Model.enums.SliderStatus;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
+import com.swp391.OnlineLearning.model.CourseCategory;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.Order;
+import com.swp391.OnlineLearning.model.Slider;
+import com.swp391.OnlineLearning.model.dto.OrderFilter;
+import com.swp391.OnlineLearning.model.Course.CourseStatus;
+import com.swp391.OnlineLearning.model.enums.OrderStatus;
+import com.swp391.OnlineLearning.model.enums.SliderStatus;
 import com.swp391.OnlineLearning.service.UserService;
 import com.swp391.OnlineLearning.service.CourseCategoryService;
 import com.swp391.OnlineLearning.service.CourseService;
@@ -111,7 +111,7 @@ public class AdminController {
     public String createUser(@ModelAttribute User user, @RequestParam Long roleId, RedirectAttributes ra) {
         try {
             userService.createUser(user, roleId);
-            ra.addFlashAttribute("success", "Tạo người dùng thành công!");
+            ra.addFlashAttribute("success", "Táº¡o ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -134,7 +134,7 @@ public class AdminController {
     public String updateUser(@PathVariable Long id, @ModelAttribute User user, @RequestParam Long roleId, RedirectAttributes ra) {
         try {
             userService.updateUser(id, user, roleId);
-            ra.addFlashAttribute("success", "Cập nhật người dùng thành công!");
+            ra.addFlashAttribute("success", "Cáº­p nháº­t ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -144,14 +144,14 @@ public class AdminController {
     @PostMapping("/admin/users/toggle/{id}")
     public String toggleUserStatus(@PathVariable Long id, RedirectAttributes ra) {
         userService.toggleUserStatus(id);
-        ra.addFlashAttribute("success", "Thay đổi trạng thái thành công!");
+        ra.addFlashAttribute("success", "Thay Ä‘á»•i tráº¡ng thÃ¡i thÃ nh cÃ´ng!");
         return "redirect:/admin/users";
     }
 
     @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable Long id, RedirectAttributes ra) {
         userService.deleteUser(id);
-        ra.addFlashAttribute("success", "Xóa người dùng thành công!");
+        ra.addFlashAttribute("success", "XÃ³a ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
         return "redirect:/admin/users";
     }
 
@@ -182,7 +182,7 @@ public class AdminController {
     public String createCategory(@ModelAttribute CourseCategory category, RedirectAttributes ra) {
         try {
             categoryService.createCategory(category);
-            ra.addFlashAttribute("success", "Tạo danh mục thành công!");
+            ra.addFlashAttribute("success", "Táº¡o danh má»¥c thÃ nh cÃ´ng!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -202,7 +202,7 @@ public class AdminController {
     public String updateCategory(@PathVariable Long id, @ModelAttribute CourseCategory category, RedirectAttributes ra) {
         try {
             categoryService.updateCategory(id, category);
-            ra.addFlashAttribute("success", "Cập nhật danh mục thành công!");
+            ra.addFlashAttribute("success", "Cáº­p nháº­t danh má»¥c thÃ nh cÃ´ng!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -212,7 +212,7 @@ public class AdminController {
     @GetMapping("/admin/course_categories/delete/{id}")
     public String deleteCategory(@PathVariable Long id, RedirectAttributes ra) {
         categoryService.deleteCategory(id);
-        ra.addFlashAttribute("success", "Xóa danh mục thành công!");
+        ra.addFlashAttribute("success", "XÃ³a danh má»¥c thÃ nh cÃ´ng!");
         return "redirect:/admin/course_categories";
     }
 
@@ -241,21 +241,21 @@ public class AdminController {
     @PostMapping("/courses/admin/approve/{id}")
     public String approveCourse(@PathVariable Long id, RedirectAttributes ra) {
         courseService.approveCourse(id);
-        ra.addFlashAttribute("success", "Duyệt khóa học thành công!");
+        ra.addFlashAttribute("success", "Duyá»‡t khÃ³a há»c thÃ nh cÃ´ng!");
         return "redirect:/courses/admin";
     }
 
     @PostMapping("/courses/admin/reject/{id}")
     public String rejectCourse(@PathVariable Long id, RedirectAttributes ra) {
         courseService.rejectCourse(id);
-        ra.addFlashAttribute("success", "Từ chối khóa học thành công!");
+        ra.addFlashAttribute("success", "Tá»« chá»‘i khÃ³a há»c thÃ nh cÃ´ng!");
         return "redirect:/courses/admin";
     }
 
     @PostMapping("/courses/admin/featured/{id}")
     public String toggleFeatured(@PathVariable Long id, RedirectAttributes ra) {
         courseService.toggleFeatured(id);
-        ra.addFlashAttribute("success", "Thay đổi nổi bật thành công!");
+        ra.addFlashAttribute("success", "Thay Ä‘á»•i ná»•i báº­t thÃ nh cÃ´ng!");
         return "redirect:/courses/admin";
     }
 
@@ -286,7 +286,7 @@ public class AdminController {
     @PostMapping("/admin/orders/{id}/status")
     public String updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus status, RedirectAttributes ra) {
         orderService.updateOrderStatus(id, status);
-        ra.addFlashAttribute("success", "Cập nhật trạng thái thành công!");
+        ra.addFlashAttribute("success", "Cáº­p nháº­t tráº¡ng thÃ¡i thÃ nh cÃ´ng!");
         return "redirect:/admin/orders";
     }
 
@@ -322,7 +322,7 @@ public class AdminController {
                 slider.setImageUrl(imageUrl);
             }
             sliderService.createSlider(slider);
-            ra.addFlashAttribute("success", "Tạo slider thành công!");
+            ra.addFlashAttribute("success", "Táº¡o slider thÃ nh cÃ´ng!");
             return "redirect:/admin/sliders";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -349,7 +349,7 @@ public class AdminController {
                 slider.setImageUrl(imageUrl);
             }
             sliderService.updateSlider(id, slider);
-            ra.addFlashAttribute("success", "Cập nhật slider thành công!");
+            ra.addFlashAttribute("success", "Cáº­p nháº­t slider thÃ nh cÃ´ng!");
             return "redirect:/admin/sliders";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -361,21 +361,21 @@ public class AdminController {
     @GetMapping("/admin/sliders/delete/{id}")
     public String deleteSlider(@PathVariable Long id, RedirectAttributes ra) {
         sliderService.deleteSlider(id);
-        ra.addFlashAttribute("success", "Xóa slider thành công!");
+        ra.addFlashAttribute("success", "XÃ³a slider thÃ nh cÃ´ng!");
         return "redirect:/admin/sliders";
     }
 
     @PostMapping("/admin/sliders/approve/{id}")
     public String approveSlider(@PathVariable Long id, RedirectAttributes ra) {
         sliderService.approveSlider(id);
-        ra.addFlashAttribute("success", "Duyệt slider thành công!");
+        ra.addFlashAttribute("success", "Duyá»‡t slider thÃ nh cÃ´ng!");
         return "redirect:/admin/sliders";
     }
 
     @PostMapping("/admin/sliders/reject/{id}")
     public String rejectSlider(@PathVariable Long id, RedirectAttributes ra) {
         sliderService.rejectSlider(id);
-        ra.addFlashAttribute("success", "Từ chối slider thành công!");
+        ra.addFlashAttribute("success", "Tá»« chá»‘i slider thÃ nh cÃ´ng!");
         return "redirect:/admin/sliders";
     }
 }

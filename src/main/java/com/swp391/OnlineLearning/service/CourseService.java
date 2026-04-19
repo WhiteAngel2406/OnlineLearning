@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.model.Course;
 import com.swp391.OnlineLearning.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

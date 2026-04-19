@@ -1,8 +1,8 @@
 package com.swp391.OnlineLearning;
 
 import com.swp391.OnlineLearning.Config.StorageProperties;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
 import com.swp391.OnlineLearning.repository.RoleRepository;
 import com.swp391.OnlineLearning.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -82,7 +82,7 @@ public class DemoApplication {
 			user.setPassword(passwordEncoder.encode("123"));
 
 			userRepository.saveAll(List.of(admin, expert, marketing, user));
-			System.out.println(">>> Đã tạo dữ liệu người dùng mẫu!");
+			System.out.println(">>> ÄÃ£ táº¡o dá»¯ liá»‡u ngÆ°á»i dÃ¹ng máº«u!");
 		};
 	}
 }

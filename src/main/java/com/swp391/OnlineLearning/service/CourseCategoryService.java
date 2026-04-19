@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.CourseCategory;
+import com.swp391.OnlineLearning.model.CourseCategory;
 import com.swp391.OnlineLearning.repository.CourseCategoryRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -39,7 +39,7 @@ public class CourseCategoryService {
 
     public CourseCategory createCategory(CourseCategory category) {
         if (repository.existsByName(category.getName())) {
-            throw new IllegalArgumentException("Tên danh mục đã tồn tại!");
+            throw new IllegalArgumentException("TÃªn danh má»¥c Ä‘Ã£ tá»“n táº¡i!");
         }
         return repository.save(category);
     }
@@ -59,7 +59,7 @@ public class CourseCategoryService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalStateException("Không thể xóa danh mục này vì đang có khóa học thuộc danh mục.");
+            throw new IllegalStateException("KhÃ´ng thá»ƒ xÃ³a danh má»¥c nÃ y vÃ¬ Ä‘ang cÃ³ khÃ³a há»c thuá»™c danh má»¥c.");
         }
     }
 

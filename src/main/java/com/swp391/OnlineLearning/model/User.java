@@ -1,9 +1,11 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.swp391.OnlineLearning.Util.ValidEmail;
+import com.swp391.OnlineLearning.util.ValidEmail;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,11 +16,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User extends BaseEntity implements UserDetails {
 
     public enum Gender {
@@ -72,6 +73,12 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "author")
     private List<Course> courses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "author")
+    private List<Blog> blogs = new ArrayList<>();
+
+    public User() {
+    }
+
     public User(String email,
                 String password,
                 String fullName,
@@ -92,11 +99,28 @@ public class User extends BaseEntity implements UserDetails {
         this.dob = dob;
     }
 
+    public User(Long id) {
+        this.id = id;
+    }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName());
-        return List.of(authority);
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -104,12 +128,82 @@ public class User extends BaseEntity implements UserDetails {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
+        return List.of(authority);
     }
 
     @Override

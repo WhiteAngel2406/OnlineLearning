@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.model.Course;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

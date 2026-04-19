@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Util;
 
-import com.swp391.OnlineLearning.Model.AnswerOption;
+import com.swp391.OnlineLearning.model.AnswerOption;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -10,14 +10,14 @@ public class AtLeastOneCorrectAnswerValidator implements ConstraintValidator<AtL
 
     @Override
     public boolean isValid(List<AnswerOption> answerOptions, ConstraintValidatorContext context) {
-        // Nếu danh sách là null hoặc rỗng, chắc chắn không có đáp án đúng nào -> không hợp lệ
+        // Náº¿u danh sÃ¡ch lÃ  null hoáº·c rá»—ng, cháº¯c cháº¯n khÃ´ng cÃ³ Ä‘Ã¡p Ã¡n Ä‘Ãºng nÃ o -> khÃ´ng há»£p lá»‡
         if (answerOptions == null || answerOptions.isEmpty()) {
             return false;
         }
 
-        // Sử dụng Stream API để kiểm tra xem có bất kỳ phần tử nào trong list
-        // có thuộc tính 'correct' là true hay không.
-        // Ngay khi tìm thấy một phần tử thỏa mãn, nó sẽ trả về true ngay lập tức.
+        // Sá»­ dá»¥ng Stream API Ä‘á»ƒ kiá»ƒm tra xem cÃ³ báº¥t ká»³ pháº§n tá»­ nÃ o trong list
+        // cÃ³ thuá»™c tÃ­nh 'correct' lÃ  true hay khÃ´ng.
+        // Ngay khi tÃ¬m tháº¥y má»™t pháº§n tá»­ thá»a mÃ£n, nÃ³ sáº½ tráº£ vá» true ngay láº­p tá»©c.
         return answerOptions.stream().anyMatch(AnswerOption::getCorrect);
     }
 }

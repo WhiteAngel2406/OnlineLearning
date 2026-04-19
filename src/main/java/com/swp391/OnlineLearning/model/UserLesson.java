@@ -1,19 +1,19 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "user_lesson_progress", uniqueConstraints = {
         // Ensure only one progress record per user, per lesson, per enrollment
         @UniqueConstraint(columnNames = {"user_id", "lesson_id", "enrollment_id"})
 })
+@Getter
+@Setter
 public class UserLesson {
 
     @Id
@@ -41,6 +41,10 @@ public class UserLesson {
     @Column(name = "completion_date")
     private LocalDateTime completionDate; // Nullable, set when isCompleted becomes true
 
+    // Default constructor
+    public UserLesson() {
+    }
+
     // Convenience constructor
     public UserLesson(User user, Lesson lesson, Enrollment enrollment) {
         this.user = user;
@@ -49,4 +53,51 @@ public class UserLesson {
         this.isCompleted = false; // Initial state
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public Enrollment getEnrollment() {
+        return enrollment;
+    }
+
+    public void setEnrollment(Enrollment enrollment) {
+        this.enrollment = enrollment;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public LocalDateTime getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(LocalDateTime completionDate) {
+        this.completionDate = completionDate;
+    }
 }

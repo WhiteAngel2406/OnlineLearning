@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Util;
 
-import com.swp391.OnlineLearning.Model.dto.UserDTO;
+import com.swp391.OnlineLearning.model.dto.UserDTO;
 import jakarta.validation.ConstraintValidator;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
