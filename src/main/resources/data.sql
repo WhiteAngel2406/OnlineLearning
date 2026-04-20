@@ -252,7 +252,7 @@ VALUES
 (33, N'Giúp thí sinh thoải mái, kiểm tra khả năng giao tiếp cơ bản', 1, N'Đúng – Part 1 là phần “warm-up”.', 11, GETDATE(), GETDATE()),
 (34, N'Kiểm tra phát âm chuyên sâu', 0, NULL, 11, GETDATE(), GETDATE()),
 
-    -- Quiz 3
+-- Quiz 3
 (35, N'Dùng ví dụ, so sánh và trải nghiệm cá nhân', 1, N'Các ví dụ giúp mở rộng nội dung.', 13, GETDATE(), GETDATE()),
 (36, N'Chỉ trả lời ngắn gọn 1 câu', 0, NULL, 13, GETDATE(), GETDATE()),
 
@@ -270,9 +270,9 @@ SET IDENTITY_INSERT answer_options OFF;
 
 SET IDENTITY_INSERT short_answer_options ON
 INSERT INTO short_answer_options (id,question_id,solution_text) values
-    (1,7,'2'),
-    (2, 8, N'free time activities'),
-    (3, 12, N'2 minutes');
+                                                                    (1,7,'2'),
+                                                                    (2, 8, N'free time activities'),
+                                                                    (3, 12, N'2 minutes');
 SET IDENTITY_INSERT short_answer_options OFF;
 
 
@@ -602,35 +602,35 @@ INSERT INTO sliders (
           1, 3, -- Jane Smith (Marketing)
           N'IELTS Speaking Masterclass 8.0+',
           N'Giảm giá 15% cho 100 lượt đăng ký đầu tiên. Chinh phục band điểm 8.0+ cùng chuyên gia John Doe.',
-          1, 'SHOW', '/uploads/sliders/6578012.jpg', 'https://www.youtube.com/results?search_query=business+flow+diagram',
+          1, 'SHOW', '/uploads/sliders/ielts_speaking.png', 'https://www.youtube.com/results?search_query=business+flow+diagram',
           GETDATE(), GETDATE(), 1520
       ),
       (
           2, 1, -- Admin Manager
           N'Luyện nghe IELTS Max Score',
           N'Khóa học mới ra mắt! Chiến thuật làm bài và luyện tập các dạng câu hỏi Listening.',
-          2, 'SHOW', '/uploads/sliders/6692555.jpg', 'https://www.youtube.com/results?search_query=business+flow+diagram',
+          2, 'SHOW', '/uploads/sliders/7420258.jpg', 'https://www.youtube.com/results?search_query=business+flow+diagram',
           GETDATE(), GETDATE(), 890
       ),
       (
           3, 3, -- Jane Smith (Marketing)
           N'Phát âm chuẩn Anh-Mỹ',
           N'Xây dựng nền tảng phát âm vững chắc với 44 âm IPA. Dành cho người mới bắt đầu.',
-          3, 'SHOW', '/uploads/sliders/6718245.jpg', 'https://www.youtube.com/results?search_query=business+flow+diagram',
+          3, 'SHOW', '/uploads/sliders/pronunciation.png', 'https://www.youtube.com/results?search_query=business+flow+diagram',
           GETDATE(), GETDATE(), 1105
       ),
       (
           4, 1, -- Admin Manager
           N'Thông báo: Nâng cấp hệ thống OELS 2.0',
           N'Hệ thống OELS sẽ được nâng cấp lên phiên bản 2.0 với nhiều tính năng hấp dẫn.',
-          4, 'SHOW', '/uploads/sliders/slider_announcement.png', 'https://www.youtube.com/results?search_query=business+flow+diagram',
+          4, 'SHOW', '/uploads/sliders/business_english.png', 'https://www.youtube.com/results?search_query=business+flow+diagram',
           GETDATE(), GETDATE(), 530
       ),
       (
           5, 3, -- Jane Smith (Marketing)
           N'Giảm giá hè 2024 (ĐÃ HẾT HẠN)',
           N'Chương trình giảm giá mùa hè đã kết thúc.',
-          5, 'HIDE', '/uploads/sliders/slider_summer_promo_old.png', '#',
+          5, 'HIDE', '/uploads/sliders/1234.jpg', '#',
           DATEADD(day, -60, GETDATE()), DATEADD(day, -30, GETDATE()), 2500
       );
 SET IDENTITY_INSERT sliders OFF;

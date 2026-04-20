@@ -1,90 +1,24 @@
 package com.swp391.OnlineLearning.Service;
 
 import com.swp391.OnlineLearning.Model.Slider;
-import com.swp391.OnlineLearning.Model.enums.SliderStatus;
-import com.swp391.OnlineLearning.repository.SliderRepository;
+import com.swp391.OnlineLearning.Model.dto.SliderDTO;
+import com.swp391.OnlineLearning.Model.dto.SliderCreateUpdateDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.PageRequest;
 
-import java.util.Optional;
+import java.util.List;
 
-@Service
-public class SliderService {
-
-    private final SliderRepository sliderRepository;
-
-    public SliderService(SliderRepository sliderRepository) {
-        this.sliderRepository = sliderRepository;
-    }
-
-    public Page<Slider> findWithFilters(String keyword, SliderStatus status, Pageable pageable) {
-        return sliderRepository.findWithFilters(keyword, status, pageable);
-    }
-
-    public Optional<Slider> findById(Long id) {
-        return sliderRepository.findById(id);
-    }
-
-    public Page<Slider> findAll(Pageable pageable) {
-        return sliderRepository.findAll(pageable);
-    }
-
-    public Page<Slider> findByStatus(SliderStatus status, Pageable pageable) {
-        return sliderRepository.findByStatus(status, pageable);
-    }
-
-    @Transactional
-    public Slider createSlider(Slider slider) {
-        return sliderRepository.save(slider);
-    }
-
-    @Transactional
-    public Slider updateSlider(Long id, Slider sliderDetails) {
-        Slider slider = sliderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Slider not found"));
-
-        slider.setTitle(sliderDetails.getTitle());
-        slider.setDescription(sliderDetails.getDescription());
-        slider.setLinkUrl(sliderDetails.getLinkUrl());
-        slider.setStatus(sliderDetails.getStatus());
-        slider.setOrderNumber(sliderDetails.getOrderNumber());
-        slider.setImageUrl(sliderDetails.getImageUrl());
-
-        return sliderRepository.save(slider);
-    }
-
-    @Transactional
-    public Slider approveSlider(Long id) {
-        Slider slider = sliderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Slider not found"));
-        slider.setStatus(SliderStatus.APPROVED);
-        return sliderRepository.save(slider);
-    }
-
-    @Transactional
-    public Slider rejectSlider(Long id) {
-        Slider slider = sliderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Slider not found"));
-        slider.setStatus(SliderStatus.REJECTED);
-        return sliderRepository.save(slider);
-    }
-
-    @Transactional
-    public void deleteSlider(Long id) {
-        Slider slider = sliderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Slider not found"));
-        slider.setStatus(SliderStatus.TAKEN_DOWN);
-        sliderRepository.save(slider);
-    }
-
-    public long countSliders() {
-        return sliderRepository.count();
-    }
-
-    public long countByStatus(SliderStatus status) {
-        return sliderRepository.findByStatus(status, PageRequest.of(0, 1)).getTotalElements();
-    }
+public interface SliderService {
+    Page<Slider> getSliders(String keyword, String status, int page, int size);
+    List<Slider> getActiveSliders();
+    Slider getSliderById(Long id);
+    Slider createSlider(SliderCreateUpdateDto dto);
+    Slider updateSlider(Long id, SliderDTO dto);
+    Slider updateSliderWithFile(Long id, SliderCreateUpdateDto dto);
+    Slider toggleStatus(Long id, String status);
+    void deleteSlider(Long id);
+    void incrementViewCount(Long id);
+    Slider save(Slider slider);
+    void approveSlider(Long id);
+    void rejectSlider(Long id);
+    void takedownSlider(Long id);
 }

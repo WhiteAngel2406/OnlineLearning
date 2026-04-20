@@ -1,381 +1,386 @@
 package com.swp391.OnlineLearning.Controller;
 
+import com.swp391.OnlineLearning.Model.CourseCategory;
+import com.swp391.OnlineLearning.Model.Order;
 import com.swp391.OnlineLearning.Model.User;
 import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.Order;
-import com.swp391.OnlineLearning.Model.Slider;
 import com.swp391.OnlineLearning.Model.dto.OrderFilter;
-import com.swp391.OnlineLearning.Model.Course.CourseStatus;
-import com.swp391.OnlineLearning.Model.enums.OrderStatus;
-import com.swp391.OnlineLearning.Model.enums.SliderStatus;
-import com.swp391.OnlineLearning.Service.UserService;
-import com.swp391.OnlineLearning.Service.CourseCategoryService;
-import com.swp391.OnlineLearning.Service.CourseService;
-import com.swp391.OnlineLearning.Service.OrderService;
-import com.swp391.OnlineLearning.Service.SliderService;
-import com.swp391.OnlineLearning.Service.UploadService;
-import com.swp391.OnlineLearning.Repository.RoleRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
+import com.swp391.OnlineLearning.Service.*;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.management.relation.Role;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
-    private final RoleRepository roleRepository;
-    private final CourseCategoryService categoryService;
-    private final CourseService courseService;
-    private final OrderService orderService;
-    private final SliderService sliderService;
     private final UploadService uploadService;
+    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final CourseCategoryService courseCategoryService;
+    //private final OrderService orderService;
 
-    public AdminController(UserService userService, RoleRepository roleRepository,
-                          CourseCategoryService categoryService, CourseService courseService,
-                          OrderService orderService, SliderService sliderService,
-                          UploadService uploadService) {
+//    public AdminController(UserService userService, UploadService uploadService, RoleService roleService, PasswordEncoder passwordEncoder, EmailService emailService, CourseCategoryService courseCategoryService, OrderService orderService) {
+//        this.userService = userService;
+//        this.uploadService = uploadService;
+//        this.roleService = roleService;
+//        this.passwordEncoder = passwordEncoder;
+//        this.emailService = emailService;
+//        this.courseCategoryService = courseCategoryService;
+//        this.orderService = orderService;
+//    }
+
+
+    public AdminController(UserService userService, UploadService uploadService, RoleService roleService, PasswordEncoder passwordEncoder, EmailService emailService, CourseCategoryService courseCategoryService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
-        this.categoryService = categoryService;
-        this.courseService = courseService;
-        this.orderService = orderService;
-        this.sliderService = sliderService;
         this.uploadService = uploadService;
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+        this.courseCategoryService = courseCategoryService;
     }
 
-    @GetMapping("/admin")
-    public String adminDashboard(Model model, Authentication authentication) {
-        if (authentication != null) {
-            String email = authentication.getName();
-            User user = userService.findByEmail(email);
-            model.addAttribute("currentUser", user);
-        }
-        Map<String, Object> stats = new HashMap<>();
-        stats.put("totalUsers", userService.count());
-        stats.put("totalCategories", categoryService.count());
-        stats.put("totalCourses", courseService.countCourses());
-        stats.put("totalOrders", orderService.count());
-        stats.put("totalRevenue", orderService.getTotalRevenue());
-        stats.put("pendingCourses", courseService.countByStatus(CourseStatus.PENDING));
-        stats.put("approvedCourses", courseService.countByStatus(CourseStatus.PUBLISHED));
-        stats.put("rejectedCourses", courseService.countByStatus(CourseStatus.DRAFT));
-        stats.put("pendingOrders", orderService.countByStatus(OrderStatus.PENDING));
-        stats.put("successOrders", orderService.countByStatus(OrderStatus.SUCCESS));
-        stats.put("failedOrders", orderService.countByStatus(OrderStatus.FAILED));
-        model.addAttribute("stats", stats);
+    //===================== DASHBOARD ========================
+    @GetMapping("")
+    public String admin(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
         return "admin/dashboard";
     }
 
-    @GetMapping("/admin/users")
-    public String getUsers(
-            @RequestParam(defaultValue = "") String keyword,
-            @RequestParam(required = false) Long roleId,
-            @RequestParam(required = false) Boolean enabled,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            Model model) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<User> users = userService.findWithFilters(keyword, roleId, enabled, pageable);
-        model.addAttribute("users", users);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("roleId", roleId);
-        model.addAttribute("enabled", enabled);
+    @GetMapping("/users")
+    public String getUsers(Model model,
+                           @RequestParam(value = "role", required = false) String role,
+                           @RequestParam(value = "gender", required = false) String gender,
+                           @RequestParam(value = "enabled", required = false) Boolean enabled,
+                           @RequestParam(value = "search", required = false) String search,
+                           @RequestParam(value = "page", defaultValue = "0") int page,
+                           @RequestParam(value = "size", defaultValue = "10") int size,
+                           @RequestParam(value = "sort", defaultValue = "id") String sort,
+                           @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
+        // Tạo Sort object
+        Sort sortObj = createSort(sort, direction);
+        Pageable pageable = PageRequest.of(page, size, sortObj);
+
+        Page<User> userPage = this.userService.getUsersWithSpecs(pageable, gender, role, enabled, search);
+
+        model.addAttribute("userPage", userPage);
+        model.addAttribute("currentSort", sort);
+        model.addAttribute("currentDirection", direction);
+
+        int totalPages = userPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().toList();
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("genders", User.Gender.values());
         return "admin/userList";
     }
 
-    @GetMapping("/admin/users/create")
+    private Sort createSort(String sort, String direction) {
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc") ?
+                Sort.Direction.DESC : Sort.Direction.ASC;
+
+        switch (sort) {
+            case "fullName":
+                return Sort.by(sortDirection, "fullName");
+            case "gender":
+                return Sort.by(sortDirection, "gender");
+            case "email":
+                return Sort.by(sortDirection, "email");
+            case "mobile":
+                return Sort.by(sortDirection, "mobile");
+            case "role":
+                return Sort.by(sortDirection, "role.name");
+            default: // id
+                return Sort.by(sortDirection, "id");
+        }
+    }
+
+    //===================== CREATE USER ========================
+    @GetMapping("/users/create")
     public String createUserForm(Model model) {
         model.addAttribute("user", new User());
-        List<UserRole> roles = roleRepository.findAll();
-        model.addAttribute("roles", roles);
         model.addAttribute("genders", User.Gender.values());
+        List<UserRole> roles = roleService.findAll();
+        roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+        model.addAttribute("roles", roles);
         return "admin/createUser";
     }
 
-    @PostMapping("/admin/users/create")
-    public String createUser(@ModelAttribute User user, @RequestParam Long roleId, RedirectAttributes ra) {
-        try {
-            userService.createUser(user, roleId);
-            ra.addFlashAttribute("success", "Tạo người dùng thành công!");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", e.getMessage());
+    @PostMapping("/users/create")
+    public String createUser(@Valid @ModelAttribute("user") User user,
+                             BindingResult bindingResult,
+                             @RequestParam("avatarFile") MultipartFile avatarFile,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("genders", User.Gender.values());
+            List<UserRole> roles = roleService.findAll();
+            roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+            model.addAttribute("roles", roles);
+            return "admin/createUser";
         }
-        return "redirect:/admin/users";
+
+        try {
+            userService.ensureEmailNotExists(user.getEmail());
+
+            if (avatarFile != null && !avatarFile.isEmpty()) {
+                String avatarFileName = uploadService.uploadImage(avatarFile, "avatars");
+                user.setAvatar(avatarFileName);
+            }
+            String plainPassword = user.getPassword();
+            // Encode password and set default values
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            user.setEnabled(true);
+
+            // Save user
+            userService.save(user);
+
+            // Send email notification
+            emailService.sendEmail(user.getEmail(), "Tài khoản đã được tạo bởi Quản trị viên",
+                    emailService.buildEmailContent(plainPassword));
+
+            redirectAttributes.addFlashAttribute("successMessage", "Tạo người dùng thành công!");
+            return "redirect:/admin/users";
+
+        } catch (IllegalArgumentException e) {
+            bindingResult.rejectValue("email", "error.user", e.getMessage());
+            model.addAttribute("genders", User.Gender.values());
+            model.addAttribute("roles", roleService.findAll());
+            return "admin/createUser";
+        } catch (Exception e) {
+            bindingResult.rejectValue("email", "error.user", "Đã xảy ra lỗi khi tạo người dùng: " + e.getMessage());
+            model.addAttribute("genders", User.Gender.values());
+            model.addAttribute("roles", roleService.findAll());
+            return "admin/createUser";
+        }
     }
 
-    @GetMapping("/admin/users/update/{id}")
-    public String updateUserForm(@PathVariable Long id, Model model) {
-        User user = userService.findById(id);
-        if (user != null) {
+    //===================== UPDATE USER ========================
+    @GetMapping("/users/update/{id}")
+    public String getViewAndUpdateForm(@PathVariable("id") Long id, Model model){
+        try{
+            User user = this.userService.getUserById(id);
             model.addAttribute("user", user);
+            List<UserRole> roles = roleService.findAll();
+            roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+            model.addAttribute("roles", roles);
+            return "admin/updateUser";
+        }catch(Exception e){
+            return "redirect:/admin/users";
         }
-        List<UserRole> roles = roleRepository.findAll();
-        model.addAttribute("roles", roles);
-        model.addAttribute("genders", User.Gender.values());
-        return "admin/updateUser";
     }
 
-    @PostMapping("/admin/users/update/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute User user, @RequestParam Long roleId, RedirectAttributes ra) {
-        try {
-            userService.updateUser(id, user, roleId);
-            ra.addFlashAttribute("success", "Cập nhật người dùng thành công!");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", e.getMessage());
+    @PostMapping("/users/update")
+    public String updateUser(@Valid @ModelAttribute("user") User user,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            return "admin/updateUser";
         }
-        return "redirect:/admin/users";
+        try{
+            User currentUser = this.userService.getUserById(user.getId());
+            currentUser.setRole(user.getRole());
+            currentUser.setEnabled(user.isEnabled());
+            this.userService.save(currentUser);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật người dùng thành công!");
+            return "redirect:/admin/users";
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi cập nhật người dùng: " + e.getMessage());
+            return "redirect:/admin/users";
+        }
     }
 
-    @PostMapping("/admin/users/toggle/{id}")
-    public String toggleUserStatus(@PathVariable Long id, RedirectAttributes ra) {
-        userService.toggleUserStatus(id);
-        ra.addFlashAttribute("success", "Thay đổi trạng thái thành công!");
-        return "redirect:/admin/users";
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
+        try{
+            this.userService.deleteById(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa người dùng thành công!");
+            return "redirect:/admin/users";
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa người dùng: " + e.getMessage());
+            return "redirect:/admin/users";
+        }
     }
 
-    @GetMapping("/admin/users/delete/{id}")
-    public String deleteUser(@PathVariable Long id, RedirectAttributes ra) {
-        userService.deleteUser(id);
-        ra.addFlashAttribute("success", "Xóa người dùng thành công!");
-        return "redirect:/admin/users";
-    }
+    //===================== COURSE CATEGORY ===============================
+    @GetMapping("/course_categories")
+    public String getCourseCategories(Model model,
+                                      @RequestParam(value = "active", required = false) Boolean active,
+                                      @RequestParam(value = "search", required = false) String search,
+                                      @RequestParam(value = "page", defaultValue = "0") int page,
+                                      @RequestParam(value = "size", defaultValue = "10") int size) {
 
-    // ==================== COURSE CATEGORY ====================
-    @GetMapping("/admin/course_categories")
-    public String getCourseCategories(
-            @RequestParam(defaultValue = "") String keyword,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            Model model) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<CourseCategory> categories = categoryService.findWithFilters(keyword, active, pageable);
-        model.addAttribute("categories", categories);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("active", active);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<CourseCategory> courseCategoryPage = this.courseCategoryService.getCourseCategoriesWithSpecs(pageable, active, search);
+
+        model.addAttribute("courseCategoryPage", courseCategoryPage);
+
+        int totalPages = courseCategoryPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().toList();
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         return "admin/courseCategory/list";
     }
 
-    @GetMapping("/admin/course_categories/create")
-    public String createCategoryForm(Model model) {
-        model.addAttribute("category", new CourseCategory());
+    @GetMapping("/course_categories/create")
+    public String createCourseCategoryForm(Model model) {
+        model.addAttribute("courseCategory", new CourseCategory());
         return "admin/courseCategory/create";
     }
 
-    @PostMapping("/admin/course_categories/create")
-    public String createCategory(@ModelAttribute CourseCategory category, RedirectAttributes ra) {
-        try {
-            categoryService.createCategory(category);
-            ra.addFlashAttribute("success", "Tạo danh mục thành công!");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", e.getMessage());
+    @PostMapping("/course_categories/create")
+    public String createCourseCategory(@Valid @ModelAttribute("courseCategory") CourseCategory courseCategory,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "admin/courseCategory/create";
         }
-        return "redirect:/admin/course_categories";
-    }
-
-    @GetMapping("/admin/course_categories/update/{id}")
-    public String updateCategoryForm(@PathVariable Long id, Model model) {
-        CourseCategory category = categoryService.findById(id);
-        if (category != null) {
-            model.addAttribute("category", category);
-        }
-        return "admin/courseCategory/update";
-    }
-
-    @PostMapping("/admin/course_categories/update/{id}")
-    public String updateCategory(@PathVariable Long id, @ModelAttribute CourseCategory category, RedirectAttributes ra) {
-        try {
-            categoryService.updateCategory(id, category);
-            ra.addFlashAttribute("success", "Cập nhật danh mục thành công!");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", e.getMessage());
-        }
-        return "redirect:/admin/course_categories";
-    }
-
-    @GetMapping("/admin/course_categories/delete/{id}")
-    public String deleteCategory(@PathVariable Long id, RedirectAttributes ra) {
-        categoryService.deleteCategory(id);
-        ra.addFlashAttribute("success", "Xóa danh mục thành công!");
-        return "redirect:/admin/course_categories";
-    }
-
-    // ==================== COURSE MANAGEMENT ====================
-    @GetMapping("/courses/admin")
-    public String courses(@RequestParam(defaultValue = "") String keyword,
-                         @RequestParam(required = false) CourseStatus status,
-                         @RequestParam(required = false) Long categoryId,
-                         @RequestParam(required = false) Long expertId,
-                         @RequestParam(required = false) Boolean isFeatured,
-                         @RequestParam(defaultValue = "0") int page,
-                         @RequestParam(defaultValue = "10") int size,
-                         Model model) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<Course> courses = courseService.findForAdmin(keyword, status, categoryId, expertId, isFeatured, pageable);
-        model.addAttribute("courses", courses);
-        model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("status", status);
-        model.addAttribute("categoryId", categoryId);
-        model.addAttribute("expertId", expertId);
-        model.addAttribute("isFeatured", isFeatured);
-        return "admin/course/courseDashboard";
-    }
-
-    @PostMapping("/courses/admin/approve/{id}")
-    public String approveCourse(@PathVariable Long id, RedirectAttributes ra) {
-        courseService.approveCourse(id);
-        ra.addFlashAttribute("success", "Duyệt khóa học thành công!");
-        return "redirect:/courses/admin";
-    }
-
-    @PostMapping("/courses/admin/reject/{id}")
-    public String rejectCourse(@PathVariable Long id, RedirectAttributes ra) {
-        courseService.rejectCourse(id);
-        ra.addFlashAttribute("success", "Từ chối khóa học thành công!");
-        return "redirect:/courses/admin";
-    }
-
-    @PostMapping("/courses/admin/featured/{id}")
-    public String toggleFeatured(@PathVariable Long id, RedirectAttributes ra) {
-        courseService.toggleFeatured(id);
-        ra.addFlashAttribute("success", "Thay đổi nổi bật thành công!");
-        return "redirect:/courses/admin";
-    }
-
-    // ==================== ORDER MANAGEMENT ====================
-    @GetMapping("/admin/orders")
-    public String orders(@ModelAttribute OrderFilter filter,
-                        @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size,
-                        Model model) {
-        Page<Order> orders = orderService.findWithFilters(
-            filter.getKeyword(), filter.getStatus(),
-            filter.getStartDate(), filter.getEndDate(),
-            PageRequest.of(page, size, Sort.by("orderDate").descending())
-        );
-        model.addAttribute("orders", orders);
-        model.addAttribute("filter", filter);
-        model.addAttribute("statuses", OrderStatus.values());
-        model.addAttribute("totalRevenue", orderService.getTotalRevenue());
-        return "admin/orderDashboard";
-    }
-
-    @GetMapping("/admin/orders/{id}")
-    public String orderDetail(@PathVariable Long id, Model model) {
-        orderService.findById(id).ifPresent(order -> model.addAttribute("order", order));
-        return "admin/orderDetail";
-    }
-
-    @PostMapping("/admin/orders/{id}/status")
-    public String updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus status, RedirectAttributes ra) {
-        orderService.updateOrderStatus(id, status);
-        ra.addFlashAttribute("success", "Cập nhật trạng thái thành công!");
-        return "redirect:/admin/orders";
-    }
-
-    // ==================== SLIDER MANAGEMENT ====================
-    @GetMapping("/admin/sliders")
-    public String sliders(@RequestParam(required = false) String keyword,
-                         @RequestParam(required = false) SliderStatus status,
-                         @RequestParam(defaultValue = "0") int page,
-                         @RequestParam(defaultValue = "10") int size,
-                         Model model) {
-        Page<Slider> sliders = sliderService.findWithFilters(keyword, status,
-            PageRequest.of(page, size, Sort.by("orderNumber").ascending()));
-        model.addAttribute("sliders", sliders);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("status", status);
-        return "admin/slider/list";
-    }
-
-    @GetMapping("/admin/sliders/create")
-    public String createSliderForm(Model model) {
-        model.addAttribute("slider", new Slider());
-        model.addAttribute("statuses", SliderStatus.values());
-        return "admin/slider/create";
-    }
-
-    @PostMapping("/admin/sliders/create")
-    public String createSlider(@ModelAttribute Slider slider,
-                              @RequestParam(required = false) MultipartFile imageFile,
-                              RedirectAttributes ra, Model model) {
-        try {
-            if (imageFile != null && !imageFile.isEmpty()) {
-                String imageUrl = uploadService.uploadSlider(imageFile);
-                slider.setImageUrl(imageUrl);
-            }
-            sliderService.createSlider(slider);
-            ra.addFlashAttribute("success", "Tạo slider thành công!");
-            return "redirect:/admin/sliders";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("statuses", SliderStatus.values());
-            return "admin/slider/create";
+        try{
+            courseCategoryService.ensureNotDuplicateName(courseCategory.getName());
+            courseCategoryService.save(courseCategory);
+            return "redirect:/admin/course_categories";
+        }catch (Exception e) {
+            bindingResult.rejectValue("name", "error.courseCategory", e.getMessage());
+            return "redirect:/admin/course_categories";
         }
     }
 
-    @GetMapping("/admin/sliders/update/{id}")
-    public String updateSliderForm(@PathVariable Long id, Model model) {
-        sliderService.findById(id).ifPresent(slider -> model.addAttribute("slider", slider));
-        model.addAttribute("statuses", SliderStatus.values());
-        return "admin/slider/update";
-    }
-
-    @PostMapping("/admin/sliders/update/{id}")
-    public String updateSlider(@PathVariable Long id,
-                              @ModelAttribute Slider slider,
-                              @RequestParam(required = false) MultipartFile imageFile,
-                              RedirectAttributes ra, Model model) {
-        try {
-            if (imageFile != null && !imageFile.isEmpty()) {
-                String imageUrl = uploadService.uploadSlider(imageFile);
-                slider.setImageUrl(imageUrl);
-            }
-            sliderService.updateSlider(id, slider);
-            ra.addFlashAttribute("success", "Cập nhật slider thành công!");
-            return "redirect:/admin/sliders";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("statuses", SliderStatus.values());
-            return "admin/slider/update";
+    @GetMapping("/course_categories/update/{id}")
+    public String createCourseCategoryForm(@PathVariable("id") Long id, Model model,
+                                           RedirectAttributes redirectAttributes) {
+        try{
+            CourseCategory cc = this.courseCategoryService.getById(id);
+            model.addAttribute("courseCategory", cc);
+            return "admin/courseCategory/update";
+        }catch (Exception e) {
+            return "redirect:/admin/course_categories";
         }
     }
 
-    @GetMapping("/admin/sliders/delete/{id}")
-    public String deleteSlider(@PathVariable Long id, RedirectAttributes ra) {
-        sliderService.deleteSlider(id);
-        ra.addFlashAttribute("success", "Xóa slider thành công!");
-        return "redirect:/admin/sliders";
+    @PostMapping("course_categories/update")
+    public String updateCourseCategory(@Valid @ModelAttribute("courseCategory") CourseCategory courseCategory,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "admin/courseCategory/update";
+        }
+        try{
+            CourseCategory cc = this.courseCategoryService.getById(courseCategory.getId());
+            this.courseCategoryService.ensureNotDuplicateName(courseCategory.getName());
+
+            cc.setName(courseCategory.getName());
+            cc.setDescription(courseCategory.getDescription());
+            cc.setActive(courseCategory.isActive());
+            this.courseCategoryService.save(cc);
+
+            return "redirect:/admin/course_categories";
+        }catch (Exception e) {
+            bindingResult.rejectValue("name", "error.courseCategory", e.getMessage());
+            return "redirect:/admin/course_categories";
+        }
     }
 
-    @PostMapping("/admin/sliders/approve/{id}")
-    public String approveSlider(@PathVariable Long id, RedirectAttributes ra) {
-        sliderService.approveSlider(id);
-        ra.addFlashAttribute("success", "Duyệt slider thành công!");
-        return "redirect:/admin/sliders";
-    }
-
-    @PostMapping("/admin/sliders/reject/{id}")
-    public String rejectSlider(@PathVariable Long id, RedirectAttributes ra) {
-        sliderService.rejectSlider(id);
-        ra.addFlashAttribute("success", "Từ chối slider thành công!");
-        return "redirect:/admin/sliders";
-    }
+//    @GetMapping("/orders")
+//    public String orderManagement(Model model, @RequestParam(defaultValue = "0") int page,
+//                                  @RequestParam(defaultValue = "5") int size,
+//                                  @RequestParam(required = false, defaultValue = "") String status,
+//                                  @RequestParam(required = false, defaultValue = "updatedAt") String sortBy,
+//                                  @RequestParam(required = false, defaultValue = "DESC") String sortDir,
+//                                  @RequestParam(required = false, defaultValue = "") String keyword,
+//                                  @RequestParam(required = false,defaultValue = "line" )String chartType,
+//                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startUpdate,
+//                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endUpdate){
+////        List<Order> orders = orderService.getAllOrders();
+//        OrderFilter filter = new OrderFilter();
+//        filter.setStatus(status);
+//        filter.setSortBy(sortBy);
+//        filter.setSortDir(sortDir);
+//        filter.setSearch(keyword);
+//        if(startUpdate != null){
+//            filter.setStartUpdate(startUpdate.atStartOfDay());
+//        }
+//        if(endUpdate != null){
+//            filter.setEndUpdate(endUpdate.atStartOfDay().plusDays(1));
+//        }
+//
+//        List<Order> orders = orderService.getOrdersWithSpecs(filter);
+//        //List to page
+//        int start = Math.min(page * size, orders.size());
+//        int end = Math.min((page + 1) * size, orders.size());
+//        List<Order> pagedOrders = orders.subList(start, end);
+//        Page<Order> ordersPage = new PageImpl<>(pagedOrders, PageRequest.of(page, size), orders.size());
+//        //total amount
+//        double totalAmount = orders.stream()
+//                .mapToDouble(Order::getAmount)
+//                .sum();
+//
+//        // 4️⃣ Tính doanh thu theo tháng (YearMonth)
+//        double filteredAmount = ordersPage.stream().mapToDouble(Order::getAmount).sum();
+//        Map<YearMonth, Double> revenueByMonth = orders.stream()
+//                .collect(Collectors.groupingBy(
+//                        order -> YearMonth.from(order.getUpdatedAt()), // group theo tháng-năm của updatedAt
+//                        TreeMap::new, // sắp xếp theo thứ tự thời gian
+//                        Collectors.summingDouble(Order::getAmount)
+//                ));
+//
+//        // 5️⃣ Chuyển sang 2 danh sách để hiển thị trên biểu đồ (JS dễ dùng)
+//        List<String> monthLabels = revenueByMonth.keySet().stream()
+//                .map(ym -> ym.toString()) // dạng "2025-01"
+//                .toList();
+//        List<Double> monthTotals = new ArrayList<>(revenueByMonth.values());
+//
+//        model.addAttribute("startUpdate", startUpdate);
+//        model.addAttribute("endUpdate", endUpdate);
+//        model.addAttribute("orders", ordersPage);
+//        model.addAttribute("allStatuses", Order.OrderStatus.values());
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", ordersPage.getTotalPages());
+//        model.addAttribute("pageSize", size);
+//        model.addAttribute("filter", filter);
+//        model.addAttribute("chartType", chartType);
+//        model.addAttribute("totalAmount", totalAmount);
+//        model.addAttribute("allOrders", orders);
+//        model.addAttribute("monthLabels", monthLabels);
+//        model.addAttribute("monthTotals", monthTotals);
+//        return "admin/orderDashboard";
+//    }
+//
+//    @GetMapping("/orders/{orderId}")
+//    public String orderDetail(@PathVariable Long orderId, Model model){
+//        Order order = orderService.getOrderById(orderId);
+//        if(order == null){
+//            return "redirect:/admin/orders";
+//        }
+//        model.addAttribute("order", order);
+//        return "admin/orderDetail";
+//    }
 }

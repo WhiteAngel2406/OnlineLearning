@@ -1,90 +1,103 @@
+<!-- order-detail-card.html -->
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/admin_layout :: layout(pageTitle = ~{::title}, pageContent = ~{::.page-content-wrapper}, pageScripts = ~{::.page-scripts-wrapper})}">
-<head><title>Chi Tiết Đơn Hàng</title></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Detail</title>
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-..." crossorigin="anonymous">
+</head>
 <body>
-<div class="page-content-wrapper">
-    <div class="container">
-        <div class="header">
-            <h1>Chi Tiết Đơn Hàng</h1>
-            <a th:href="@{/admin/orders}" class="btn btn-outline">
-                <i class="bi bi-arrow-left"></i> Quay Lại
-            </a>
-        </div>
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Order Details</h5>
+                    <small class="text-muted" th:text="${order.id != null} ? ('#' + ${order.orderCode}) : '—'"></small>
+                </div>
 
-        <div th:if="${order != null}">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="detail-card">
-                        <h3 class="detail-card-title">Thông Tin Đơn Hàng</h3>
-                        <div class="detail-row">
-                            <span class="detail-label">Mã Đơn:</span>
-                            <span class="detail-value" th:text="${order.orderCode}">ORD-001</span>
+                <div class="card-body">
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title mb-1">Order code</h6>
+                            <p class="mb-0 fw-medium" th:text="${order.orderCode}">ORDER_CODE</p>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Số Tiền:</span>
-                            <span class="detail-value" th:text="${#numbers.formatDecimal(order.amount, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</span>
+                        <div class="text-end">
+                            <h6 class="card-title mb-1">Amount</h6>
+                            <p class="mb-0 fw-semibold" th:text="${#numbers.formatDecimal(order.amount, 0, 'COMMA', 2, 'POINT')} + ' VND'">
+                                0 VND
+                            </p>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Trạng Thái:</span>
-                            <span th:if="${order.status == 'SUCCESS'}" class="status-active">Đã thanh toán</span>
-                            <span th:if="${order.status == 'FAILED'}" class="status-inactive">Thất bại</span>
-                            <span th:if="${order.status == 'REFUNDED'}" class="status-pending">Đã hoàn tiền</span>
-                            <span th:if="${order.status == 'PENDING'}" class="status-pending">Chờ xử lý</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="row gy-2">
+                        <div class="col-md-6">
+                            <small class="text-muted">Status</small>
+                            <div th:switch="${order.status.name()}">
+                                <span th:case="'PENDING'" class="badge bg-warning text-dark" th:text="${order.status.displayName}">Đang chờ</span>
+                                <span th:case="'PAID'" class="badge bg-success" th:text="${order.status.displayName}">Đã thanh toán</span>
+                                <span th:case="'FAILED'" class="badge bg-danger" th:text="${order.status.displayName}">Thất bại</span>
+                                <span th:case="'CANCELLED'" class="badge bg-secondary" th:text="${order.status.displayName}">Đã hủy</span>
+                                <span th:case="*"
+                                      class="badge bg-light text-dark"
+                                      th:text="${order.status != null ? order.status.name() : 'UNKNOWN'}">UNKNOWN</span>
+                            </div>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Ngày Đặt:</span>
-                            <span class="detail-value" th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</span>
+
+                        <div class="col-md-6">
+                            <small class="text-muted">VNPay response code</small>
+                            <p class="mb-0" th:text="${order.vnpResponseCode != null ? order.vnpResponseCode : '—'}">—</p>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Mã Giao Dịch:</span>
-                            <span class="detail-value" th:text="${order.vnpTransactionNo ?: '-'}">VNPAY123</span>
+
+                        <div class="col-md-6">
+                            <small class="text-muted">VNPay transaction no.</small>
+                            <p class="mb-0" th:text="${order.vnpTransactionNo != null ? order.vnpTransactionNo : '—'}">—</p>
+                        </div>
+
+                        <div class="col-12">
+                            <small class="text-muted">Order info</small>
+                            <p class="mb-0" th:text="${order.orderInfo != null ? order.orderInfo : '—'}">Order info here</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <small class="text-muted">User</small>
+                            <!-- thay đổi thuộc tính hiển thị theo entity User (ví dụ fullName hoặc username) -->
+                            <p class="mb-0" th:text="${order.user != null ? order.user.fullName : '—'}">User Name</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <small class="text-muted">Course</small>
+                            <!-- thay đổi thuộc tính hiển thị theo entity Course (ví dụ title hoặc name) -->
+                            <p class="mb-0" th:text="${order.course != null ? order.course.name : '—'}">Course Title</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="detail-card">
-                        <h3 class="detail-card-title">Thông Tin Khách Hàng</h3>
-                        <div class="detail-row">
-                            <span class="detail-label">Tên:</span>
-                            <span class="detail-value" th:text="${order.user?.fullName}">Nguyen Van A</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Email:</span>
-                            <span class="detail-value" th:text="${order.user?.email}">email@example.com</span>
-                        </div>
+
+                <div class="card-footer d-flex justify-content-between">
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="history.back();">
+                            ← Quay lại
+                        </button>
                     </div>
-                    <div class="detail-card mt-3">
-                        <h3 class="detail-card-title">Thông Tin Khóa Học</h3>
-                        <div class="detail-row">
-                            <span class="detail-label">Tên Khóa Học:</span>
-                            <span class="detail-value" th:text="${order.course?.name}">Course Name</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Giá:</span>
-                            <span class="detail-value" th:text="${#numbers.formatDecimal(order.course?.price, 1, 'POINT', 0, 'POINT')} + ' VNĐ'">100,000 VNĐ</span>
-                        </div>
+                    <div>
+                        <!-- Ví dụ nút Download / Print / Edit nếu cần -->
+                        <a th:href="@{/admin/orders}" class="btn btn-light">Danh sách đơn hàng</a>
+                        <button onclick="window.print()" class="btn btn-primary">Tải hoá đơn (PDF)</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="detail-card mt-4">
-                <h3 class="detail-card-title">Cập Nhật Trạng Thái</h3>
-                <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post" class="filter-group-inline">
-                    <select name="status" class="input-field">
-                        <option th:each="s : ${T(com.example.demo.model.enums.OrderStatus).values()}"
-                                th:value="${s}" th:text="${s}">Status</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
-                </form>
             </div>
-        </div>
-
-        <div th:if="${order == null}" class="alert alert-warning">
-            Không tìm thấy đơn hàng!
         </div>
     </div>
 </div>
-<th:block class="page-scripts-wrapper"></th:block>
+
+<!-- Bootstrap JS (optional, nếu cần component JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-..." crossorigin="anonymous"></script>
 </body>
 </html>
