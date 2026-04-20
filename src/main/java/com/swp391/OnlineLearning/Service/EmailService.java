@@ -59,7 +59,7 @@ public class EmailService {
                 Please log in via the link below:
                 %s
 
-                This link will expire in 24 hours.
+                This link will expire in 1 hours.
 
                 If you did not request this, please ignore this email.
                 """, password, url);
@@ -77,7 +77,7 @@ public class EmailService {
                 Please confirm your action by clicking the link below:
                 %s
 
-                This link will expire in 24 hours.
+                This link will expire in 1 hours.
 
                 If you did not request this, please ignore this email.
                 """, url);
