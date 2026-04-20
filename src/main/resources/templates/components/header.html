@@ -1,6 +1,6 @@
 <header th:fragment="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <nav class="navbar">
-        <a href="/" class="logo">OELS</a>
+        <a href="#" class="logo">OELS</a>
         <ul class="nav-links" style="margin-bottom: 0">
             <li><a href="/" id="home">Trang chủ</a></li>
             <li><a href="/courses/learner" id="courses">Khóa học</a></li>
@@ -15,6 +15,10 @@
                     <i class="fas fa-user"></i>
                     Thông tin cá nhân
                 </a>
+                <a href="/marketing" class="dropdown-item" sec:authorize="hasRole('ROLE_MARKETING')">
+                    <i class="fas fa-user"></i>
+                    Quản lí slide
+                </a>
                 <a href="/admin" class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')">
                     <i class="fas fa-book"></i>
                     Trang quản lí
@@ -23,11 +27,24 @@
                     <i class="fas fa-book"></i>
                     Khóa học của tôi
                 </a>
-                <a href="/courses/create" class="dropdown-item" sec:authorize="hasRole('ROLE_EXPERT')">
+                <a href="/courses/create" class="dropdown-item" sec:authorize="hasRole('ROLE_EXPERT')"><!-- sec:authorize="hasRole('ROLE_EXPERT')"-->
                     <i class="fas fa-book"></i>
                     Tạo khóa học mới
                 </a>
+                <a th:href="@{'/courses/users/' + ${session.currentUserId}}" class="dropdown-item" sec:authorize="hasRole('ROLE_EXPERT')"><!-- sec:authorize="hasRole('ROLE_EXPERT')"-->
+                    <i class="fas fa-book"></i>
+                    Khóa học tôi tạo
+                </a>
+                <a th:href="'/chats/'" class="dropdown-item" >
+                    <i class="fa-solid fa-users"></i>
+                    Nhóm chat của tôi
+                </a>
+                <a th:href="@{/changePassword}" class="dropdown-item">
+                    <i class="fas fa-key"></i>
+                    Thay đổi mật khẩu
+                </a>
                 <div class="dropdown-divider"></div>
+                <!-- Logout bằng form POST -->
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" class="dropdown-item logout">
                         <i class="fas fa-sign-out-alt"></i>
@@ -36,6 +53,8 @@
                 </form>
             </div>
         </div>
+
+        <!-- Nếu chưa đăng nhập -->
         <div class="auth-links" sec:authorize="isAnonymous()">
             <a th:href="@{/register}" class="auth-btn">Đăng ký</a>
             <a th:href="@{/login}" class="auth-btn">Đăng nhập</a>
@@ -43,22 +62,24 @@
     </nav>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <script>
+        //HEADER
         document.addEventListener('DOMContentLoaded', function() {
             const userIcon = document.getElementById('userIcon');
             const dropdownMenu = document.getElementById('dropdownMenu');
-            if (!userIcon || !dropdownMenu) return;
-
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             document.body.appendChild(overlay);
 
+            // Add active class to the current link
             const currentUrl = window.location.pathname;
             const menuLinks = document.querySelectorAll('ul li a');
             menuLinks.forEach(link => {
                 if (link.getAttribute('href') === currentUrl || currentUrl.startsWith(link.getAttribute('href') + '/')) {
                     link.classList.add('active');
+                }else{
+                    link.classList.remove('active');
                 }
-            });
+            })
 
             userIcon.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -71,6 +92,22 @@
                 overlay.classList.remove('show');
             });
 
+            // Close dropdown when clicking on dropdown items
+            dropdownMenu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    dropdownMenu.classList.remove('show');
+                    overlay.classList.remove('show');
+
+                    // Here you would handle the navigation
+                    /*const href = e.target.getAttribute('href');
+                    if (href && href !== '#') {
+                        // window.location.href = href;
+                        alert(`Navigating to: ${e.target.textContent.trim()}`);
+                    }*/
+                }
+            });
+
+            // Close dropdown when pressing Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     dropdownMenu.classList.remove('show');
