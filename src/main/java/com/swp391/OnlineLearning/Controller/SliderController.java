@@ -88,9 +88,9 @@ public class SliderController {
             slider.setUser(currentUser);
             sliderService.save(slider);
 
-            redirectAttributes.addFlashAttribute("success", "Slider created successfully");
+            redirectAttributes.addFlashAttribute("success", "Tạo slider thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Failed to create slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi tạo slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -143,9 +143,9 @@ public class SliderController {
             }
             sliderService.save(existingSlider);
 
-            redirectAttributes.addFlashAttribute("success", "Slider updated successfully");
+            redirectAttributes.addFlashAttribute("success", "Cập nhật slider thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Failed to update slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -154,9 +154,9 @@ public class SliderController {
     public String toggleSlider(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             sliderService.toggleSlider(id);
-            redirectAttributes.addFlashAttribute("success", "Slider toggled successfully");
+            redirectAttributes.addFlashAttribute("success", "Thay đổi trạng thái slider thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Failed to toggle slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi thay đổi trạng thái slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -165,9 +165,9 @@ public class SliderController {
     public String deleteSlider(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             sliderService.deleteSlider(id);
-            redirectAttributes.addFlashAttribute("success", "Slider deleted successfully");
+            redirectAttributes.addFlashAttribute("success", "Xóa slider thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Failed to delete slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi xóa slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }

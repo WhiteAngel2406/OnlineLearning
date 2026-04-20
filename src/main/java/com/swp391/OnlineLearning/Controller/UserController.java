@@ -106,10 +106,10 @@ public class UserController {
             }
 
             userService.save(user);
-            redirectAttributes.addFlashAttribute("message", "Update profile successfully");
+            redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin thành công!");
             return "redirect:/viewProfile";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Update failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật: " + e.getMessage());
             return "user/updateProfile";
         }
     }

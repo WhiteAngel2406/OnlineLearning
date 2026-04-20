@@ -15,15 +15,15 @@
         <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle me-2"></i>
             <span th:text="${message}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
         </div>
         <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle me-2"></i>
             <span th:text="${error}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
         </div>
         <div class="header">
-            <h1>Enrollment Dashboard</h1>
+            <h1>Bảng điều khiển đơn hàng</h1>
             <!--        <a th:href="@{/courses/create}" class="btn btn-primary"><i class="fas fa-plus"></i> Tạo Khóa Học Mới</a>-->
         </div>
         <div class="container mt-3">
@@ -97,8 +97,8 @@
             <div class="filter-group">
                 <label for="sortBy">Sắp xếp bởi</label>
                 <select name="sortBy" id="sortBy">
-                    <option value="updatedAt" th:selected="${filter.sortBy == 'updatedAt'}">Updated</option>
-                    <option value="createdAt" th:selected="${filter.sortBy == 'createdAt'}">Created</option>
+                    <option value="updatedAt" th:selected="${filter.sortBy == 'updatedAt'}">Cập nhật</option>
+                    <option value="createdAt" th:selected="${filter.sortBy == 'createdAt'}">Tạo mới</option>
                     <option value="amount" th:selected="${filter.sortBy == 'amount'}">Amount</option>
                 </select>
             </div>

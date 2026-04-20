@@ -230,7 +230,7 @@ public class CourseController {
                                    HttpSession session, RedirectAttributes redirectAttributes){
         try{
             this.courseService.sendSubmitReview(courseId);
-            redirectAttributes.addFlashAttribute("message", "Send submit review success!");
+            redirectAttributes.addFlashAttribute("message", "Gửi phê duyệt thành công!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -243,7 +243,7 @@ public class CourseController {
                                HttpSession session, RedirectAttributes redirectAttributes){
         try{
             this.courseService.cancelReview(courseId);
-            redirectAttributes.addFlashAttribute("message", "Cancel review success!");
+            redirectAttributes.addFlashAttribute("message", "Hủy phê duyệt thành công!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -255,7 +255,7 @@ public class CourseController {
                                RedirectAttributes redirectAttributes){
         try{
             Course courseToDelete = this.courseService.deleteById(courseId);
-            redirectAttributes.addFlashAttribute("message", "Delete course success!");
+            redirectAttributes.addFlashAttribute("message", "Xóa khóa học thành công!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -268,7 +268,7 @@ public class CourseController {
                                      RedirectAttributes redirectAttributes){
         try{
             Course courseToHandle = this.courseService.handleChangingCourseStatus(courseId, respondToPublish);
-            redirectAttributes.addFlashAttribute("message", "Handle course status success!");
+            redirectAttributes.addFlashAttribute("message", "Xử lý trạng thái khóa học thành công!");
             return "redirect:/courses/admin";
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
