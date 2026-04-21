@@ -29,3 +29,11 @@ buildNumber.properties
 *.iws
 *.iml
 *.ipr
+
+### Agent and AI tools ###
+.cursor/
+.codex/
+.agent/
+.agents/
+diagram/
+openspec/
