@@ -1,0 +1,17 @@
+services:
+  db:
+    # Sử dụng azure-sql-edge để tương thích tốt nhất với chip Apple Silicon (M1/M2/M3)
+    image: mcr.microsoft.com/azure-sql-edge
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      # SQL Server yêu cầu mật khẩu mạnh, "123456" sẽ làm container crash
+      MSSQL_SA_PASSWORD: "StrongPassword123!"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
