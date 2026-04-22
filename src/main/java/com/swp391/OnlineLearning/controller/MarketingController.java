@@ -3,6 +3,9 @@ package com.swp391.OnlineLearning.controller;
 import com.swp391.OnlineLearning.model.Slider;
 import com.swp391.OnlineLearning.model.User;
 import com.swp391.OnlineLearning.model.dto.SliderCreateUpdateDto;
+import com.swp391.OnlineLearning.repository.BlogRepository;
+import com.swp391.OnlineLearning.repository.CourseRepository;
+import com.swp391.OnlineLearning.repository.UserRepository;
 import com.swp391.OnlineLearning.service.SliderService;
 import com.swp391.OnlineLearning.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -23,12 +26,17 @@ import java.util.List;
 public class MarketingController {
 
     private final SliderService sliderService;
-
     private final UserService userService;
+    private final BlogRepository blogRepository;
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
 
-    public MarketingController(SliderService sliderService, UserService userService) {
+    public MarketingController(SliderService sliderService, UserService userService, BlogRepository blogRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.sliderService = sliderService;
         this.userService = userService;
+        this.blogRepository = blogRepository;
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("")
@@ -51,6 +59,17 @@ public class MarketingController {
 
             model.addAttribute("totalSliders", totalSliders);
             model.addAttribute("activeSliders", activeSliders);
+
+            // New stats
+            long totalBlogs = blogRepository.count();
+            long publishedBlogs = blogRepository.countByStatus(com.swp391.OnlineLearning.model.Blog.BlogStatus.PUBLISHED);
+            long totalCourses = courseRepository.count();
+            long totalUsers = userRepository.count();
+
+            model.addAttribute("totalBlogs", totalBlogs);
+            model.addAttribute("publishedBlogs", publishedBlogs);
+            model.addAttribute("totalCourses", totalCourses);
+            model.addAttribute("totalUsers", totalUsers);
 
             return "marketing/dashboard";
         } catch (Exception e) {

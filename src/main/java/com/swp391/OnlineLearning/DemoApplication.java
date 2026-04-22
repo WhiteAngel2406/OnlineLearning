@@ -11,7 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import java.util.List;
 
 @SpringBootApplication
@@ -119,4 +121,25 @@ public class DemoApplication {
 
 		};
 	}
+}
+
+@Component
+class BrowserOpener {
+    @EventListener(ApplicationReadyEvent.class)
+    public void openBrowser() {
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+            Runtime rt = Runtime.getRuntime();
+            String url = "http://localhost:8080";
+            if (os.contains("win")) {
+                rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+            } else if (os.contains("mac")) {
+                rt.exec("open " + url);
+            } else if (os.contains("nix") || os.contains("nux")) {
+                rt.exec("xdg-open " + url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

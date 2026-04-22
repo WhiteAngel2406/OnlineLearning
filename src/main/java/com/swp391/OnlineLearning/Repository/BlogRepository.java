@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BlogRepository extends JpaRepository<Blog, Long> {
+    long countByStatus(Blog.BlogStatus status);
     @Query("""
         Select new com.swp391.OnlineLearning.model.dto.BlogDTO(
             b.id,

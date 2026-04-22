@@ -409,9 +409,50 @@
     </div>
 
     <!-- Summary Cards -->
-
-
-    <!-- Quick Actions -->
+    <div class="summary-cards">
+        <div class="card">
+            <div class="icon purple">
+                <i class="fas fa-images"></i>
+            </div>
+            <div class="value" th:text="${totalSliders}">0</div>
+            <div class="label">Tổng số Slider</div>
+        </div>
+        <div class="card">
+            <div class="icon green">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="value" th:text="${activeSliders}">0</div>
+            <div class="label">Slider Đang Hiển Thị</div>
+        </div>
+        <div class="card">
+            <div class="icon blue">
+                <i class="fas fa-newspaper"></i>
+            </div>
+            <div class="value" th:text="${totalBlogs}">0</div>
+            <div class="label">Tổng Bài Viết</div>
+        </div>
+        <div class="card">
+            <div class="icon yellow">
+                <i class="fas fa-upload"></i>
+            </div>
+            <div class="value" th:text="${publishedBlogs}">0</div>
+            <div class="label">Bài Viết Đã Xuất Bản</div>
+        </div>
+        <div class="card">
+            <div class="icon purple">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="value" th:text="${totalCourses}">0</div>
+            <div class="label">Tổng Khóa Học</div>
+        </div>
+        <div class="card">
+            <div class="icon green">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="value" th:text="${totalUsers}">0</div>
+            <div class="label">Tổng Người Dùng</div>
+        </div>
+    </div>    <!-- Quick Actions -->
     <div class="quick-actions">
         <h2 class="section-title">Thao tác nhanh</h2>
         <div class="action-buttons">
