@@ -1,9 +1,10 @@
-package com.swp391.OnlineLearning.Util;
+package com.swp391.OnlineLearning.util;
 
-import com.swp391.OnlineLearning.Model.Question;
-import com.swp391.OnlineLearning.Model.dto.CourseDTO;
-import com.swp391.OnlineLearning.Model.dto.MultipleChoiceQuestionFormDTO;
-import com.swp391.OnlineLearning.Model.dto.ShortAnswerQuestionFormDTO;
+import com.swp391.OnlineLearning.model.Question;
+import com.swp391.OnlineLearning.model.ShortAnswerOption;
+import com.swp391.OnlineLearning.model.dto.CourseDTO;
+import com.swp391.OnlineLearning.model.dto.MultipleChoiceQuestionFormDTO;
+import com.swp391.OnlineLearning.model.dto.ShortAnswerQuestionFormDTO;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;

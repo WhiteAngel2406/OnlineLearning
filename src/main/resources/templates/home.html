@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OELS - Online English Learning System</title>
+    <title>OELS - Hệ Thống Học Tiếng Anh Trực Tuyến</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Phông chữ cao cấp -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6c63ff;
-            --primary-hover: #5a54d6;
-            --secondary-color: #4ecdc4;
-            --text-color: #333;
-            --text-light: #666;
-            --bg-color: #fff;
-            --bg-light: #f8f9fa;
-            --border-color: #e9ecef;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --radius: 12px;
+            /* Hệ thống màu Premium */
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #0ea5e9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg-body: #ffffff;
+            --bg-surface: #f8fafc;
+            --border: #e2e8f0;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05);
         }
+<<<<<<< HEAD
 
         * {
             margin: 0;
@@ -413,7 +419,100 @@
 
         /* Footer */
 
+=======
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        
+        /* Typography */
+        h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; }
+        h1 { font-size: 3.5rem; font-weight: 800; color: var(--text-main); }
+        h2 { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem; }
+        h3 { font-size: 1.25rem; font-weight: 600; }
+        p { color: var(--text-muted); }
+        
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.875rem 1.75rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-outline { border: 2px solid var(--border); color: var(--text-main); background: transparent; }
+        .btn-outline:hover { border-color: var(--text-muted); background: var(--bg-surface); }
+        
+        /* Hero Section */
+        .hero { padding: 6rem 0 4rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
+        .hero-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        .hero-badge { display: inline-block; padding: 0.5rem 1rem; background: #dbeafe; color: var(--primary); border-radius: 100px; font-weight: 600; font-size: 0.875rem; width: max-content; }
+        .hero-desc { font-size: 1.25rem; max-width: 500px; }
+        .hero-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+        .hero-image { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); height: 500px; width: 100%; object-fit: cover; }
+        
+        /* Proof Strip */
+        .proof { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2.5rem 0; background: var(--bg-surface); }
+        .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .proof-item h4 { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+        .proof-item p { font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.875rem; }
+        
+        /* Sections Shared */
+        .section { padding: 6rem 0; }
+        .section.alt { background: var(--bg-surface); }
+
+        /* Courses Grid */
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2.5rem; }
+        .course-card { background: white; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .course-thumb { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .course-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+        .course-category { font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 0.5rem; }
+        .course-title { margin-bottom: 0.5rem; font-size: 1.25rem; }
+        .course-desc { font-size: 0.875rem; margin-bottom: 1.5rem; flex: 1; }
+        .course-meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .course-author { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; }
+        .course-rating { display: flex; align-items: center; gap: 0.25rem; color: #eab308; font-weight: 600; }
+        
+        /* Blogs Grid */
+        .blogs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2.5rem; }
+        .blog-card { display: flex; gap: 1.5rem; align-items: center; }
+        .blog-thumb { width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover; }
+        .blog-body h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
+        .blog-body p { font-size: 0.875rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* FAQ */
+        .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; cursor: pointer; transition: background 0.2s; }
+        .faq-item:hover { background: var(--bg-surface); }
+        .faq-question { font-weight: 600; font-size: 1.125rem; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { display: none; margin-top: 1rem; color: var(--text-muted); }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-toggle { transform: rotate(180deg); }
+        
+        /* Contact & Final CTA */
+        .cta-section { background: var(--text-main); color: white; border-radius: var(--radius-lg); padding: 4rem; text-align: center; margin: 4rem 0; }
+        .cta-section h2 { color: white; margin-bottom: 1rem; }
+        .cta-section p { color: #cbd5e1; font-size: 1.25rem; margin-bottom: 2rem; }
+        
+        /* Floating Chat (From old) */
+        .chat-float-btn { position: fixed; bottom: 25px; right: 25px; background-color: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; text-decoration: none; box-shadow: var(--shadow-lg); transition: transform 0.2s; z-index: 99; }
+        .chat-float-btn:hover { transform: scale(1.1); color: white; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; text-align: center; padding: 4rem 0; }
+            .hero-badge { margin: 0 auto; }
+            .hero-desc { margin: 0 auto; }
+            .hero-actions { justify-content: center; }
+            .hero-image { height: 400px; }
+            .proof-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta-section { padding: 3rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .blog-card { flex-direction: column; align-items: flex-start; }
+            .blog-thumb { width: 100%; height: 200px; }
+        }
+>>>>>>> main
     </style>
+    <!-- Header/Footer CSS Fallbacks -->
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
@@ -421,8 +520,9 @@
 <!-- Header -->
 <div th:replace="~{components/header :: header}"></div>
 
-<!-- Main Content -->
+<!-- Hero Section -->
 <div class="container">
+<<<<<<< HEAD
     <!-- Hero Slider -->
     <div class="hero-slider" th:if="${sliders != null and !sliders.isEmpty()}">
 
@@ -447,10 +547,61 @@
                  class="slider-dot"
                  th:classappend="${iter.first} ? ' active' : ''"
                  th:onclick="|showSlide(${iter.index})|">
+=======
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge" th:if="${sliders != null and !sliders.isEmpty() and sliders[0].title != null}" th:text="${sliders[0].title}">Khóa học tiếng Anh nổi bật</span>
+            <span class="hero-badge" th:unless="${sliders != null and !sliders.isEmpty() and sliders[0].title != null}">OELS Tiếng Anh</span>
+            
+            <h1 th:text="${(sliders != null and !sliders.isEmpty() and sliders[0].title != null) ? sliders[0].title : 'Chinh phục tiếng Anh, mở lối tương lai'}">
+                Chinh phục tiếng Anh, mở lối tương lai
+            </h1>
+            <p class="hero-desc" th:if="${sliders != null and !sliders.isEmpty() and sliders[0].description != null}" th:text="${sliders[0].description}">
+                Học tiếng Anh chưa bao giờ thực tiễn và hiệu quả đến thế.
+            </p>
+            <p class="hero-desc" th:unless="${sliders != null and !sliders.isEmpty() and sliders[0].description != null}">
+                Nâng tầm kỹ năng giao tiếp và tự tin đạt điểm cao IELTS cùng với chuyên gia hàng đầu.
+            </p>
+            
+            <div class="hero-actions">
+                <a href="#courses" class="btn btn-primary">Khám phá khóa học</a>
+                <a th:href="@{/register}" class="btn btn-outline">Đăng ký miễn phí</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img class="hero-image" 
+                 th:src="${(sliders != null and !sliders.isEmpty() and sliders[0].imageUrl != null) ? sliders[0].imageUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfFXRVrxEzWOUU5Z7XaFiRaV3kUGiSpQ7JMA&s'}" 
+                 alt="OELS Hero Banner">
+        </div>
+    </section>
+</div>
+
+<!-- Proof Strip -->
+<section class="proof">
+    <div class="container">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <h4 th:text="${totalLearners != null ? totalLearners + '+' : '10,000+'}">...</h4>
+                <p>Học viên</p>
+            </div>
+            <div class="proof-item">
+                <h4>95%</h4>
+                <p>Hài lòng</p>
+            </div>
+            <div class="proof-item">
+                <h4 th:text="${totalResources != null ? totalResources + '+' : '150+'}">...</h4>
+                <p>Tài nguyên</p>
+            </div>
+            <div class="proof-item">
+                <h4>4.8/5</h4>
+                <p>Đánh giá</p>
+>>>>>>> main
             </div>
         </div>
     </div>
+</section>
 
+<<<<<<< HEAD
     <div class="hero-slider"  th:if="${sliders == null or sliders.isEmpty()}">
         <div class="slide active">
             <div class="slide-content">
@@ -528,8 +679,41 @@
                data-bs-custom-class="custom-tooltip"
                data-bs-title="Chat với tôi">
                 <i class="bi bi-chat-right-dots" ></i>
+=======
+<!-- Featured Courses Section -->
+<section class="section" id="courses">
+    <div class="container">
+        <h2>Lộ Trình Học Phổ Biến</h2>
+        <div class="courses-grid" th:if="${featuredCourses != null and !featuredCourses.isEmpty()}">
+            <a th:each="course : ${featuredCourses}" th:href="@{'/courses/' + ${course.id} + '/learner'}" class="course-card">
+                <img th:src="${course.thumbnail != null and course.thumbnail.startsWith('http') ? course.thumbnail : '/uploads/' + course.thumbnail}" alt="Course Thumbnail" class="course-thumb">
+                <div class="course-body">
+                    <span class="course-category" th:text="${course.category.name}">Khung Category</span>
+                    <h3 class="course-title" th:text="${course.name}">Tên khóa học</h3>
+                    <p class="course-desc" th:text="${course.shortDescription}">Mô tả ngắn khóa học...</p>
+                    <div class="course-meta">
+                        <div class="course-author">
+                            <i class="fas fa-user-circle"></i>
+                            <span th:text="${course.author != null ? course.author.fullName : 'Giảng viên OELS'}">Giảng viên</span>
+                        </div>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span th:if="${courseFeedbackStatsMap != null and courseFeedbackStatsMap.get(course.id) != null}" th:text="${courseFeedbackStatsMap.get(course.id).averageRating}">4.8</span>
+                            <span th:unless="${courseFeedbackStatsMap != null and courseFeedbackStatsMap.get(course.id) != null}">4.9</span>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> main
             </a>
+        </div>
+        <div th:if="${featuredCourses == null or featuredCourses.isEmpty()}" style="text-align: center; padding: 2rem; color: var(--text-muted); background: white; border: 1px dashed var(--border); border-radius: var(--radius-md);">
+            <i class="fas fa-book-open" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>Các khóa học tiếng Anh chuẩn bị ra mắt. Vui lòng quay lại sau!</p>
+        </div>
+    </div>
+</section>
 
+<<<<<<< HEAD
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Liên Hệ</h3>
                 <ul class="contact-info">
@@ -551,15 +735,88 @@
                     <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+=======
+<!-- Resources/Blogs Section -->
+<section class="section alt" id="resources">
+    <div class="container">
+        <h2>Tài Nguyên Học Tập</h2>
+        <div class="blogs-grid" th:if="${latestBlogs != null and !latestBlogs.isEmpty()}">
+            <a th:each="blog : ${latestBlogs}" th:href="@{'/blogs/' + ${blog.id}}" class="blog-card">
+                <img th:src="${blog.thumbnail != null and blog.thumbnail.startsWith('http') ? blog.thumbnail : '/uploads/' + blog.thumbnail}" alt="Blog thumbnail" class="blog-thumb">
+                <div class="blog-body">
+                    <h3 th:text="${blog.title}">Tiêu đề bài viết</h3>
+                    <p th:text="${blog.shortDescription}">Nội dung bài viết giới thiệu nhanh...</p>
+                </div>
+            </a>
+        </div>
+        <div th:if="${latestBlogs == null or latestBlogs.isEmpty()}" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+            <p>Bài viết chưa có sẵn dữ liệu.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section">
+    <div class="container">
+        <h2>Câu Hỏi Thường Gặp</h2>
+        <div class="faq-grid">
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Hệ thống OELS thích hợp với ai?</span>
+                    <i class="fas fa-chevron-down faq-toggle" style="transition: 0.2s;"></i>
+                </div>
+                <div class="faq-answer">
+                    Chúng tôi có lộ trình cho cả người mất gốc lẫn những ai muốn ôn luyện thi chứng chỉ. Các khóa học được phân lớp rõ ràng từ cơ bản đến IELTS chuyên sâu.
+>>>>>>> main
                 </div>
             </div>
-        </aside>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Tôi có thể học vào thời gian nào?</span>
+                    <i class="fas fa-chevron-down faq-toggle" style="transition: 0.2s;"></i>
+                </div>
+                <div class="faq-answer">
+                    Bất cứ lúc nào. Mọi tài nguyên học thuật và bài giảng đều hỗ trợ trực tuyến 24/7.
+                </div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Làm thế nào để được hỗ trợ chuyên sâu?</span>
+                    <i class="fas fa-chevron-down faq-toggle" style="transition: 0.2s;"></i>
+                </div>
+                <div class="faq-answer">
+                    Bạn có thể sử dụng chức năng chat với tư vấn viên/giảng viên tại mọi thời điểm trong tuần qua hộp hỗ trợ 24/7 của nền tảng.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA & Contact Section -->
+<div class="container">
+    <div class="cta-section">
+        <h2>Bắt đầu hành trình tiếng Anh của bạn</h2>
+        <p>Tham gia cùng hơn 10,000 học viên khác đã tự tin giao tiếp ngôn ngữ toàn cầu.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap;">
+            <a th:href="@{/register}" class="btn btn-primary" style="background: white; color: var(--text-main);">Tạo Tài Khoản Free</a>
+            <a href="mailto:contact@oels.edu.vn" class="btn btn-outline" style="border-color: rgba(255,255,255,0.2); color: white;">Liên Hệ Tư Vấn</a>
+        </div>
+        <div style="display: flex; gap: 2rem; justify-content: center; color: #94a3b8; font-size: 0.875rem; flex-wrap: wrap;">
+            <span><i class="fas fa-envelope"></i> contact@oels.edu.vn</span>
+            <span><i class="fas fa-phone"></i> +84 123 456 789</span>
+        </div>
     </div>
 </div>
+
+<!-- Floating Chat -->
+<a href="/chats/consultant" class="chat-float-btn" title="Chat với chuyên gia">
+    <i class="bi bi-chat-right-dots"></i>
+</a>
 
 <!-- Footer -->
 <div th:replace="~{components/footer :: footer}"></div>
 
+<<<<<<< HEAD
 <script>
     // Slider functionality
     let currentSlide = 0;
@@ -619,5 +876,7 @@
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+=======
+>>>>>>> main
 </body>
 </html>

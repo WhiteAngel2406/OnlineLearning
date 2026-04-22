@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Lesson;
+import com.swp391.OnlineLearning.model.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

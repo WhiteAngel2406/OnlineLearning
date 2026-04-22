@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Config;
+package com.swp391.OnlineLearning.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

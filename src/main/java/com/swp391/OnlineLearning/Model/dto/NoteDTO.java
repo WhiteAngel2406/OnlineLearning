@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Note;
+import com.swp391.OnlineLearning.model.Note;
 
 public class NoteDTO {
     private Long id;

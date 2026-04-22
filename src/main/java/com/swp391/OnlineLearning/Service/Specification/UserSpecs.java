@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 package com.swp391.OnlineLearning.Service.Specification;
+=======
+package com.swp391.OnlineLearning.service.specification;
+>>>>>>> main
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.User.Gender;
-import com.swp391.OnlineLearning.Model.User_;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.User.Gender;
 import org.springframework.data.jpa.domain.Specification;
 
 public class UserSpecs {
@@ -13,8 +16,8 @@ public class UserSpecs {
                 return cb.conjunction();
             }
             try {
-                Gender genderEnum = Gender.valueOf(gender.toUpperCase());
-                return cb.equal(root.get(User_.GENDER), genderEnum);
+                Gender genderEnum = Gender.valueOf(gender);
+                return cb.equal(root.get("gender"), genderEnum);
             } catch (IllegalArgumentException e) {
                 return cb.conjunction();
             }
@@ -35,7 +38,7 @@ public class UserSpecs {
             if (enabled == null) {
                 return cb.conjunction();
             }
-            return cb.equal(root.get(User_.ENABLED), enabled);
+            return cb.equal(root.get("enabled"), enabled);
         };
     }
 
@@ -47,14 +50,13 @@ public class UserSpecs {
 
             String likePattern = "%" + keyword.toLowerCase() + "%";
             return cb.or(
-                    cb.like(cb.lower(root.get(User_.EMAIL)), likePattern),
-                    cb.like(cb.lower(root.get(User_.FULL_NAME)), likePattern),
-                    cb.like(root.get(User_.MOBILE), "%" + keyword + "%")
+                    cb.like(cb.lower(root.get("email")), likePattern),
+                    cb.like(cb.lower(root.get("fullName")), likePattern),
+                    cb.like(root.get("mobile"), "%" + keyword + "%")
             );
         };
     }
 
-    // Method để kết hợp tất cả các specifications
     public static Specification<User> withFilters(String keyword, String gender, String role, Boolean enabled) {
         return Specification.allOf(searchByContainingEmailOrFullNameOrMobileKeyword(keyword))
                 .and(searchByGender(gender))

@@ -1,14 +1,15 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.ChapterRepository;
-import com.swp391.OnlineLearning.Repository.LessonRepository;
-import com.swp391.OnlineLearning.Service.LessonService;
-import com.swp391.OnlineLearning.Service.UploadService;
-import com.swp391.OnlineLearning.Util.VideoDuration;
-import com.swp391.OnlineLearning.Model.Chapter;
-import com.swp391.OnlineLearning.Model.Lesson;
-import com.swp391.OnlineLearning.Model.dto.CreateLectureRequest;
-import com.swp391.OnlineLearning.Model.dto.CreateQuizRequest;
+import com.swp391.OnlineLearning.model.Chapter;
+import com.swp391.OnlineLearning.model.Lesson;
+import com.swp391.OnlineLearning.model.dto.AnsweredOption;
+import com.swp391.OnlineLearning.model.dto.CreateLectureRequest;
+import com.swp391.OnlineLearning.model.dto.CreateQuizRequest;
+import com.swp391.OnlineLearning.repository.ChapterRepository;
+import com.swp391.OnlineLearning.repository.LessonRepository;
+import com.swp391.OnlineLearning.service.LessonService;
+import com.swp391.OnlineLearning.service.UploadService;
+import com.swp391.OnlineLearning.util.VideoDuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

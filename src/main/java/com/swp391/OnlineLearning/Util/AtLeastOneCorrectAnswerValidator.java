@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Util;
+package com.swp391.OnlineLearning.util;
 
-import com.swp391.OnlineLearning.Model.AnswerOption;
+import com.swp391.OnlineLearning.model.AnswerOption;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

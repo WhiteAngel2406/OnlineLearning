@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.dto.ChapterLearningDTO;
+import com.swp391.OnlineLearning.model.dto.ChapterLearningDTO;
 
 import java.util.List;
 

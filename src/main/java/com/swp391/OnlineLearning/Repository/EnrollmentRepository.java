@@ -1,11 +1,11 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Enrollment;
-import com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO;
+import com.swp391.OnlineLearning.model.Enrollment;
+import com.swp391.OnlineLearning.model.dto.EnrollmentInfoDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.swp391.OnlineLearning.Model.User;
+import com.swp391.OnlineLearning.model.User;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     List<Enrollment> findByUserId(long userId);
 
-    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO( " +
+    @Query("SELECT NEW com.swp391.OnlineLearning.model.dto.EnrollmentInfoDTO( " +
             "    e.id, " +
             "    c.name, " +
             "    c.thumbnail, " +

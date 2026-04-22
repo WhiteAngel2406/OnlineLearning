@@ -1,12 +1,13 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.EnrollmentRepository;
-import com.swp391.OnlineLearning.Repository.UserLessonRepository;
-import com.swp391.OnlineLearning.Repository.UserRepository;
-import com.swp391.OnlineLearning.Service.LearningService;
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Model.dto.ChapterLearningDTO;
-import com.swp391.OnlineLearning.Model.dto.UserLessonLearningDTO;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.ChapterLearningDTO;
+import com.swp391.OnlineLearning.model.dto.UserLessonLearningDTO;
+import com.swp391.OnlineLearning.repository.EnrollmentRepository;
+import com.swp391.OnlineLearning.repository.UserLessonRepository;
+import com.swp391.OnlineLearning.repository.UserRepository;
+import com.swp391.OnlineLearning.service.LearningService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

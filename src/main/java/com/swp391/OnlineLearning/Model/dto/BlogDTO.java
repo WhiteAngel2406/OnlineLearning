@@ -1,5 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class BlogDTO {
@@ -79,6 +80,31 @@ public class BlogDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getFormattedContent() {
+        if (content == null || content.isEmpty()) {
+            return "";
+        }
+        String lowerContent = content.toLowerCase();
+        if (lowerContent.contains("<p>") || lowerContent.contains("<br") || 
+            lowerContent.contains("<h1") || lowerContent.contains("<h2") || 
+            lowerContent.contains("<h3") || lowerContent.contains("<div") ||
+            lowerContent.contains("<ul") || lowerContent.contains("<ol") ||
+            lowerContent.contains("<li")) {
+            return content;
+        }
+        
+        String[] paragraphs = content.split("\\r?\\n\\r?\\n+");
+        StringBuilder sb = new StringBuilder();
+        for (String p : paragraphs) {
+            String trimmed = p.trim();
+            if (!trimmed.isEmpty()) {
+                trimmed = trimmed.replaceAll("\\r?\\n", "<br/>");
+                sb.append("<p>").append(trimmed).append("</p>\n");
+            }
+        }
+        return sb.toString();
     }
 
     public LocalDateTime getCreatedAt() {

@@ -1,16 +1,17 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.swp391.OnlineLearning.Model.dto.FeedbackRequest;
+import com.swp391.OnlineLearning.model.dto.FeedbackRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "feedbacks") // Hoặc "reviews"
+@Getter
+@Setter
 public class Feedback extends BaseEntity{
 
     public enum FeedbackStatus {
@@ -67,6 +68,63 @@ public class Feedback extends BaseEntity{
         this.status = FeedbackStatus.APPROVED;
     }
 
+    // --- Getters and Setters ---
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public Enrollment getEnrollment() {
+        return enrollment;
+    }
+
+    public void setEnrollment(Enrollment enrollment) {
+        this.enrollment = enrollment;
+    }
+
+    public FeedbackStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(FeedbackStatus status) {
+        this.status = status;
+    }
+
+    public int getHelpfulCount() {
+        return helpfulCount;
+    }
+
+    public void setHelpfulCount(int helpfulCount) {
+        this.helpfulCount = helpfulCount;
+    }
+
+    public int getNotHelpfulCount() {
+        return notHelpfulCount;
+    }
+
+    public void setNotHelpfulCount(int notHelpfulCount) {
+        this.notHelpfulCount = notHelpfulCount;
+    }
 
     // (Đừng quên thêm equals() và hashCode() dựa trên ID!)
     @Override

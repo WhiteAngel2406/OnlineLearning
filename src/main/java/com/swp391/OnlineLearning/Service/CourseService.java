@@ -1,9 +1,9 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
 
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.dto.CourseDTO;
-import com.swp391.OnlineLearning.Model.dto.UpdateCourseDTO;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.dto.CourseDTO;
+import com.swp391.OnlineLearning.model.dto.UpdateCourseDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

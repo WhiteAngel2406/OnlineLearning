@@ -1,10 +1,10 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.UserLessonRepository;
-import com.swp391.OnlineLearning.Service.UserLessonService;
-import com.swp391.OnlineLearning.Model.*;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.UserLessonLearningDTO;
+import com.swp391.OnlineLearning.repository.UserLessonRepository;
+import com.swp391.OnlineLearning.service.UserLessonService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

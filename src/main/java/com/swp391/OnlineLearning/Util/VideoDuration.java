@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Util;
+package com.swp391.OnlineLearning.util;
 
 import org.springframework.web.multipart.MultipartFile;
 import ws.schild.jave.MultimediaObject;

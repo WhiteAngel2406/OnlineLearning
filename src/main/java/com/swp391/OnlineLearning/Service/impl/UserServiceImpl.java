@@ -1,12 +1,12 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Model.dto.UserDTO;
-import com.swp391.OnlineLearning.Repository.RoleRepository;
-import com.swp391.OnlineLearning.Repository.UserRepository;
-import com.swp391.OnlineLearning.Service.UserService;
-import com.swp391.OnlineLearning.Service.Specification.UserSpecs;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
+import com.swp391.OnlineLearning.model.dto.UserDTO;
+import com.swp391.OnlineLearning.repository.RoleRepository;
+import com.swp391.OnlineLearning.repository.UserRepository;
+import com.swp391.OnlineLearning.service.UserService;
+import com.swp391.OnlineLearning.service.specification.UserSpecs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

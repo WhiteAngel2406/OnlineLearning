@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Lesson;
+import com.swp391.OnlineLearning.model.Lesson;
 
 public class LessonResponse {
     private Long id;

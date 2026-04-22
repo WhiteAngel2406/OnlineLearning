@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(java -version)",
+      "Bash(/usr/libexec/java_home -V)",
+      "Bash(brew --version)",
+      "Bash(brew info *)",
+      "Bash(brew search *)",
+      "Read(//Library/Java/JavaVirtualMachines/**)",
+      "Read(//opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/**)",
+      "Bash(sudo ln *)",
+      "Read(//Users/mac/**)",
+      "Bash(export JAVA_HOME=\"/opt/homebrew/opt/openjdk\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "Bash(./mvnw -version)"
+    ]
+  }
+}

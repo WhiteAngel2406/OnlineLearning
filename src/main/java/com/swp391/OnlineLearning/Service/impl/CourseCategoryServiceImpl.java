@@ -1,9 +1,9 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Repository.CourseCategoryRepository;
-import com.swp391.OnlineLearning.Service.CourseCategoryService;
-import com.swp391.OnlineLearning.Service.Specification.CourseCategorySpecs;
+import com.swp391.OnlineLearning.model.CourseCategory;
+import com.swp391.OnlineLearning.repository.CourseCategoryRepository;
+import com.swp391.OnlineLearning.service.CourseCategoryService;
+import com.swp391.OnlineLearning.service.specification.CourseCategorySpecs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

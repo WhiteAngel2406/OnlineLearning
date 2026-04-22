@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;

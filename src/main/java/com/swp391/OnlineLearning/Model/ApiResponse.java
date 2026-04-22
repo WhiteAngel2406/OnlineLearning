@@ -1,13 +1,13 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ApiResponse<T> {
     private String status;
     private String message;
@@ -23,4 +23,43 @@ public class ApiResponse<T> {
         this.timestamp = LocalDateTime.now();
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }

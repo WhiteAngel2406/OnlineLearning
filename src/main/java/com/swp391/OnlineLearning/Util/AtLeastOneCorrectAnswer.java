@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Util;
+package com.swp391.OnlineLearning.util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

@@ -1,19 +1,16 @@
 package com.swp391.OnlineLearning.Config;
 
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
-    @Value("${storage.location:uploads}")
-    private String uploadLocation;
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Expose folder uploads
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:" + uploadLocation + "/");
+                .addResourceLocations("file:uploads/"); // đường dẫn tới folder uploads
     }
 }

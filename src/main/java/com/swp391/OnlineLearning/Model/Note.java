@@ -1,14 +1,16 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.swp391.OnlineLearning.Model.dto.NoteRequest;
+import com.swp391.OnlineLearning.model.dto.NoteRequest;
 import jakarta.persistence.*;
-import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "notes")
+@Getter
+@Setter
 public class Note extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +26,9 @@ public class Note extends BaseEntity{
     @JoinColumn(name = "user_lesson_id")
     private UserLesson userLesson;
 
+    public Note() {
+    }
+
     public Note(UserLesson userLesson, NoteRequest noteRequest) {
         this.timeAtLesson = noteRequest.getTimeAtLesson();
         this.content = noteRequest.getContent();
@@ -36,4 +41,35 @@ public class Note extends BaseEntity{
         this.userLesson = userLesson;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTimeAtLesson() {
+        return timeAtLesson;
+    }
+
+    public void setTimeAtLesson(String timeAtLesson) {
+        this.timeAtLesson = timeAtLesson;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public UserLesson getUserLesson() {
+        return userLesson;
+    }
+
+    public void setUserLesson(UserLesson userLesson) {
+        this.userLesson = userLesson;
+    }
 }

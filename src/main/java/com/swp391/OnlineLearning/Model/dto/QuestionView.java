@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Question;
+import com.swp391.OnlineLearning.model.Question;
 
 public class QuestionView {
     private Question question;

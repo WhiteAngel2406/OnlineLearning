@@ -1,17 +1,17 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "lessons")
+@Getter
+@Setter
 public class Lesson extends BaseEntity{
     public enum LessonType {
         LECTURE("Bài giảng"),
@@ -75,6 +75,10 @@ public class Lesson extends BaseEntity{
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 
+    public Lesson() {
+        super();
+    }
+
     public Lesson(String title, Integer orderNumber, LessonType lessonType, Integer estimatedTime, Integer passRate, Integer timeLimitInMinutes, Integer numberOfQuestions) {
         this.title = title;
         this.orderNumber = orderNumber;
@@ -96,4 +100,108 @@ public class Lesson extends BaseEntity{
         this.chapter = chapter;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
+    }
+
+    public Integer getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(Integer estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public Integer getPassRate() {
+        return passRate;
+    }
+
+    public void setPassRate(Integer passRate) {
+        this.passRate = passRate;
+    }
+
+    public Integer getTimeLimitInMinutes() {
+        return timeLimitInMinutes;
+    }
+
+    public void setTimeLimitInMinutes(Integer timeLimitInMinutes) {
+        this.timeLimitInMinutes = timeLimitInMinutes;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
+    }
+
+    public Integer getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public void setNumberOfQuestions(Integer numberOfQuestions) {
+        this.numberOfQuestions = numberOfQuestions;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 }

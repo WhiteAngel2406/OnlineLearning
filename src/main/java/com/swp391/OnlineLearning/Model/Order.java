@@ -1,13 +1,15 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
-import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order extends BaseEntity{
     public enum OrderStatus{
         PENDING("Đang chờ"),
@@ -53,4 +55,79 @@ public class Order extends BaseEntity{
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    public Order() {
+        super();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getOrderInfo() {
+        return orderInfo;
+    }
+
+    public void setOrderInfo(String orderInfo) {
+        this.orderInfo = orderInfo;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public String getVnpResponseCode() {
+        return vnpResponseCode;
+    }
+
+    public void setVnpResponseCode(String vnpResponseCode) {
+        this.vnpResponseCode = vnpResponseCode;
+    }
+
+    public String getVnpTransactionNo() {
+        return vnpTransactionNo;
+    }
+
+    public void setVnpTransactionNo(String vnpTransactionNo) {
+        this.vnpTransactionNo = vnpTransactionNo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
 }

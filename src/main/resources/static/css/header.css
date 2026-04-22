@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+=======
+/* header.css - Navigation header styles */
+:root {
+    --primary-color: #2563eb; /* Updated to premium blue */
+    --primary-hover: #1d4ed8;
+    --secondary-color: #0ea5e9;
+    --text-color: #0f172a;
+    --text-light: #64748b;
+    --bg-color: #ffffff;
+    --bg-light: #f8fafc;
+    --border-color: #e2e8f0;
+}
+>>>>>>> main
 
 header {
     background: var(--bg-color);

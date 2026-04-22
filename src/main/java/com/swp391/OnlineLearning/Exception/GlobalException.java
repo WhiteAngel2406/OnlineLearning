@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Exception;
+package com.swp391.OnlineLearning.exception;
 
-import com.swp391.OnlineLearning.Model.ApiResponse;
+import com.swp391.OnlineLearning.model.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

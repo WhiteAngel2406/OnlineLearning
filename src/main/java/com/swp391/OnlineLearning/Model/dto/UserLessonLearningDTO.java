@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Lesson;
-import com.swp391.OnlineLearning.Model.UserLesson;
+import com.swp391.OnlineLearning.model.Lesson;
+import com.swp391.OnlineLearning.model.UserLesson;
 
 public class UserLessonLearningDTO {
     private Long lessonId;

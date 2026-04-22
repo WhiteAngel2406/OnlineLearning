@@ -1,19 +1,20 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "questions")
+@Getter
+@Setter
 public class Question extends BaseEntity{
     public enum QuestionType {
         MULTIPLE_CHOICE("Trắc nghiệm nhiều lựa chọn"),
@@ -67,6 +68,9 @@ public class Question extends BaseEntity{
     @OneToOne(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private ShortAnswerOption shortAnswerOption;
 
+    public Question() {
+        super();
+    }
     public Question(String content, QuestionType questionType, MediaType mediaType, String mediaUrl, Lesson lesson) {
         this.content = content;
         this.questionType = questionType;
@@ -75,4 +79,67 @@ public class Question extends BaseEntity{
         this.lesson = lesson;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
+
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public List<AnswerOption> getAnswerOptions() {
+        return answerOptions;
+    }
+
+    public void setAnswerOptions(List<AnswerOption> answerOptions) {
+        this.answerOptions = answerOptions;
+    }
+
+    public ShortAnswerOption getShortAnswerOption() {
+        return shortAnswerOption;
+    }
+
+    public void setShortAnswerOption(ShortAnswerOption shortAnswerOption) {
+        this.shortAnswerOption = shortAnswerOption;
+    }
 }

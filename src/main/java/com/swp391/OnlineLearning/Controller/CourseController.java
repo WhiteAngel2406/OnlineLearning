@@ -1,15 +1,16 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Model.ApiResponse;
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.Enrollment;
-import com.swp391.OnlineLearning.Model.dto.CourseDTO;
-import com.swp391.OnlineLearning.Model.dto.CourseFeedbackStats;
-import com.swp391.OnlineLearning.Model.dto.FeedbackDTO;
-import com.swp391.OnlineLearning.Model.dto.UpdateCourseDTO;
-import com.swp391.OnlineLearning.Service.*;
-import com.swp391.OnlineLearning.Service.impl.EnrollmentServiceImpl;
+import com.swp391.OnlineLearning.model.ApiResponse;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.CourseCategory;
+import com.swp391.OnlineLearning.model.Enrollment;
+import com.swp391.OnlineLearning.model.dto.CourseDTO;
+import com.swp391.OnlineLearning.model.dto.CourseFeedbackStats;
+import com.swp391.OnlineLearning.model.dto.FeedbackDTO;
+import com.swp391.OnlineLearning.model.dto.UpdateCourseDTO;
+import com.swp391.OnlineLearning.model.dto.*;
+import com.swp391.OnlineLearning.service.*;
+import com.swp391.OnlineLearning.service.impl.EnrollmentServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -239,8 +240,8 @@ public class CourseController {
 
     @PostMapping("/{courseId}/cancel-review")
     public String cancleReview(@PathVariable("courseId") Long courseId,
-                               Model model,
-                               HttpSession session, RedirectAttributes redirectAttributes){
+                                   Model model,
+                                   HttpSession session, RedirectAttributes redirectAttributes){
         try{
             this.courseService.cancelReview(courseId);
             redirectAttributes.addFlashAttribute("message", "Cancel review success!");

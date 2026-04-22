@@ -1,17 +1,15 @@
-package com.swp391.OnlineLearning.Service.Specification;
+package com.swp391.OnlineLearning.service.specification;
 
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.CourseCategory_;
+import com.swp391.OnlineLearning.model.CourseCategory;
 import org.springframework.data.jpa.domain.Specification;
 
 public class CourseCategorySpecs {
     public static Specification<CourseCategory> searchByName(String name) {
         return (root, query, cb) -> {
-            if (name == null) {
+            if (name == null || name.trim().isEmpty()) {
                 return cb.conjunction();
-            } else {
-                return cb.like(root.get(CourseCategory_.NAME), "%" + name + "%");
             }
+            return cb.like(root.get("name"), "%" + name + "%");
         };
     }
 
@@ -19,9 +17,8 @@ public class CourseCategorySpecs {
         return (root, query, criteriaBuilder) -> {
             if (active == null) {
                 return criteriaBuilder.conjunction();
-            }else{
-                return criteriaBuilder.equal(root.get(CourseCategory_.ACTIVE), active);
             }
+            return criteriaBuilder.equal(root.get("active"), active);
         };
     }
 }

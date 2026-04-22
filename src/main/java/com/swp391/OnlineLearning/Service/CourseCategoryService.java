@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.CourseCategory;
+import com.swp391.OnlineLearning.model.CourseCategory;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

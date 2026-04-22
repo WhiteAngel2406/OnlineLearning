@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Service.Specification;
+package com.swp391.OnlineLearning.service.specification;
 
-import com.swp391.OnlineLearning.Model.*;
+import com.swp391.OnlineLearning.model.*;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 

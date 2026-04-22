@@ -24,12 +24,18 @@ buildNumber.properties
 .sts4-cache
 ### VS Code ###
 .vscode/
+.cursor/
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+
+*.drawio
+test.txt
+HELP.md
 openspec/
+.agents/
 .agent/
-.gitnexus
-.claude/
+.codex/
+.codex/

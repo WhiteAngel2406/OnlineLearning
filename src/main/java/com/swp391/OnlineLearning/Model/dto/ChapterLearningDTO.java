@@ -1,6 +1,7 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Chapter;
+import com.swp391.OnlineLearning.model.Chapter;
+import com.swp391.OnlineLearning.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Note;
-import com.swp391.OnlineLearning.Model.dto.NoteDTO;
-import com.swp391.OnlineLearning.Model.dto.NoteRequest;
+import com.swp391.OnlineLearning.model.Note;
+import com.swp391.OnlineLearning.model.dto.NoteDTO;
+import com.swp391.OnlineLearning.model.dto.NoteRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

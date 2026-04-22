@@ -1,6 +1,7 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.dto.BlogDTO;
+import com.swp391.OnlineLearning.model.Blog;
+import com.swp391.OnlineLearning.model.dto.BlogDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Order;
+import com.swp391.OnlineLearning.model.Order;
 
 import java.time.LocalDateTime;
 

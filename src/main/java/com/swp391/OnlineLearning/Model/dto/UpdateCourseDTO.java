@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
-import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.model.Course;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 

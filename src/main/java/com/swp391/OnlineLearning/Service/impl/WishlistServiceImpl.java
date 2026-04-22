@@ -1,12 +1,12 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.CourseRepository;
-import com.swp391.OnlineLearning.Repository.UserRepository;
-import com.swp391.OnlineLearning.Repository.WishlistRepository;
-import com.swp391.OnlineLearning.Service.WishlistService;
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.Wishlist;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.Wishlist;
+import com.swp391.OnlineLearning.repository.CourseRepository;
+import com.swp391.OnlineLearning.repository.UserRepository;
+import com.swp391.OnlineLearning.repository.WishlistRepository;
+import com.swp391.OnlineLearning.service.WishlistService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

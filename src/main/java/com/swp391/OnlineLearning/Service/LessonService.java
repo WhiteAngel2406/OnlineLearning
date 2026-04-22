@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Lesson;
-import com.swp391.OnlineLearning.Model.dto.CreateLectureRequest;
-import com.swp391.OnlineLearning.Model.dto.CreateQuizRequest;
+import com.swp391.OnlineLearning.model.Lesson;
+import com.swp391.OnlineLearning.model.dto.CreateLectureRequest;
+import com.swp391.OnlineLearning.model.dto.CreateQuizRequest;
 import jakarta.validation.Valid;
 
 public interface LessonService {

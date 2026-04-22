@@ -1,7 +1,8 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Wishlist;
-
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.Wishlist;
 import java.util.List;
 import java.util.Optional;
 

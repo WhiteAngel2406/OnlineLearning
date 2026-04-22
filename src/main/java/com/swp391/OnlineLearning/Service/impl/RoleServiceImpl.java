@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Repository.RoleRepository;
-import com.swp391.OnlineLearning.Service.RoleService;
+import com.swp391.OnlineLearning.model.UserRole;
+import com.swp391.OnlineLearning.repository.RoleRepository;
+import com.swp391.OnlineLearning.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Note;
-import com.swp391.OnlineLearning.Model.dto.NoteDTO;
+import com.swp391.OnlineLearning.model.Note;
+import com.swp391.OnlineLearning.model.dto.NoteDTO;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface NoteRepository extends JpaRepository<Note, Long> {
-    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.NoteDTO( " +
+    @Query("SELECT NEW com.swp391.OnlineLearning.model.dto.NoteDTO( " +
             "    n.id, " +
             "    n.content, " +
             "    n.timeAtLesson, " +

@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Service.*;
-import com.swp391.OnlineLearning.Model.dto.*;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.*;
+import com.swp391.OnlineLearning.service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
@@ -82,10 +82,10 @@ public class UserController {
 
     @PostMapping("/updateProfile")
     public String handleUpdateProfile(@Valid @ModelAttribute("updatedUser") User updatedUser,
-                                      BindingResult bindingResult,
-                                      @RequestParam("avatarFile") MultipartFile avatarFile,
-                                      Principal principal,
-                                      RedirectAttributes redirectAttributes) {
+            BindingResult bindingResult,
+            @RequestParam("avatarFile") MultipartFile avatarFile,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "user/updateProfile";
@@ -117,15 +117,15 @@ public class UserController {
     @PostMapping("/courses/{courseId}/changeWishlist")
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> changeWishlistStatus(@PathVariable("courseId") Long courseId,
-                                                                  @RequestParam("add-to-wishlist") boolean addToWishlist,
-                                                                  HttpSession session){
+                                                            @RequestParam("add-to-wishlist") boolean addToWishlist,
+                                                            HttpSession session){
         try{
             Long userId = (Long) session.getAttribute("currentUserId");
             User currentUser = this.userService.getUserById(userId);
             Course currentCourse = this.courseSerive.findById(courseId);
             if (!addToWishlist){
                 Optional<Wishlist> wishlist = this.wishlistService.findByUserIdAndCourseId(userId, courseId);
-                wishlist.ifPresent(w -> wishlistService.delete(w.getId()));
+                wishlist.ifPresent(value -> this.wishlistService.delete(value.getId()));
             }else{
                 Wishlist newWishlist = this.wishlistService.createNew(userId, courseId);
             }
@@ -306,8 +306,8 @@ public class UserController {
     @PutMapping("/api/notes/{noteId}")
     @ResponseBody
     public ResponseEntity<ApiResponse<String>> updateNote(@PathVariable("noteId") long noteId,
-                                                          @RequestBody String content,
-                                                          HttpSession session){
+                                                        @RequestBody String content,
+                                                        HttpSession session){
         try{
             Long userId = (Long) session.getAttribute("currentUserId");
             if (userId == null){

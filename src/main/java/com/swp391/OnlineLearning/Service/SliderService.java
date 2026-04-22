@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Slider;
-import com.swp391.OnlineLearning.Model.dto.SliderDTO;
-import com.swp391.OnlineLearning.Model.dto.SliderCreateUpdateDto;
+import com.swp391.OnlineLearning.model.Slider;
+import com.swp391.OnlineLearning.model.dto.SliderDTO;
+import com.swp391.OnlineLearning.model.dto.SliderCreateUpdateDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

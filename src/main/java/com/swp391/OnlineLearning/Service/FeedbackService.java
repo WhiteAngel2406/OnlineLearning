@@ -1,11 +1,14 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.dto.CourseFeedbackStats;
-import com.swp391.OnlineLearning.Model.dto.FeedbackDTO;
-import com.swp391.OnlineLearning.Model.dto.FeedbackRequest;
+import com.swp391.OnlineLearning.model.Feedback;
+import com.swp391.OnlineLearning.model.dto.CourseFeedbackStats;
+import com.swp391.OnlineLearning.model.dto.FeedbackDTO;
+import com.swp391.OnlineLearning.model.dto.FeedbackRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface FeedbackService {
     void handleSave(long enrollmentId, FeedbackRequest feedbackRequest);

@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Service;
 
-import com.swp391.OnlineLearning.Model.User;
+import com.swp391.OnlineLearning.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

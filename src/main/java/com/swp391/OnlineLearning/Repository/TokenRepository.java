@@ -1,6 +1,6 @@
 package com.swp391.OnlineLearning.Repository;
 
-import com.swp391.OnlineLearning.Model.Token;
+import com.swp391.OnlineLearning.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

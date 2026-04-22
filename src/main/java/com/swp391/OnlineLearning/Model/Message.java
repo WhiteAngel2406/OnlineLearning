@@ -1,17 +1,14 @@
-package com.swp391.OnlineLearning.Model;
-
-import jakarta.persistence.*;
+package com.swp391.OnlineLearning.model;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "messages")
+@Getter
+@Setter
 public class Message {
 
     @Id
@@ -34,6 +31,11 @@ public class Message {
 
     private String fileURl;
 
+
+
+    public Message() {
+    }
+
     public Message(Long id, Chat chat, User sender, String content, LocalDateTime createdAt, String fileURl) {
         this.id = id;
         this.chat = chat;
@@ -43,5 +45,52 @@ public class Message {
         this.fileURl = fileURl;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getFileURl() {
+        return fileURl;
+    }
+
+    public void setFileURl(String fileURl) {
+        this.fileURl = fileURl;
+    }
 }
 

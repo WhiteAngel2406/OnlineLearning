@@ -1,8 +1,9 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.BlogRepository;
-import com.swp391.OnlineLearning.Service.BlogService;
-import com.swp391.OnlineLearning.Model.dto.BlogDTO;
+import com.swp391.OnlineLearning.model.Blog;
+import com.swp391.OnlineLearning.model.dto.BlogDTO;
+import com.swp391.OnlineLearning.repository.BlogRepository;
+import com.swp391.OnlineLearning.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

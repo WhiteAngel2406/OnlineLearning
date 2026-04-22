@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Config/VNPayConfig.java
 package com.swp391.OnlineLearning.Config;
+=======
+package com.swp391.OnlineLearning.config;
+>>>>>>> main:src/main/java/com/swp391/OnlineLearning/config/VNPayConfig.java
 
 import jakarta.servlet.http.HttpServletRequest;
 

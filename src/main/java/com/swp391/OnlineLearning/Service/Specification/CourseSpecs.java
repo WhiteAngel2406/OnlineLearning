@@ -1,9 +1,8 @@
-package com.swp391.OnlineLearning.Service.Specification;
+package com.swp391.OnlineLearning.service.specification;
 
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.Course_;
-import com.swp391.OnlineLearning.Model.User;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.CourseCategory;
+import com.swp391.OnlineLearning.model.User;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,24 +10,20 @@ import org.springframework.data.jpa.domain.Specification;
 public class CourseSpecs {
     public static Specification<Course> hasStatus(Course.CourseStatus status) {
         return (root, query, criteriaBuilder) -> {
-            // Nếu status là null, không áp dụng điều kiện lọc này
             if (status == null) {
-                return criteriaBuilder.conjunction(); // Tương đương với WHERE 1=1 (luôn đúng)
+                return criteriaBuilder.conjunction();
             }
-            // Tạo điều kiện: root.get("status") == status
-            // "status" là tên của thuộc tính trong class Course
-            Predicate statusPredicate = criteriaBuilder.equal(root.get(Course_.STATUS), status);
-            return statusPredicate;
+            return criteriaBuilder.equal(root.get("status"), status);
         };
     }
 
     public static Specification<Course> hasNameContaining(String keyword) {
-        return ((root, query, criteriaBuilder) ->{
+        return (root, query, criteriaBuilder) -> {
             if (keyword == null || keyword.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.like(root.get(Course_.NAME), "%" + keyword + "%");
-        });
+            return criteriaBuilder.like(root.get("name"), "%" + keyword + "%");
+        };
     }
 
     public static Specification<Course> hasCategoryId(Long categoryId) {
@@ -36,7 +31,6 @@ public class CourseSpecs {
             if (categoryId == null) {
                 return criteriaBuilder.conjunction();
             }
-            // Thực hiện JOIN đến bảng CourseCategory thông qua trường "category"
             Join<Course, CourseCategory> categoryJoin = root.join("category");
             return criteriaBuilder.equal(categoryJoin.get("id"), categoryId);
         };

@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
 public class SliderDTO {
     private Integer id;

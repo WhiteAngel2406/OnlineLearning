@@ -1,17 +1,32 @@
+<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/QuizAttempt.java
 package com.swp391.OnlineLearning.Model;
 
 
 import jakarta.persistence.*;
 import lombok.*;
+=======
+package com.swp391.OnlineLearning.model;
+import lombok.Getter;
+import lombok.Setter;
+
+
+import jakarta.persistence.*;
+>>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/QuizAttempt.java
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/QuizAttempt.java
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+=======
+@Entity
+@Getter
+@Setter
+>>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/QuizAttempt.java
 public class QuizAttempt {
     @Id
     @GeneratedValue
@@ -31,6 +46,11 @@ public class QuizAttempt {
     @OneToMany(mappedBy = "quizAttempt", cascade = CascadeType.ALL)
     private List<QuizAttemptQuestion> questions = new ArrayList<>();
 
+<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/QuizAttempt.java
+=======
+    public QuizAttempt() {
+    }
+>>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/QuizAttempt.java
     public QuizAttempt(User user, Lesson lesson, LocalDateTime startTime, LocalDateTime endTime, Double score, Boolean passed, List<QuizAttemptQuestion> questions) {
         this.user = user;
         this.lesson = lesson;
@@ -53,5 +73,79 @@ public class QuizAttempt {
         this.questions = questions;
     }
 
+<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/QuizAttempt.java
+=======
+    public LocalDateTime getCompletedTime() {
+        return completedTime;
+    }
+
+    public void setCompletedTime(LocalDateTime completedTime) {
+        this.completedTime = completedTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public Boolean getPassed() {
+        return passed;
+    }
+
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
+    }
+
+    public List<QuizAttemptQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuizAttemptQuestion> questions) {
+        this.questions = questions;
+    }
+>>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/QuizAttempt.java
 }
 

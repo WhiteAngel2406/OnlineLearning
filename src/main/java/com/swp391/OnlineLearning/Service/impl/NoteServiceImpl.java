@@ -1,15 +1,16 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.NoteRepository;
-import com.swp391.OnlineLearning.Repository.UserLessonRepository;
-import com.swp391.OnlineLearning.Service.NoteService;
-import com.swp391.OnlineLearning.Model.Note;
-import com.swp391.OnlineLearning.Model.UserLesson;
-import com.swp391.OnlineLearning.Model.dto.NoteDTO;
-import com.swp391.OnlineLearning.Model.dto.NoteRequest;
+import com.swp391.OnlineLearning.model.Note;
+import com.swp391.OnlineLearning.model.UserLesson;
+import com.swp391.OnlineLearning.model.dto.NoteDTO;
+import com.swp391.OnlineLearning.model.dto.NoteRequest;
+import com.swp391.OnlineLearning.repository.NoteRepository;
+import com.swp391.OnlineLearning.repository.UserLessonRepository;
+import com.swp391.OnlineLearning.service.NoteService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service

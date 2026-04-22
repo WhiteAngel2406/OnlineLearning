@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Config.StorageProperties;
-import com.swp391.OnlineLearning.Service.UploadService;
+import com.swp391.OnlineLearning.config.StorageProperties;
+import com.swp391.OnlineLearning.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

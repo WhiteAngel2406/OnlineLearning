@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Blog;
-import com.swp391.OnlineLearning.Model.dto.BlogDTO;
+import com.swp391.OnlineLearning.model.Blog;
+import com.swp391.OnlineLearning.model.dto.BlogDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface BlogRepository extends JpaRepository<Blog, Long> {
     @Query("""
-        Select new com.swp391.OnlineLearning.Model.dto.BlogDTO(
+        Select new com.swp391.OnlineLearning.model.dto.BlogDTO(
             b.id,
             a.avatar,
             a.fullName,
@@ -32,7 +32,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     Page<BlogDTO> findAllPublishedByCategory_Slug(@Param("slug") String slug, Pageable pageable);
 
     @Query("""
-        Select new com.swp391.OnlineLearning.Model.dto.BlogDTO(
+        Select new com.swp391.OnlineLearning.model.dto.BlogDTO(
             b.id,
             a.avatar,
             a.fullName,
@@ -52,7 +52,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     BlogDTO findPublishedBlogById(@Param("id") Long id);
 
     @Query("""
-        Select new com.swp391.OnlineLearning.Model.dto.BlogDTO(
+        Select new com.swp391.OnlineLearning.model.dto.BlogDTO(
             b.id,
             a.avatar,
             a.fullName,

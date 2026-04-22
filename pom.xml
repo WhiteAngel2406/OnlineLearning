@@ -27,7 +27,12 @@
 		<url/>
 	</scm>
 	<properties>
+<<<<<<< HEAD
 		<java.version>25</java.version>
+=======
+		<java.version>17</java.version>
+		<lombok.version>1.18.44</lombok.version>
+>>>>>>> main
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,11 +79,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate.orm</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<scope>provided</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>ws.schild</groupId>
 			<artifactId>jave-core</artifactId>
@@ -89,16 +90,19 @@
 			<artifactId>jave-nativebin-win64</artifactId>
 			<version>3.5.0</version>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>ws.schild</groupId>
 			<artifactId>jave-nativebin-linux64</artifactId>
 			<version>3.5.0</version>
 		</dependency>
 		<!-- Source: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+=======
+>>>>>>> main
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.42</version>
+			<version>1.18.44</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -131,7 +135,11 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+<<<<<<< HEAD
 							<version>1.18.42</version>
+=======
+							<version>1.18.44</version>
+>>>>>>> main
 						</path>
 						<path>
 							<groupId>org.hibernate.orm</groupId>
@@ -143,5 +151,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

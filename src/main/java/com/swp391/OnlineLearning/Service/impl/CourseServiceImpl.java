@@ -1,15 +1,15 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.dto.CourseDTO;
-import com.swp391.OnlineLearning.Model.dto.UpdateCourseDTO;
-import com.swp391.OnlineLearning.Repository.CourseCategoryRepository;
-import com.swp391.OnlineLearning.Repository.CourseRepository;
-import com.swp391.OnlineLearning.Service.CourseService;
-import com.swp391.OnlineLearning.Service.UploadService;
-import com.swp391.OnlineLearning.Service.UserService;
-import com.swp391.OnlineLearning.Service.Specification.CourseSpecs;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.dto.CourseDTO;
+import com.swp391.OnlineLearning.model.dto.UpdateCourseDTO;
+import com.swp391.OnlineLearning.repository.CourseCategoryRepository;
+import com.swp391.OnlineLearning.repository.CourseRepository;
+import com.swp391.OnlineLearning.service.CourseService;
+import com.swp391.OnlineLearning.service.UploadService;
+import com.swp391.OnlineLearning.service.UserService;
+import com.swp391.OnlineLearning.service.specification.CourseSpecs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

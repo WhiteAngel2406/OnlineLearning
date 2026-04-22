@@ -1,7 +1,13 @@
-package com.swp391.OnlineLearning.Config;
+package com.swp391.OnlineLearning.config;
 
+<<<<<<< HEAD
 import com.swp391.OnlineLearning.Service.SessionService;
 import com.swp391.OnlineLearning.Service.UserService;
+=======
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.service.SessionService;
+import com.swp391.OnlineLearning.service.UserService;
+>>>>>>> main
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +23,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -47,18 +54,19 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
     // This method determines the target URL based on the user's roles
     protected String determineTargetUrl(final Authentication authentication) {
-
-        Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put("ROLE_USER", "/");
-        roleTargetUrlMap.put("ROLE_EXPERT", "/");
-        roleTargetUrlMap.put("ROLE_MARKETING", "/");
-        roleTargetUrlMap.put("ROLE_ADMIN", "/admin");
+        User currentUser = (User) authentication.getPrincipal();
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();
-            if (roleTargetUrlMap.containsKey(authorityName)) {
-                return roleTargetUrlMap.get(authorityName);
+            if (authorityName.equals("ROLE_ADMIN")) {
+                return "/admin";
+            } else if (authorityName.equals("ROLE_MARKETING")) {
+                return "/marketing";
+            } else if (authorityName.equals("ROLE_EXPERT")) {
+                return "/courses/users/" + currentUser.getId();
+            } else if (authorityName.equals("ROLE_USER")) {
+                return "/";
             }
         }
 

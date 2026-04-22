@@ -1,9 +1,11 @@
-package com.swp391.OnlineLearning.Service.Specification;
+package com.swp391.OnlineLearning.service.specification;
 
-import com.swp391.OnlineLearning.Model.Order;
+import com.swp391.OnlineLearning.model.Order;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class OrderSpecs {
 

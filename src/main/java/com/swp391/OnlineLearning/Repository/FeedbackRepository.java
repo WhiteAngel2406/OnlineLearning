@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.Enrollment;
-import com.swp391.OnlineLearning.Model.Feedback;
-import com.swp391.OnlineLearning.Model.dto.FeedbackDTO;
+import com.swp391.OnlineLearning.model.Enrollment;
+import com.swp391.OnlineLearning.model.Feedback;
+import com.swp391.OnlineLearning.model.dto.FeedbackDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,7 +15,7 @@ import java.util.List;
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     Feedback findByEnrollment(Enrollment enrollment);
 
-    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.FeedbackDTO( " +
+    @Query("SELECT NEW com.swp391.OnlineLearning.model.dto.FeedbackDTO( " +
             "    f.id, " +
             "    u.fullName, " +
             "    u.avatar, " +
@@ -37,7 +37,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findByCourseId(Long courseId);
 
     Page<Feedback> findAll(Specification<Feedback> feedbackSpecification, Pageable pageable);
-    @Query("SELECT NEW com.swp391.OnlineLearning.Model.dto.FeedbackDTO( " +
+    @Query("SELECT NEW com.swp391.OnlineLearning.model.dto.FeedbackDTO( " +
             "    f.id, " +
             "    u.fullName, " +
             "    u.avatar, " +

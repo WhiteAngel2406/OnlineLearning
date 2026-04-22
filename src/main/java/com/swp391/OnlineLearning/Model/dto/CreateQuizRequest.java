@@ -1,6 +1,7 @@
-package com.swp391.OnlineLearning.Model.dto;
+package com.swp391.OnlineLearning.model.dto;
 
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 public class CreateQuizRequest {
     @NotBlank(message = "Vui lòng nhập tên bài học")

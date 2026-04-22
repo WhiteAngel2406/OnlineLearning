@@ -1,11 +1,10 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Enrollment;
-import com.swp391.OnlineLearning.Model.Order;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO;
-import com.swp391.OnlineLearning.Model.dto.EnrollmentLearningDTO;
-
+import com.swp391.OnlineLearning.model.Enrollment;
+import com.swp391.OnlineLearning.model.Order;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.dto.EnrollmentInfoDTO;
+import com.swp391.OnlineLearning.model.dto.EnrollmentLearningDTO;
 
 import java.util.List;
 
