@@ -34,18 +34,18 @@ public class MarketingController {
     @GetMapping("")
     public String marketingDashboard(Model model, Principal principal, HttpSession session) {
         try {
-            // Lấy thông tin user hiện tại
+            // Láº¥y thÃ´ng tin user hiá»‡n táº¡i
 //            User currentUser = userService.findByEmailAndEnabledTrue(principal.getName()).orElseThrow();
             Long userId = (Long) session.getAttribute("currentUserId");
             User currentUser = userService.getUserById(userId);
             model.addAttribute("currentUser", currentUser);
 
-            // Lấy danh sách sliders để quản lý (lấy tất cả, không phân trang)
+            // Láº¥y danh sÃ¡ch sliders Ä‘á»ƒ quáº£n lÃ½ (láº¥y táº¥t cáº£, khÃ´ng phÃ¢n trang)
             Page<Slider> sliderPage = sliderService.getSliders("", null, 0, 1000);
             List<Slider> sliders = sliderPage.getContent();
             model.addAttribute("sliders", sliders);
 
-            // Thống kê cơ bản
+            // Thá»‘ng kÃª cÆ¡ báº£n
             long totalSliders = sliders.size();
             long activeSliders = sliders.stream().filter(s -> s.getStatus().equals("SHOW")).count();
 
@@ -78,7 +78,7 @@ public class MarketingController {
             model.addAttribute("currentPage", page);
             model.addAttribute("currentSize", size);
 
-            // Tính toán số trang để hiển thị
+            // TÃ­nh toÃ¡n sá»‘ trang Ä‘á»ƒ hiá»ƒn thá»‹
             int totalPages = sliderPage.getTotalPages();
             int startPage = Math.max(0, page - 2);
             int endPage = Math.min(totalPages - 1, page + 2);
@@ -104,22 +104,22 @@ public class MarketingController {
         return "redirect:/marketing/sliders";
     }
 
-    // Hiển thị form tạo slider mới
+    // Hiá»ƒn thá»‹ form táº¡o slider má»›i
     @GetMapping("/sliders/create")
     public String createSliderForm(Model model) {
         model.addAttribute("slider", new SliderCreateUpdateDto());
         return "slider/create";
     }
 
-    // Xử lý tạo slider mới
+    // Xá»­ lÃ½ táº¡o slider má»›i
     @PostMapping("/sliders/create")
     public String createSlider(@ModelAttribute SliderCreateUpdateDto dto, RedirectAttributes redirectAttributes) {
         try {
             sliderService.createSlider(dto);
-            redirectAttributes.addFlashAttribute("success", "Tạo slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "Táº¡o slider thÃ nh cÃ´ng!");
             return "redirect:/marketing/sliders";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi tạo slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi táº¡o slider: " + e.getMessage());
             return "redirect:/marketing/create";
         }
     }
@@ -144,15 +144,15 @@ public class MarketingController {
         }
     }
 
-    // Xử lý cập nhật slider
+    // Xá»­ lÃ½ cáº­p nháº­t slider
     @PostMapping("/sliders/update/{id}")
     public String updateSlider(@PathVariable Long id, @ModelAttribute SliderCreateUpdateDto dto, RedirectAttributes redirectAttributes) {
         try {
             sliderService.updateSliderWithFile(id, dto);
-            redirectAttributes.addFlashAttribute("success", "Cập nhật slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "Cáº­p nháº­t slider thÃ nh cÃ´ng!");
             return "redirect:/marketing/sliders";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi cáº­p nháº­t slider: " + e.getMessage());
             return "redirect:/marketing/sliders/update/" + id;
         }
     }

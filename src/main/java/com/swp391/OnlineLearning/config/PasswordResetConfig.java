@@ -15,11 +15,11 @@ public class PasswordResetConfig {
     @Bean
     public CommandLineRunner resetPasswords(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            System.out.println("========== BẮT ĐẦU RESET MẬT KHẨU ==========");
+            System.out.println("========== Báº®T Äáº¦U RESET Máº¬T KHáº¨U ==========");
             List<User> users = userRepository.findAll();
             boolean updated = false;
             
-            // Mã hóa mật khẩu "password123" bằng BCryptPasswordEncoder đã được cấu hình trong project
+            // MÃ£ hÃ³a máº­t kháº©u "password123" báº±ng BCryptPasswordEncoder Ä‘Ã£ Ä‘Æ°á»£c cáº¥u hÃ¬nh trong project
             String newEncodedPassword = passwordEncoder.encode("password123");
             
             for (User user : users) {
@@ -29,11 +29,11 @@ public class PasswordResetConfig {
             
             if (updated) {
                 userRepository.saveAll(users);
-                System.out.println("Thành công: Đã đổi mật khẩu của toàn bộ tài khoản (" + users.size() + " accounts) thành 'password123'.");
+                System.out.println("ThÃ nh cÃ´ng: ÄÃ£ Ä‘á»•i máº­t kháº©u cá»§a toÃ n bá»™ tÃ i khoáº£n (" + users.size() + " accounts) thÃ nh 'password123'.");
             } else {
-                System.out.println("Không tìm thấy người dùng nào trong database.");
+                System.out.println("KhÃ´ng tÃ¬m tháº¥y ngÆ°á»i dÃ¹ng nÃ o trong database.");
             }
-            System.out.println("========== KẾT THÚC RESET MẬT KHẨU ==========");
+            System.out.println("========== Káº¾T THÃšC RESET Máº¬T KHáº¨U ==========");
         };
     }
 }

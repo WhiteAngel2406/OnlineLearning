@@ -1,13 +1,8 @@
 package com.swp391.OnlineLearning.config;
 
-<<<<<<< HEAD
-import com.swp391.OnlineLearning.Service.SessionService;
-import com.swp391.OnlineLearning.Service.UserService;
-=======
 import com.swp391.OnlineLearning.model.User;
 import com.swp391.OnlineLearning.service.SessionService;
 import com.swp391.OnlineLearning.service.UserService;
->>>>>>> main
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -75,7 +70,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
     // This method clears the authentication attributes from the session
     protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
-        HttpSession session = request.getSession(false);// lấy session hiện tại nếu có, nếu không có thì trả về null
+        HttpSession session = request.getSession(false);// láº¥y session hiá»‡n táº¡i náº¿u cÃ³, náº¿u khÃ´ng cÃ³ thÃ¬ tráº£ vá» null
         if (session == null) {
             return;
         }

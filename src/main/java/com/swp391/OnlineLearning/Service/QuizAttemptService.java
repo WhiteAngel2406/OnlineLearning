@@ -1,10 +1,10 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.Lesson;
-import com.swp391.OnlineLearning.Model.Question;
-import com.swp391.OnlineLearning.Model.QuizAttempt;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.dto.AnsweredOption;
+import com.swp391.OnlineLearning.model.Lesson;
+import com.swp391.OnlineLearning.model.Question;
+import com.swp391.OnlineLearning.model.QuizAttempt;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.dto.AnsweredOption;
 
 import java.util.List;
 import java.util.Map;

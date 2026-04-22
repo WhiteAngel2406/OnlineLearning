@@ -98,7 +98,7 @@ public class ChatController {
             return "redirect:/";
         }
         User user = userService.getUserById(userId);
-        // Gán thành viên vào nhóm
+        // GÃ¡n thÃ nh viÃªn vÃ o nhÃ³m
         //Avatar
         if(avatarFile != null&&!avatarFile.isEmpty()){
             chat.setAvatar(uploadService.uploadImage(avatarFile, "chats/avatars/"));

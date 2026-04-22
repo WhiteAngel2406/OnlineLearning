@@ -38,7 +38,7 @@ public class EnrollmentInfoDTO {
         this.totalLessons = totalLessons;
         this.completedLessons = completedLessons;
 
-        // ✅ FIX chuẩn
+        // âœ… FIX chuáº©n
         if (totalLessons > 0) {
             this.progress = (int) Math.round((completedLessons * 100.0) / totalLessons);
         } else {

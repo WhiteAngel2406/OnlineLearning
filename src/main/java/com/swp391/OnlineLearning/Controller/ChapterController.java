@@ -1,10 +1,10 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Service.ChapterService;
-import com.swp391.OnlineLearning.Service.CourseService;
-import com.swp391.OnlineLearning.Model.ApiResponse;
-import com.swp391.OnlineLearning.Model.Chapter;
-import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.service.ChapterService;
+import com.swp391.OnlineLearning.service.CourseService;
+import com.swp391.OnlineLearning.model.ApiResponse;
+import com.swp391.OnlineLearning.model.Chapter;
+import com.swp391.OnlineLearning.model.Course;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,12 +26,12 @@ public class ChapterController {
     }
 
     public static class CreateChapterRequest {
-        @NotBlank(message = "Vui lòng nhập tên chương")
-        @Size(min = 5, max = 100, message = "Độ dài tên chương phải từ 5-100 kí tự")
+        @NotBlank(message = "Vui lÃ²ng nháº­p tÃªn chÆ°Æ¡ng")
+        @Size(min = 5, max = 100, message = "Äá»™ dÃ i tÃªn chÆ°Æ¡ng pháº£i tá»« 5-100 kÃ­ tá»±")
         private String name;
 
-        @NotBlank(message = "Vui lòng nhập mô tả")
-        @Size(min = 10, max = 200, message = "Độ dài mô tả phải từ 10-200 kí tự")
+        @NotBlank(message = "Vui lÃ²ng nháº­p mÃ´ táº£")
+        @Size(min = 10, max = 200, message = "Äá»™ dÃ i mÃ´ táº£ pháº£i tá»« 10-200 kÃ­ tá»±")
         private String shortDescription;
 
        public String getName() {
@@ -159,11 +159,11 @@ public class ChapterController {
                                                                @PathVariable("chapterId") Long chapterId) {
         try{
             this.chapterService.deleteChapterAndReorder(courseId, chapterId);
-            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.OK, "Xóa chương thành công", null, null);
+            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.OK, "XÃ³a chÆ°Æ¡ng thÃ nh cÃ´ng", null, null);
             return ResponseEntity.ok(response);
         }catch (Exception e){
             ApiResponse<Void> response = new ApiResponse<>(HttpStatus.BAD_REQUEST,
-                    "Không thể xóa chương học!", null, null);
+                    "KhÃ´ng thá»ƒ xÃ³a chÆ°Æ¡ng há»c!", null, null);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }

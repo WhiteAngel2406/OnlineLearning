@@ -35,7 +35,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course buildNewCourse(CourseDTO courseDTO, Long authorId) {
         User author = this.userService.getUserById(authorId);
-        if (this.courseRepository.existsByName(courseDTO.getName())) throw new IllegalArgumentException("Tên khóa học " + courseDTO.getName() + " đã tồn tại.");
+        if (this.courseRepository.existsByName(courseDTO.getName())) throw new IllegalArgumentException("TÃªn khÃ³a há»c " + courseDTO.getName() + " Ä‘Ã£ tá»“n táº¡i.");
         if (courseDTO.getThumbnailFile() == null && courseDTO.getThumbnailFile().isEmpty()) throw new IllegalArgumentException("Course thumbnail is required");
 
         Course course = new Course();

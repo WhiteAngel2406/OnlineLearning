@@ -7,13 +7,13 @@ import jakarta.validation.constraints.NotNull;
 
 public class FeedbackRequest {
     @NotNull
-    @Min(value = 1, message = "Vui lòng đánh giá từ 1-5 sao.")
-    @Max(value = 5, message = "Vui lòng đánh giá từ 1-5 sao.")
+    @Min(value = 1, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
+    @Max(value = 5, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
     @Column(nullable = false)
     private Integer rating;
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
-    @NotNull(message = "Vui lòng nhập nội dung đánh giá.")
+    @NotNull(message = "Vui lÃ²ng nháº­p ná»™i dung Ä‘Ã¡nh giÃ¡.")
     private String review;
 
     public Integer getRating() {

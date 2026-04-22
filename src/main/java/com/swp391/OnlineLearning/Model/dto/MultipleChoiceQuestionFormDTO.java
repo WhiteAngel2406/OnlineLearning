@@ -13,15 +13,15 @@ import java.util.List;
 
 @ValidMediaType
 public class MultipleChoiceQuestionFormDTO {
-    @NotBlank(message = "Vui lòng nhập nội dung câu hỏi")
+    @NotBlank(message = "Vui lÃ²ng nháº­p ná»™i dung cÃ¢u há»i")
     private String content;
 
-    @NotNull(message = "Vui lòng chọn loại media kèm theo")
+    @NotNull(message = "Vui lÃ²ng chá»n loáº¡i media kÃ¨m theo")
     private Question.MediaType mediaType;
 
     private MultipartFile media;
 
-    @AtLeastOneCorrectAnswer(message = "Câu hỏi cần có ít nhất 1 đáp án đúng")
+    @AtLeastOneCorrectAnswer(message = "CÃ¢u há»i cáº§n cÃ³ Ã­t nháº¥t 1 Ä‘Ã¡p Ã¡n Ä‘Ãºng")
     private List<AnswerOption> answerOptions = new ArrayList<>();
 
     public MultipleChoiceQuestionFormDTO() {

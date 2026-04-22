@@ -121,7 +121,7 @@ public class LessonServiceImpl implements LessonService {
         }
         this.lessonRepository.delete(lessonToDelete);
 
-        //cập nhật lại orderNumber cho các lesson còn lại
+        //cáº­p nháº­t láº¡i orderNumber cho cÃ¡c lesson cÃ²n láº¡i
         List<Lesson> remainingLessons = this.lessonRepository.findByChapterIdOrderByOrderNumberAsc(chapterId);
         for (int i = 0; i < remainingLessons.size(); i++) {
             Lesson lesson = remainingLessons.get(i);

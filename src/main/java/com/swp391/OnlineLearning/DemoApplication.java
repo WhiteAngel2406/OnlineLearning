@@ -1,18 +1,10 @@
 package com.swp391.OnlineLearning;
 
-<<<<<<< HEAD
-import com.swp391.OnlineLearning.Config.StorageProperties;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Repository.RoleRepository;
-import com.swp391.OnlineLearning.Repository.UserRepository;
-=======
 import com.swp391.OnlineLearning.config.StorageProperties;
 import com.swp391.OnlineLearning.model.User;
 import com.swp391.OnlineLearning.model.UserRole;
 import com.swp391.OnlineLearning.repository.RoleRepository;
 import com.swp391.OnlineLearning.repository.UserRepository;
->>>>>>> main
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,20 +32,7 @@ public class DemoApplication {
 								   com.swp391.OnlineLearning.repository.SliderRepository sliderRepository,
 								   PasswordEncoder passwordEncoder) {
 		return args -> {
-<<<<<<< HEAD
-			// Chỉ tạo dữ liệu nếu chưa có
 
-			User admin = userRepository.findByEmail("admin@example.com").orElse(new User());
-			admin.setPassword(passwordEncoder.encode("123"));
-			User expert = userRepository.findByEmail("expert@example.com").orElse(new User());
-			expert.setPassword(passwordEncoder.encode("123"));
-			User marketing = userRepository.findByEmail("marketing@example.com").orElse(new User());
-			marketing.setPassword(passwordEncoder.encode("123"));
-			User user = userRepository.findByEmail("user@example.com").orElse(new User());
-			user.setPassword(passwordEncoder.encode("123"));
-			userRepository.saveAll(List.of(admin, expert, user, marketing));
-			System.out.println(">>> Đã tạo dữ liệu người dùng mẫu!");
-=======
 			// Create roles if not exist
 			UserRole adminRole = roleRepository.findByName("ADMIN").orElseGet(() -> roleRepository.save(new UserRole("ADMIN", "Administrator role")));
 			UserRole expertRole = roleRepository.findByName("EXPERT").orElseGet(() -> roleRepository.save(new UserRole("EXPERT", "Expert role")));
@@ -82,33 +61,33 @@ public class DemoApplication {
 
 			// Seed Course Categories
 			if (categoryRepository.count() == 0) {
-				com.swp391.OnlineLearning.model.CourseCategory c1 = new com.swp391.OnlineLearning.model.CourseCategory("Tiếng Anh Giao Tiếp", "Các khóa học cải thiện kỹ năng giao tiếp tiếng Anh cơ bản và nâng cao", true);
-				com.swp391.OnlineLearning.model.CourseCategory c2 = new com.swp391.OnlineLearning.model.CourseCategory("Luyện thi IELTS", "Chinh phục IELTS với các chiến lược làm bài hiệu quả", true);
-				com.swp391.OnlineLearning.model.CourseCategory c3 = new com.swp391.OnlineLearning.model.CourseCategory("Từ Vựng & Ngữ Pháp", "Củng cố nền tảng ngữ pháp và mở rộng vốn từ vựng tiếng Anh", true);
+				com.swp391.OnlineLearning.model.CourseCategory c1 = new com.swp391.OnlineLearning.model.CourseCategory("Tiáº¿ng Anh Giao Tiáº¿p", "CÃ¡c khÃ³a há»c cáº£i thiá»‡n ká»¹ nÄƒng giao tiáº¿p tiáº¿ng Anh cÆ¡ báº£n vÃ  nÃ¢ng cao", true);
+				com.swp391.OnlineLearning.model.CourseCategory c2 = new com.swp391.OnlineLearning.model.CourseCategory("Luyá»‡n thi IELTS", "Chinh phá»¥c IELTS vá»›i cÃ¡c chiáº¿n lÆ°á»£c lÃ m bÃ i hiá»‡u quáº£", true);
+				com.swp391.OnlineLearning.model.CourseCategory c3 = new com.swp391.OnlineLearning.model.CourseCategory("Tá»« Vá»±ng & Ngá»¯ PhÃ¡p", "Cá»§ng cá»‘ ná»n táº£ng ngá»¯ phÃ¡p vÃ  má»Ÿ rá»™ng vá»‘n tá»« vá»±ng tiáº¿ng Anh", true);
 				categoryRepository.saveAll(List.of(c1, c2, c3));
 
 				// Seed Courses
-				com.swp391.OnlineLearning.model.Course course1 = new com.swp391.OnlineLearning.model.Course("Tiếng Anh Giao Tiếp Cho Người Đi Làm", "Giao tiếp tự tin nơi công sở", "Khóa học tập trung vào các tình huống giao tiếp tiếng Anh thực tế trong môi trường văn phòng, cách viết email và ứng xử chuyên nghiệp.", "Không yêu cầu", imgUrl, 1200000.0, 10.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c1);
+				com.swp391.OnlineLearning.model.Course course1 = new com.swp391.OnlineLearning.model.Course("Tiáº¿ng Anh Giao Tiáº¿p Cho NgÆ°á»i Äi LÃ m", "Giao tiáº¿p tá»± tin nÆ¡i cÃ´ng sá»Ÿ", "KhÃ³a há»c táº­p trung vÃ o cÃ¡c tÃ¬nh huá»‘ng giao tiáº¿p tiáº¿ng Anh thá»±c táº¿ trong mÃ´i trÆ°á»ng vÄƒn phÃ²ng, cÃ¡ch viáº¿t email vÃ  á»©ng xá»­ chuyÃªn nghiá»‡p.", "KhÃ´ng yÃªu cáº§u", imgUrl, 1200000.0, 10.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c1);
 				course1.setAuthor(expert);
-				com.swp391.OnlineLearning.model.Course course2 = new com.swp391.OnlineLearning.model.Course("Luyện thi IELTS 6.5+ Cấp Tốc", "Chinh phục IELTS trong 3 tháng", "Cung cấp lộ trình luyện thi IELTS cường độ cao, bám sát các dạng đề thi thật với phương pháp giải chi tiết.", "Trình độ trung bình (B1)", imgUrl, 2500000.0, 20.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c2);
+				com.swp391.OnlineLearning.model.Course course2 = new com.swp391.OnlineLearning.model.Course("Luyá»‡n thi IELTS 6.5+ Cáº¥p Tá»‘c", "Chinh phá»¥c IELTS trong 3 thÃ¡ng", "Cung cáº¥p lá»™ trÃ¬nh luyá»‡n thi IELTS cÆ°á»ng Ä‘á»™ cao, bÃ¡m sÃ¡t cÃ¡c dáº¡ng Ä‘á» thi tháº­t vá»›i phÆ°Æ¡ng phÃ¡p giáº£i chi tiáº¿t.", "TrÃ¬nh Ä‘á»™ trung bÃ¬nh (B1)", imgUrl, 2500000.0, 20.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c2);
 				course2.setAuthor(expert);
-				com.swp391.OnlineLearning.model.Course course3 = new com.swp391.OnlineLearning.model.Course("Ngữ Pháp Tiếng Anh Toàn Diện", "Nắm trắc cấu trúc ngữ pháp", "Khóa học giúp củng cố toàn bộ các điểm ngữ pháp từ cơ bản đến nâng cao dùng trong văn viết và nói.", "Không yêu cầu", imgUrl, 800000.0, 0.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c3);
+				com.swp391.OnlineLearning.model.Course course3 = new com.swp391.OnlineLearning.model.Course("Ngá»¯ PhÃ¡p Tiáº¿ng Anh ToÃ n Diá»‡n", "Náº¯m tráº¯c cáº¥u trÃºc ngá»¯ phÃ¡p", "KhÃ³a há»c giÃºp cá»§ng cá»‘ toÃ n bá»™ cÃ¡c Ä‘iá»ƒm ngá»¯ phÃ¡p tá»« cÆ¡ báº£n Ä‘áº¿n nÃ¢ng cao dÃ¹ng trong vÄƒn viáº¿t vÃ  nÃ³i.", "KhÃ´ng yÃªu cáº§u", imgUrl, 800000.0, 0.0, true, com.swp391.OnlineLearning.model.Course.CourseStatus.PUBLISHED, 0, c3);
 				course3.setAuthor(expert);
 				courseRepository.saveAll(List.of(course1, course2, course3));
 			}
 
 			// Seed Blog Categories
 			if (blogCategoryRepository.count() == 0) {
-				com.swp391.OnlineLearning.model.BlogCategory b1 = new com.swp391.OnlineLearning.model.BlogCategory("Kinh nghiệm ôn ngoại ngữ", "kinh-nghiem-on-ngoai-ngu");
-				com.swp391.OnlineLearning.model.BlogCategory b2 = new com.swp391.OnlineLearning.model.BlogCategory("Mẹo làm bài thi", "meo-lam-bai-thi");
+				com.swp391.OnlineLearning.model.BlogCategory b1 = new com.swp391.OnlineLearning.model.BlogCategory("Kinh nghiá»‡m Ã´n ngoáº¡i ngá»¯", "kinh-nghiem-on-ngoai-ngu");
+				com.swp391.OnlineLearning.model.BlogCategory b2 = new com.swp391.OnlineLearning.model.BlogCategory("Máº¹o lÃ m bÃ i thi", "meo-lam-bai-thi");
 				blogCategoryRepository.saveAll(List.of(b1, b2));
 
 				// Seed Blogs
-				com.swp391.OnlineLearning.model.Blog blog1 = new com.swp391.OnlineLearning.model.Blog(null, "Cách Tự Học IELTS Writing Lên 7.0 Ở Nhà", imgUrl, "Kinh nghiệm rèn luyện kỹ năng viết IELTS tại nhà mà không cần đến trung tâm.", "Trong bài viết này, chúng ta sẽ cùng đi sâu vào phương pháp paraphrase và cách lên dàn ý nhanh để ghi trọn điểm IELTS Writing...", b1, marketing);
+				com.swp391.OnlineLearning.model.Blog blog1 = new com.swp391.OnlineLearning.model.Blog(null, "CÃ¡ch Tá»± Há»c IELTS Writing LÃªn 7.0 á»ž NhÃ ", imgUrl, "Kinh nghiá»‡m rÃ¨n luyá»‡n ká»¹ nÄƒng viáº¿t IELTS táº¡i nhÃ  mÃ  khÃ´ng cáº§n Ä‘áº¿n trung tÃ¢m.", "Trong bÃ i viáº¿t nÃ y, chÃºng ta sáº½ cÃ¹ng Ä‘i sÃ¢u vÃ o phÆ°Æ¡ng phÃ¡p paraphrase vÃ  cÃ¡ch lÃªn dÃ n Ã½ nhanh Ä‘á»ƒ ghi trá»n Ä‘iá»ƒm IELTS Writing...", b1, marketing);
 				blog1.setStatus(com.swp391.OnlineLearning.model.Blog.BlogStatus.PUBLISHED);
-				com.swp391.OnlineLearning.model.Blog blog2 = new com.swp391.OnlineLearning.model.Blog(null, "5 Bước Để Nói Tiếng Anh Trôi Chảy Tự Nhiên", imgUrl, "Bí kíp giúp bạn nâng cao phản xạ khi trò chuyện với người nước ngoài.", "Đừng quá tập trung vào ngữ pháp khi nói, hãy bắt chước cách phát âm (shadowing) để rèn luyện thói quen phản xạ tự nhiên của não bộ...", b1, marketing);
+				com.swp391.OnlineLearning.model.Blog blog2 = new com.swp391.OnlineLearning.model.Blog(null, "5 BÆ°á»›c Äá»ƒ NÃ³i Tiáº¿ng Anh TrÃ´i Cháº£y Tá»± NhiÃªn", imgUrl, "BÃ­ kÃ­p giÃºp báº¡n nÃ¢ng cao pháº£n xáº¡ khi trÃ² chuyá»‡n vá»›i ngÆ°á»i nÆ°á»›c ngoÃ i.", "Äá»«ng quÃ¡ táº­p trung vÃ o ngá»¯ phÃ¡p khi nÃ³i, hÃ£y báº¯t chÆ°á»›c cÃ¡ch phÃ¡t Ã¢m (shadowing) Ä‘á»ƒ rÃ¨n luyá»‡n thÃ³i quen pháº£n xáº¡ tá»± nhiÃªn cá»§a nÃ£o bá»™...", b1, marketing);
 				blog2.setStatus(com.swp391.OnlineLearning.model.Blog.BlogStatus.PUBLISHED);
-				com.swp391.OnlineLearning.model.Blog blog3 = new com.swp391.OnlineLearning.model.Blog(null, "Các Lỗi Ngữ Pháp Thường Gặp Trong Bài Thi TOEIC", imgUrl, "Phân loại các bẫy ngữ pháp phổ biến và cách tránh mất điểm oan.", "Phần thi Reading của TOEIC luôn ẩn chứa vô số rủi ro với các mẫu câu đảo ngữ và thì hoàn thành. Hãy cùng điểm qua...", b2, marketing);
+				com.swp391.OnlineLearning.model.Blog blog3 = new com.swp391.OnlineLearning.model.Blog(null, "CÃ¡c Lá»—i Ngá»¯ PhÃ¡p ThÆ°á»ng Gáº·p Trong BÃ i Thi TOEIC", imgUrl, "PhÃ¢n loáº¡i cÃ¡c báº«y ngá»¯ phÃ¡p phá»• biáº¿n vÃ  cÃ¡ch trÃ¡nh máº¥t Ä‘iá»ƒm oan.", "Pháº§n thi Reading cá»§a TOEIC luÃ´n áº©n chá»©a vÃ´ sá»‘ rá»§i ro vá»›i cÃ¡c máº«u cÃ¢u Ä‘áº£o ngá»¯ vÃ  thÃ¬ hoÃ n thÃ nh. HÃ£y cÃ¹ng Ä‘iá»ƒm qua...", b2, marketing);
 				blog3.setStatus(com.swp391.OnlineLearning.model.Blog.BlogStatus.PUBLISHED);
 				blogRepository.saveAll(List.of(blog1, blog2, blog3));
 			}
@@ -116,8 +95,8 @@ public class DemoApplication {
 			// Seed Sliders
 			if (sliderRepository.count() == 0) {
 				com.swp391.OnlineLearning.model.Slider s1 = new com.swp391.OnlineLearning.model.Slider();
-				s1.setTitle("Hệ Thống Tiếng Anh Trực Tuyến Hàng Đầu");
-				s1.setDescription("Mở rộng tiềm năng ngoại ngữ của bạn với các chuyên gia uy tín.");
+				s1.setTitle("Há»‡ Thá»‘ng Tiáº¿ng Anh Trá»±c Tuyáº¿n HÃ ng Äáº§u");
+				s1.setDescription("Má»Ÿ rá»™ng tiá»m nÄƒng ngoáº¡i ngá»¯ cá»§a báº¡n vá»›i cÃ¡c chuyÃªn gia uy tÃ­n.");
 				s1.setImageUrl(imgUrl);
 				s1.setLinkUrl("/courses");
 				s1.setStatus("ACTIVE");
@@ -125,8 +104,8 @@ public class DemoApplication {
 				s1.setUser(marketing);
 				
 				com.swp391.OnlineLearning.model.Slider s2 = new com.swp391.OnlineLearning.model.Slider();
-				s2.setTitle("Ưu Đãi Đặc Biệt Khóa Luyện Thi IELTS Cấp Tốc");
-				s2.setDescription("Cam kết đầu ra chuẩn 6.5+ chỉ sau 3 tháng. Đăng ký ngay để nhận ưu đãi lên đến 20%!");
+				s2.setTitle("Æ¯u ÄÃ£i Äáº·c Biá»‡t KhÃ³a Luyá»‡n Thi IELTS Cáº¥p Tá»‘c");
+				s2.setDescription("Cam káº¿t Ä‘áº§u ra chuáº©n 6.5+ chá»‰ sau 3 thÃ¡ng. ÄÄƒng kÃ½ ngay Ä‘á»ƒ nháº­n Æ°u Ä‘Ã£i lÃªn Ä‘áº¿n 20%!");
 				s2.setImageUrl(imgUrl);
 				s2.setLinkUrl("/promotions");
 				s2.setStatus("ACTIVE");
@@ -136,8 +115,8 @@ public class DemoApplication {
 				sliderRepository.saveAll(List.of(s1, s2));
 			}
 
-			System.out.println(">>> Đã tạo dữ liệu mẫu thành công với đầy đủ Courses, Blogs, Sliders!");
->>>>>>> main
+			System.out.println(">>> ÄÃ£ táº¡o dá»¯ liá»‡u máº«u thÃ nh cÃ´ng vá»›i Ä‘áº§y Ä‘á»§ Courses, Blogs, Sliders!");
+
 		};
 	}
 }

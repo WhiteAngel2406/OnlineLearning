@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * Hàm xử lý IPN (Code chuẩn)
+     * HÃ m xá»­ lÃ½ IPN (Code chuáº©n)
      */
     /*@Override
     public String processIPN(Map<String, String> vnpParams) {
@@ -62,45 +62,45 @@ public class OrderServiceImpl implements OrderService {
             if (!signValue.equals(vnp_SecureHash)){
                 return "{\"RspCode\":\"" + RspCode_InvalidSignature + "\",\"Message\":\"Invalid Checksum\"}";
             }
-            // 3. Lấy thông tin
-            // vnp_TxnRef chính là Order ID của chúng ta
+            // 3. Láº¥y thÃ´ng tin
+            // vnp_TxnRef chÃ­nh lÃ  Order ID cá»§a chÃºng ta
             String vnp_TxnRef = vnpParams.get("vnp_TxnRef");
             String vnp_Amount_str = vnpParams.get("vnp_Amount");
             String vnp_ResponseCode = vnpParams.get("vnp_ResponseCode");
             String vnp_TransactionNo = vnpParams.get("vnp_TransactionNo");
 
-            // 4. Kiểm tra Order (checkOrderId)
+            // 4. Kiá»ƒm tra Order (checkOrderId)
             Order order = this.orderRepository.findById(Long.parseLong(vnp_TxnRef)).orElse(null);
             if (order == null) {
                 return "{\"RspCode\":\"" + RspCode_OrderNotFound + "\",\"Message\":\"Order not Found\"}";
             }
 
-            // 5. Kiểm tra số tiền (checkAmount)
-            // SỬA LỖI 3: Logic so sánh Amount bị sai
+            // 5. Kiá»ƒm tra sá»‘ tiá»n (checkAmount)
+            // Sá»¬A Lá»–I 3: Logic so sÃ¡nh Amount bá»‹ sai
             long vnpAmount = Long.parseLong(vnp_Amount_str); // (Vd: 152000000)
             long orderAmount = (long) (order.getAmount() * 100); // (Vd: 1520000.0 * 100 = 152000000)
             if (orderAmount != vnpAmount) {
                 return "{\"RspCode\":\"" + RspCode_InvalidAmount + "\",\"Message\":\"Invalid Amount\"}";
             }
 
-            // 6. Kiểm tra trạng thái (checkOrderStatus)
+            // 6. Kiá»ƒm tra tráº¡ng thÃ¡i (checkOrderStatus)
             if (order.getStatus() != Order.OrderStatus.PENDING) {
                 return "{\"RspCode\":\"" + RspCode_OrderAlreadyConfirmed + "\",\"Message\":\"Order already confirmed\"}";
             }
 
-            // 7. Cập nhật trạng thái
+            // 7. Cáº­p nháº­t tráº¡ng thÃ¡i
             if ("00".equals(vnp_ResponseCode)) {
                 order.setStatus(Order.OrderStatus.PAID);
             } else {
                 order.setStatus(Order.OrderStatus.FAILED);
             }
 
-            // 8. Lưu bằng chứng và CẬP NHẬT
+            // 8. LÆ°u báº±ng chá»©ng vÃ  Cáº¬P NHáº¬T
             order.setVnpResponseCode(vnp_ResponseCode);
             order.setVnpTransactionNo(vnp_TransactionNo);
             this.orderRepository.save(order);
 
-            // 9. Trả về 00
+            // 9. Tráº£ vá» 00
             return "{\"RspCode\":\"" + RspCode_Success + "\",\"Message\":\"Confirm Success\"}";
         }
 
@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 /*
     @Override
     public Order processReturn(Map<String, String> vnpParams) {
-        // 1. Kiểm tra chữ ký (Checksum)
+        // 1. Kiá»ƒm tra chá»¯ kÃ½ (Checksum)
         String vnp_SecureHash = vnpParams.get("vnp_SecureHash");
         vnpParams.remove("vnp_SecureHashType");
         vnpParams.remove("vnp_SecureHash");
@@ -121,35 +121,35 @@ public class OrderServiceImpl implements OrderService {
         String signValue = VNPayConfig.hashAllFields(vnpParams);
         if (!signValue.equals(vnp_SecureHash)) throw new RuntimeException("Invalid checksum");
 
-        // 2. Lấy thông tin
+        // 2. Láº¥y thÃ´ng tin
         String vnp_TxnRef = vnpParams.get("vnp_TxnRef");
         String vnp_Amount_str = vnpParams.get("vnp_Amount");
         String vnp_ResponseCode = vnpParams.get("vnp_ResponseCode");
         String vnp_TransactionNo = vnpParams.get("vnp_TransactionNo");
 
-        // 3. Kiểm tra Order
+        // 3. Kiá»ƒm tra Order
         Order order = this.findByVnp_TxnRef(vnp_TxnRef);
         if (order == null) throw new RuntimeException("Order not found");
 
-        // 4. Kiểm tra số tiền
+        // 4. Kiá»ƒm tra sá»‘ tiá»n
         long vnpAmount = Long.parseLong(vnp_Amount_str);
         long orderAmount = (long) (order.getAmount() * 100);
         if (orderAmount != vnpAmount) throw new RuntimeException("Invalid amount");
 
-        // 5. Kiểm tra trạng thái (Chỉ cập nhật nếu đang PENDING)
+        // 5. Kiá»ƒm tra tráº¡ng thÃ¡i (Chá»‰ cáº­p nháº­t náº¿u Ä‘ang PENDING)
         if (order.getStatus() == Order.OrderStatus.PENDING) {
             if ("00".equals(vnp_ResponseCode)) {
                 order.setStatus(Order.OrderStatus.PAID);
             } else {
                 order.setStatus(Order.OrderStatus.FAILED);
             }
-            // 6. Lưu bằng chứng và CẬP NHẬT DB
+            // 6. LÆ°u báº±ng chá»©ng vÃ  Cáº¬P NHáº¬T DB
             order.setVnpResponseCode(vnp_ResponseCode);
             order.setVnpTransactionNo(vnp_TransactionNo);
             orderRepository.save(order);
 
         }
-        // Nếu không PENDING (đã xử lý bởi IPN) thì cứ trả về order
+        // Náº¿u khÃ´ng PENDING (Ä‘Ã£ xá»­ lÃ½ bá»Ÿi IPN) thÃ¬ cá»© tráº£ vá» order
         return order;
     }
 */

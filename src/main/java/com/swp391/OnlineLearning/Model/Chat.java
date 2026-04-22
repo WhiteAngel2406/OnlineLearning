@@ -28,12 +28,12 @@ public class Chat {
     private ChatType type;
 
     @Column(name = "name", columnDefinition = "NVARCHAR(255)")
-    private String name; // chỉ dùng cho nhóm
+    private String name; // chá»‰ dÃ¹ng cho nhÃ³m
 
     @Column(name = "description", columnDefinition = "NVARCHAR(1000)")
-    private String description; // mô tả nhóm
+    private String description; // mÃ´ táº£ nhÃ³m
 
-    private String avatar; // ảnh nhóm (nếu có)
+    private String avatar; // áº£nh nhÃ³m (náº¿u cÃ³)
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMember> members = new ArrayList<>();

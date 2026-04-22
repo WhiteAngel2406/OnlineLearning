@@ -56,8 +56,8 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     )
     Page<FeedbackDTO> findFilteredFeedbackDTOs(
             @Param("courseId") Long courseId,
-            @Param("rating") Integer rating, // null nếu "Tất cả"
-            @Param("keyword") String keyword, // null nếu không tìm kiếm
+            @Param("rating") Integer rating, // null náº¿u "Táº¥t cáº£"
+            @Param("keyword") String keyword, // null náº¿u khÃ´ng tÃ¬m kiáº¿m
             Pageable pageable
     );
 

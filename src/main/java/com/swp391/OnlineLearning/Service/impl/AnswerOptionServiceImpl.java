@@ -1,9 +1,9 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.AnswerOptionRepository;
-import com.swp391.OnlineLearning.Service.AnswerOptionService;
-import com.swp391.OnlineLearning.Model.AnswerOption;
-import com.swp391.OnlineLearning.Model.Question;
+import com.swp391.OnlineLearning.repository.AnswerOptionRepository;
+import com.swp391.OnlineLearning.service.AnswerOptionService;
+import com.swp391.OnlineLearning.model.AnswerOption;
+import com.swp391.OnlineLearning.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

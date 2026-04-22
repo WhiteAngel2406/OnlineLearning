@@ -17,8 +17,8 @@ import java.util.List;
 @Setter
 public class Question extends BaseEntity{
     public enum QuestionType {
-        MULTIPLE_CHOICE("Trắc nghiệm nhiều lựa chọn"),
-        SHORT_ANSWER("Điền từ/câu trả lời ngắn");
+        MULTIPLE_CHOICE("Tráº¯c nghiá»‡m nhiá»u lá»±a chá»n"),
+        SHORT_ANSWER("Äiá»n tá»«/cÃ¢u tráº£ lá»i ngáº¯n");
         private final String displayName;
         QuestionType(String displayName) {
             this.displayName = displayName;
@@ -40,23 +40,23 @@ public class Question extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(255)")
-    @NotBlank(message = "Nội dung câu hỏi không được để trống.")
-    private String content; // Nội dung text của câu hỏi
+    @NotBlank(message = "Ná»™i dung cÃ¢u há»i khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    private String content; // Ná»™i dung text cá»§a cÃ¢u há»i
 
     @Column(nullable = false)
-    @NotNull(message = "Loại câu hỏi không được để trống.")
+    @NotNull(message = "Loáº¡i cÃ¢u há»i khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     @Enumerated(EnumType.STRING)
-    private QuestionType questionType; // Loại câu hỏi (ví dụ: trắc nghiệm, tự luận...)
+    private QuestionType questionType; // Loáº¡i cÃ¢u há»i (vÃ­ dá»¥: tráº¯c nghiá»‡m, tá»± luáº­n...)
 
-    // --- Phần dành cho Media ---
-    @NotNull(message = "Loại phương tiện (media) không được để trống, ví dụ: NONE.")
+    // --- Pháº§n dÃ nh cho Media ---
+    @NotNull(message = "Loáº¡i phÆ°Æ¡ng tiá»‡n (media) khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng, vÃ­ dá»¥: NONE.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MediaType mediaType; // Loại media đính kèm (nếu có)
+    private MediaType mediaType; // Loáº¡i media Ä‘Ã­nh kÃ¨m (náº¿u cÃ³)
 
-    @Size(max = 2048, message = "Đường dẫn media không được vượt quá 2048 ký tự.")
-    @Column(length = 2048, columnDefinition = "NVARCHAR(MAX)") // Giới hạn độ dài trong CSDL
-    private String mediaUrl; // Đường dẫn tới file media
+    @Size(max = 2048, message = "ÄÆ°á»ng dáº«n media khÃ´ng Ä‘Æ°á»£c vÆ°á»£t quÃ¡ 2048 kÃ½ tá»±.")
+    @Column(length = 2048, columnDefinition = "NVARCHAR(MAX)") // Giá»›i háº¡n Ä‘á»™ dÃ i trong CSDL
+    private String mediaUrl; // ÄÆ°á»ng dáº«n tá»›i file media
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", nullable = false)

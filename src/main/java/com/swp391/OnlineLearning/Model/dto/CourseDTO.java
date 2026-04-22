@@ -5,37 +5,37 @@ import com.swp391.OnlineLearning.util.ValidMediaType;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@ValidMediaType(message = "Vui lòng tải file hợp lệ.")
+@ValidMediaType(message = "Vui lÃ²ng táº£i file há»£p lá»‡.")
 public class CourseDTO {
-    @NotBlank(message = "Vui lòng nhập tên khóa học")
-    @Size(min = 5, max = 100, message = "Tên khóa học phải từ 5-100 kí tự")
+    @NotBlank(message = "Vui lÃ²ng nháº­p tÃªn khÃ³a há»c")
+    @Size(min = 5, max = 100, message = "TÃªn khÃ³a há»c pháº£i tá»« 5-100 kÃ­ tá»±")
     private String name;
 
-    @NotBlank(message = "Vui lòng nhập mô tả ngắn")
-    @Size(min = 10, max = 200, message = "Mô tả ngắn phải từ 10-200 kí tự")
+    @NotBlank(message = "Vui lÃ²ng nháº­p mÃ´ táº£ ngáº¯n")
+    @Size(min = 10, max = 200, message = "MÃ´ táº£ ngáº¯n pháº£i tá»« 10-200 kÃ­ tá»±")
     private String shortDescription;
 
-    @NotBlank(message = "Vui lòng nhập mô tả")
-    @Size(min = 10, message = "Mô tả chi tiết phải từ 10 kí tự")
+    @NotBlank(message = "Vui lÃ²ng nháº­p mÃ´ táº£")
+    @Size(min = 10, message = "MÃ´ táº£ chi tiáº¿t pháº£i tá»« 10 kÃ­ tá»±")
     private String description;
 
-    @NotBlank(message = "Vui lòng nhập yêu cầu tiên quyết")
+    @NotBlank(message = "Vui lÃ²ng nháº­p yÃªu cáº§u tiÃªn quyáº¿t")
     //@Size(min = 10, message = "Prerequisite must be between 10-10000 characters")
     private String prerequisite;
 
-    @NotNull(message = "Vui lòng nhập giá")
-    @DecimalMin(value = "1.0", message = "Giá tiền phải là số dương")
+    @NotNull(message = "Vui lÃ²ng nháº­p giÃ¡")
+    @DecimalMin(value = "1.0", message = "GiÃ¡ tiá»n pháº£i lÃ  sá»‘ dÆ°Æ¡ng")
     private Double price;
 
-    @NotNull(message = "Vui lòng nhập giảm giá")
-    @DecimalMin(value = "0.0", message = "Giảm giá phải từ 0-100")
-    @DecimalMax(value = "100.0", message = "Giảm giá phải từ 0-100")
+    @NotNull(message = "Vui lÃ²ng nháº­p giáº£m giÃ¡")
+    @DecimalMin(value = "0.0", message = "Giáº£m giÃ¡ pháº£i tá»« 0-100")
+    @DecimalMax(value = "100.0", message = "Giáº£m giÃ¡ pháº£i tá»« 0-100")
     private Double discount;
 
-    @NotNull(message = "Vui lòng chọn danh mục")
+    @NotNull(message = "Vui lÃ²ng chá»n danh má»¥c")
     private Long categoryId;
 
-    @NotNull(message = "Vui lòng chọn thumbnail")
+    @NotNull(message = "Vui lÃ²ng chá»n thumbnail")
     private MultipartFile thumbnailFile;
 
     private Course.CourseStatus status;

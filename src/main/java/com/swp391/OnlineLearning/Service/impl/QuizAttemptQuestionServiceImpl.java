@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.QuizAttemptQuestionRepository;
-import com.swp391.OnlineLearning.Service.QuizAttemptQuestionService;
-import com.swp391.OnlineLearning.Model.QuizAttemptQuestion;
+import com.swp391.OnlineLearning.repository.QuizAttemptQuestionRepository;
+import com.swp391.OnlineLearning.service.QuizAttemptQuestionService;
+import com.swp391.OnlineLearning.model.QuizAttemptQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

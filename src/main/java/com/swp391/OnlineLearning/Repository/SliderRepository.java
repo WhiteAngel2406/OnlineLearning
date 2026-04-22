@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface SliderRepository extends JpaRepository<Slider, Long> {
 
-    // Tìm kiếm theo tiêu đề hoặc linkUrl
+    // TÃ¬m kiáº¿m theo tiÃªu Ä‘á» hoáº·c linkUrl
     @Query("SELECT s FROM Slider s WHERE " +
             "(LOWER(s.title) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%')) OR " +
             "LOWER(s.linkUrl) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%'))) AND " +
@@ -21,7 +21,7 @@ public interface SliderRepository extends JpaRepository<Slider, Long> {
                                @Param("status") String status,
                                Pageable pageable);
 
-    // Lấy slider theo status và sắp xếp theo orderNumber
+    // Láº¥y slider theo status vÃ  sáº¯p xáº¿p theo orderNumber
     List<Slider> findByStatusOrderByOrderNumberAsc(String status);
 }
 

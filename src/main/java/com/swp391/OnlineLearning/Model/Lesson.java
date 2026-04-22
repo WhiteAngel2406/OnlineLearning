@@ -14,8 +14,8 @@ import java.util.List;
 @Setter
 public class Lesson extends BaseEntity{
     public enum LessonType {
-        LECTURE("Bài giảng"),
-        QUIZ("Bài kiểm tra");
+        LECTURE("BÃ i giáº£ng"),
+        QUIZ("BÃ i kiá»ƒm tra");
 
         private final String displayName;
         LessonType(String displayName) {
@@ -30,42 +30,42 @@ public class Lesson extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, length = 200, columnDefinition = "NVARCHAR(200)")
-    @NotBlank(message = "Tiêu đề bài học không được để trống.")
-    @Size(min = 5, max = 200, message = "Tiêu đề bài học phải có độ dài từ 5 đến 200 ký tự.")
+    @NotBlank(message = "TiÃªu Ä‘á» bÃ i há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 5, max = 200, message = "TiÃªu Ä‘á» bÃ i há»c pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 5 Ä‘áº¿n 200 kÃ½ tá»±.")
     private String title;
 
     @Column(nullable = false)
-    @NotNull(message = "Thứ tự bài học không được để trống.")
-    @PositiveOrZero(message = "Thứ tự bài học phải là số không âm.")
+    @NotNull(message = "Thá»© tá»± bÃ i há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @PositiveOrZero(message = "Thá»© tá»± bÃ i há»c pháº£i lÃ  sá»‘ khÃ´ng Ã¢m.")
     private Integer orderNumber;
 
     @Column(nullable = false)
-    @NotNull(message = "Loại bài học không được để trống.")
+    @NotNull(message = "Loáº¡i bÃ i há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     @Enumerated(EnumType.STRING)
     private LessonType lessonType;
 
-    @Positive(message = "Thời lượng ước tính của bài học phải là số dương.")
+    @Positive(message = "Thá»i lÆ°á»£ng Æ°á»›c tÃ­nh cá»§a bÃ i há»c pháº£i lÃ  sá»‘ dÆ°Æ¡ng.")
     private Integer estimatedTime;
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
     private String htmlContent;
 
-    // --- Dành cho bài giảng ---
+    // --- DÃ nh cho bÃ i giáº£ng ---
     private String videoUrl;
-    private Long duration = 0L; // tính bằng milliseconds
+    private Long duration = 0L; // tÃ­nh báº±ng milliseconds
 
-    // --- Dành cho bài kiểm tra ---
+    // --- DÃ nh cho bÃ i kiá»ƒm tra ---
     @Column(name = "pass_rate")
-    @Min(value = 0, message = "Điểm đạt yêu cầu phải lớn hơn hoặc bằng 0.")
-    @Max(value = 100, message = "Điểm đạt yêu cầu phải nhỏ hơn hoặc bằng 100.")
+    @Min(value = 0, message = "Äiá»ƒm Ä‘áº¡t yÃªu cáº§u pháº£i lá»›n hÆ¡n hoáº·c báº±ng 0.")
+    @Max(value = 100, message = "Äiá»ƒm Ä‘áº¡t yÃªu cáº§u pháº£i nhá» hÆ¡n hoáº·c báº±ng 100.")
     private Integer passRate;
 
-    @Positive(message = "Giới hạn thời gian phải là số dương.")
+    @Positive(message = "Giá»›i háº¡n thá»i gian pháº£i lÃ  sá»‘ dÆ°Æ¡ng.")
     private Integer timeLimitInMinutes;
 
     @Column(name = "number_of_questions")
-    @Min(value = 1, message = "Số lượng câu hỏi phải lớn hơn hoặc bằng 1.")
-    @Max(value = 100, message = "Số lượng câu hỏi phải nhỏ hơn hoặc bằng 100.")
+    @Min(value = 1, message = "Sá»‘ lÆ°á»£ng cÃ¢u há»i pháº£i lá»›n hÆ¡n hoáº·c báº±ng 1.")
+    @Max(value = 100, message = "Sá»‘ lÆ°á»£ng cÃ¢u há»i pháº£i nhá» hÆ¡n hoáº·c báº±ng 100.")
     private Integer numberOfQuestions;
 
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

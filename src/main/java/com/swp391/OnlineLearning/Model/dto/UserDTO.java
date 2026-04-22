@@ -1,19 +1,19 @@
 package com.swp391.OnlineLearning.model.dto;
 
 import com.swp391.OnlineLearning.util.PasswordMatches;
-import com.swp391.OnlineLearning.util.ValidEmail;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@PasswordMatches(message = "Mật khẩu nhập lại không giống")
+@PasswordMatches(message = "Máº­t kháº©u nháº­p láº¡i khÃ´ng giá»‘ng")
 public class UserDTO {
-    @NotBlank(message = "Vui lòng nhập tên đầy đủ")
+    @NotBlank(message = "Vui lÃ²ng nháº­p tÃªn Ä‘áº§y Ä‘á»§")
     private String fullName;
 
-    @ValidEmail(message = "Email không hợp lệ")
-    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email khÃ´ng há»£p lá»‡")
+    @NotBlank(message = "Email khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng")
     private String email;
 
-    @NotBlank(message = "Vui lòng nhập mật khẩu")
+    @NotBlank(message = "Vui lÃ²ng nháº­p máº­t kháº©u")
     private String password;
     private String confirmedPassword;
 

@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.QuizAttemptSelectedOption;
+import com.swp391.OnlineLearning.model.QuizAttemptSelectedOption;
 
 import java.util.List;
 

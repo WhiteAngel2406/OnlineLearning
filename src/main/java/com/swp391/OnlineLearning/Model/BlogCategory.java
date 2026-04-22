@@ -19,7 +19,7 @@ public class BlogCategory {
     @Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String name;
 
-    // slug dùng để tạo URL thân thiện, ví dụ: /blogs/danh-muc/meo-vat-hay
+    // slug dÃ¹ng Ä‘á»ƒ táº¡o URL thÃ¢n thiá»‡n, vÃ­ dá»¥: /blogs/danh-muc/meo-vat-hay
     @Column(name = "slug", nullable = false, unique = true)
     private String slug;
 

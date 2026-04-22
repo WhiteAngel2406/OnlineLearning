@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Model;
+package com.swp391.OnlineLearning.model;
 
 import jakarta.persistence.*;
 import lombok.*;

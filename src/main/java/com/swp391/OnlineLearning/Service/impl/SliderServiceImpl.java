@@ -1,11 +1,11 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.Slider;
-import com.swp391.OnlineLearning.Model.dto.SliderCreateUpdateDto;
-import com.swp391.OnlineLearning.Model.dto.SliderDTO;
-import com.swp391.OnlineLearning.Model.enums.SliderStatus;
-import com.swp391.OnlineLearning.Repository.SliderRepository;
-import com.swp391.OnlineLearning.Service.SliderService;
+import com.swp391.OnlineLearning.model.Slider;
+import com.swp391.OnlineLearning.model.dto.SliderCreateUpdateDto;
+import com.swp391.OnlineLearning.model.dto.SliderDTO;
+
+import com.swp391.OnlineLearning.repository.SliderRepository;
+import com.swp391.OnlineLearning.service.SliderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class SliderServiceImpl implements SliderService {
 
     @Override
     public List<Slider> getActiveSliders() {
-        return sliderRepository.findByStatusOrderByOrderNumberAsc(SliderStatus.SHOW.name());
+        return sliderRepository.findByStatusOrderByOrderNumberAsc("SHOW");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SliderServiceImpl implements SliderService {
         slider.setDescription(dto.getDescription());
         slider.setLinkUrl(dto.getLinkUrl());
         slider.setOrderNumber(dto.getOrderNumber() != null ? dto.getOrderNumber() : 1);
-        slider.setStatus(dto.getStatus() != null ? dto.getStatus() : SliderStatus.HIDE.name());
+        slider.setStatus(dto.getStatus() != null ? dto.getStatus() : "HIDE");
         slider.setImageUrl(dto.getImageUrl());
         return slider;
     }
@@ -90,10 +90,10 @@ public class SliderServiceImpl implements SliderService {
     @Override
     public Slider toggleSlider(Long id) {
         Slider slider = getSliderById(id);
-        if (SliderStatus.SHOW.name().equals(slider.getStatus())) {
-            slider.setStatus(SliderStatus.HIDE.name());
+        if ("SHOW".equals(slider.getStatus())) {
+            slider.setStatus("HIDE");
         } else {
-            slider.setStatus(SliderStatus.SHOW.name());
+            slider.setStatus("SHOW");
         }
         return sliderRepository.save(slider);
     }

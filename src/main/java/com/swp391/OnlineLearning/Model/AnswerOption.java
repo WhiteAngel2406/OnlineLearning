@@ -17,16 +17,16 @@ public class AnswerOption extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(500)")
-    @NotBlank(message = "Nội dung lựa chọn không được để trống.")
-    @Size(max = 500, message = "Nội dung lựa chọn không được vượt quá 500 ký tự.")
-    private String content; // Nội dung lựa chọn (A, B, C, D...)
+    @NotBlank(message = "Ná»™i dung lá»±a chá»n khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(max = 500, message = "Ná»™i dung lá»±a chá»n khÃ´ng Ä‘Æ°á»£c vÆ°á»£t quÃ¡ 500 kÃ½ tá»±.")
+    private String content; // Ná»™i dung lá»±a chá»n (A, B, C, D...)
 
-    @NotNull(message = "Trường 'correct' không được để trống.")
+    @NotNull(message = "TrÆ°á»ng 'correct' khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     @Column(nullable = false)
-    private Boolean correct; // Đánh dấu đây là đáp án đúng
+    private Boolean correct; // ÄÃ¡nh dáº¥u Ä‘Ã¢y lÃ  Ä‘Ã¡p Ã¡n Ä‘Ãºng
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
-    private String explanation; // Giải thích cho lựa chọn này
+    private String explanation; // Giáº£i thÃ­ch cho lá»±a chá»n nÃ y
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = false)

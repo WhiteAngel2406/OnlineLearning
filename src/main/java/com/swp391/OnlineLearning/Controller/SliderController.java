@@ -1,13 +1,13 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Model.Slider;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.dto.SliderCreateUpdateDto;
-import com.swp391.OnlineLearning.Model.dto.SliderDTO;
-import com.swp391.OnlineLearning.Model.enums.SliderStatus;
-import com.swp391.OnlineLearning.Service.SliderService;
-import com.swp391.OnlineLearning.Service.UploadService;
-import com.swp391.OnlineLearning.Service.UserService;
+import com.swp391.OnlineLearning.model.Slider;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.dto.SliderCreateUpdateDto;
+import com.swp391.OnlineLearning.model.dto.SliderDTO;
+
+import com.swp391.OnlineLearning.service.SliderService;
+import com.swp391.OnlineLearning.service.UploadService;
+import com.swp391.OnlineLearning.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class SliderController {
     @GetMapping("/create")
     public String createSliderForm(Model model) {
         model.addAttribute("slider", new SliderCreateUpdateDto());
-        model.addAttribute("statuses", SliderStatus.values());
+        model.addAttribute("statuses", Arrays.asList("SHOW", "HIDE"));
         return "admin/slider/create";
     }
 
@@ -88,9 +88,9 @@ public class SliderController {
             slider.setUser(currentUser);
             sliderService.save(slider);
 
-            redirectAttributes.addFlashAttribute("success", "Tạo slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "Táº¡o slider thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi tạo slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi táº¡o slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -109,7 +109,7 @@ public class SliderController {
             sliderDto.setImageUrl(slider.getImageUrl());
 
             model.addAttribute("slider", sliderDto);
-            model.addAttribute("statuses", SliderStatus.values());
+            model.addAttribute("statuses", Arrays.asList("SHOW", "HIDE"));
             return "admin/slider/update";
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -143,9 +143,9 @@ public class SliderController {
             }
             sliderService.save(existingSlider);
 
-            redirectAttributes.addFlashAttribute("success", "Cập nhật slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "Cáº­p nháº­t slider thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi cáº­p nháº­t slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -154,9 +154,9 @@ public class SliderController {
     public String toggleSlider(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             sliderService.toggleSlider(id);
-            redirectAttributes.addFlashAttribute("success", "Thay đổi trạng thái slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "Thay Ä‘á»•i tráº¡ng thÃ¡i slider thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi thay đổi trạng thái slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi thay Ä‘á»•i tráº¡ng thÃ¡i slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }
@@ -165,9 +165,9 @@ public class SliderController {
     public String deleteSlider(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             sliderService.deleteSlider(id);
-            redirectAttributes.addFlashAttribute("success", "Xóa slider thành công!");
+            redirectAttributes.addFlashAttribute("success", "XÃ³a slider thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi xóa slider: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi xÃ³a slider: " + e.getMessage());
         }
         return "redirect:/admin/sliders";
     }

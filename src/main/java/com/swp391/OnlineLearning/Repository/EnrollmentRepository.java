@@ -28,7 +28,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
             "JOIN FETCH e.course c " +
             "LEFT JOIN FETCH c.chapters chap " +
             "LEFT JOIN FETCH chap.lessons l " +
-            "WHERE e.id = :enrollmentId AND e.user.id = :userId") // Thêm check userId cho an toàn
+            "WHERE e.id = :enrollmentId AND e.user.id = :userId") // ThÃªm check userId cho an toÃ n
     Optional<Enrollment> findByIdAndUserIdWithFullCourseStructure(@Param("enrollmentId") long enrollmentId, @Param("userId") long userId);
 
     List<Enrollment> findByUserId(long userId);

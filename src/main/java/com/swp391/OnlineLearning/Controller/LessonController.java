@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Service.*;
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Model.dto.*;
+import com.swp391.OnlineLearning.service.*;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,7 @@ public class LessonController {
         this.answerOptionService = answerOptionService;
         this.shortAnswerOptionService = shortAnswerOptionService;
     }
-    //=========================================== Xử lí Lesson ===================================================
+    //=========================================== Xá»­ lÃ­ Lesson ===================================================
     //--- GET LESSONS ---
     @GetMapping("/api/chapters/{chapterId}/lessons")
     @ResponseBody
@@ -66,20 +66,20 @@ public class LessonController {
     @PostMapping("/api/chapters/{chapterId}/lectures")
     @ResponseBody
     public ResponseEntity<ApiResponse<LessonResponse>> createLecture(@PathVariable("chapterId") Long chapterId,
-                                                                     @Valid @ModelAttribute CreateLectureRequest request) { // <-- Dùng LectureRequest
-        Lesson newLesson = lessonService.createLecture(chapterId, request); // Gọi service tương ứng
+                                                                     @Valid @ModelAttribute CreateLectureRequest request) { // <-- DÃ¹ng LectureRequest
+        Lesson newLesson = lessonService.createLecture(chapterId, request); // Gá»i service tÆ°Æ¡ng á»©ng
         LessonResponse lessonResponse = new LessonResponse(newLesson);
-        ApiResponse<LessonResponse> response = new ApiResponse<>(HttpStatus.CREATED, "Tạo bài giảng thành công", lessonResponse, null);
+        ApiResponse<LessonResponse> response = new ApiResponse<>(HttpStatus.CREATED, "Táº¡o bÃ i giáº£ng thÃ nh cÃ´ng", lessonResponse, null);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/api/chapters/{chapterId}/quizzes")
     @ResponseBody
     public ResponseEntity<ApiResponse<LessonResponse>> createQuiz(@PathVariable("chapterId") Long chapterId,
-                                                                  @Valid @ModelAttribute CreateQuizRequest request) { // <-- Dùng LectureRequest
+                                                                  @Valid @ModelAttribute CreateQuizRequest request) { // <-- DÃ¹ng LectureRequest
         Lesson newLesson = lessonService.createQuiz(chapterId, request);
         LessonResponse lessonResponse = new LessonResponse(newLesson);
-        ApiResponse<LessonResponse> response = new ApiResponse<>(HttpStatus.CREATED, "Tạo bài test thành công", lessonResponse, null);
+        ApiResponse<LessonResponse> response = new ApiResponse<>(HttpStatus.CREATED, "Táº¡o bÃ i test thÃ nh cÃ´ng", lessonResponse, null);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -124,13 +124,13 @@ public class LessonController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             ApiResponse<Void> response = new ApiResponse<>(HttpStatus.BAD_REQUEST,
-                    "Không thể xóa bài học!", null, null);
+                    "KhÃ´ng thá»ƒ xÃ³a bÃ i há»c!", null, null);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 
 
-    //============================== XỬ LÍ QUIZ ===================================
+    //============================== Xá»¬ LÃ QUIZ ===================================
     @GetMapping("/courses/{courseId}/quizzes/{quizId}/questions")
     public String getQuizQuestionBank(@PathVariable("quizId") Long id,
                                       @PathVariable("courseId") Long courseId,
@@ -179,7 +179,7 @@ public class LessonController {
         if (bindingResult.hasErrors()) {
             Lesson quiz = lessonService.findById(quizId);
             if (quiz == null) {
-                throw new IllegalArgumentException("Không tìm thấy Quiz với ID: " + quizId);
+                throw new IllegalArgumentException("KhÃ´ng tÃ¬m tháº¥y Quiz vá»›i ID: " + quizId);
             }
             model.addAttribute("isUpdate", false);
             model.addAttribute("courseId", courseId);
@@ -245,7 +245,7 @@ public class LessonController {
         if (bindingResult.hasErrors()) {
             Lesson quiz = lessonService.findById(quizId);
             if (quiz == null) {
-                throw new IllegalArgumentException("Không tìm thấy Quiz với ID: " + quizId);
+                throw new IllegalArgumentException("KhÃ´ng tÃ¬m tháº¥y Quiz vá»›i ID: " + quizId);
             }
             model.addAttribute("isUpdate", false);
             model.addAttribute("courseId", courseId);
@@ -314,23 +314,23 @@ public class LessonController {
             Question question = questionService.findByIdWithAnswerOptions(questionId);
             Lesson quiz = lessonService.findById(quizId);
 
-            // Map từ Entity sang DTO để đổ dữ liệu vào form
+            // Map tá»« Entity sang DTO Ä‘á»ƒ Ä‘á»• dá»¯ liá»‡u vÃ o form
             MultipleChoiceQuestionFormDTO dto = new MultipleChoiceQuestionFormDTO();
             dto.setContent(question.getContent());
             dto.setMediaType(question.getMediaType());
-            // Lấy danh sách câu trả lời đã có
+            // Láº¥y danh sÃ¡ch cÃ¢u tráº£ lá»i Ä‘Ã£ cÃ³
             List<AnswerOption> existingOptions = question.getAnswerOptions();
             dto.setAnswerOptions(existingOptions);
 
-            model.addAttribute("isUpdate", true); // Đánh dấu đây là form update
-            model.addAttribute("pageTitle", "Cập nhật câu hỏi trắc nghiệm");
+            model.addAttribute("isUpdate", true); // ÄÃ¡nh dáº¥u Ä‘Ã¢y lÃ  form update
+            model.addAttribute("pageTitle", "Cáº­p nháº­t cÃ¢u há»i tráº¯c nghiá»‡m");
             model.addAttribute("quiz", quiz);
             model.addAttribute("courseId", courseId);
-            model.addAttribute("questionId", questionId); // Truyền questionId để form action biết
+            model.addAttribute("questionId", questionId); // Truyá»n questionId Ä‘á»ƒ form action biáº¿t
             model.addAttribute("multipleChoiceQuestionFormDTO", dto);
             model.addAttribute("mediaTypes", Question.MediaType.values());
 
-            return "course/createMultipleChoiceQuestion"; // Tái sử dụng view create
+            return "course/createMultipleChoiceQuestion"; // TÃ¡i sá»­ dá»¥ng view create
         } catch (Exception e) {
             // Handle error, maybe redirect with an error message
             return "redirect:/courses/" + courseId + "/quizzes/" + quizId + "/questions";
@@ -348,7 +348,7 @@ public class LessonController {
         if (bindingResult.hasErrors()) {
             Lesson quiz = lessonService.findById(quizId);
             model.addAttribute("isUpdate", true);
-            model.addAttribute("pageTitle", "Cập nhật câu hỏi trắc nghiệm");
+            model.addAttribute("pageTitle", "Cáº­p nháº­t cÃ¢u há»i tráº¯c nghiá»‡m");
             model.addAttribute("quiz", quiz);
             model.addAttribute("courseId", courseId);
             model.addAttribute("questionId", questionId);
@@ -361,18 +361,18 @@ public class LessonController {
             questionToUpdate.setContent(dto.getContent());
             questionToUpdate.setMediaType(dto.getMediaType());
 
-            // Xử lý upload file mới (nếu có)
+            // Xá»­ lÃ½ upload file má»›i (náº¿u cÃ³)
             if (dto.getMedia() != null && !dto.getMedia().isEmpty()) {
                 String fileName = this.uploadService.uploadFile(dto.getMedia(), "quizzes/media", null);
                 questionToUpdate.setMediaUrl(fileName);
             } else if (dto.getMediaType() == Question.MediaType.NONE) {
-                questionToUpdate.setMediaUrl(null); // Xóa media nếu người dùng chọn NONE
+                questionToUpdate.setMediaUrl(null); // XÃ³a media náº¿u ngÆ°á»i dÃ¹ng chá»n NONE
             }
 
             questionService.save(questionToUpdate);
 
-            //xóa và thêm mới các lựa chọn
-            //khi xóa ở question, các answerOption đó sẽ bị mồ côi và cũng bị xóa (do orphanRemoval = true)
+            //xÃ³a vÃ  thÃªm má»›i cÃ¡c lá»±a chá»n
+            //khi xÃ³a á»Ÿ question, cÃ¡c answerOption Ä‘Ã³ sáº½ bá»‹ má»“ cÃ´i vÃ  cÅ©ng bá»‹ xÃ³a (do orphanRemoval = true)
             questionToUpdate.getAnswerOptions().clear();
 
             dto.getAnswerOptions().forEach(option -> {
@@ -380,9 +380,9 @@ public class LessonController {
                 answerOptionService.save(option);
             });
 
-            redirectAttributes.addFlashAttribute("message", "Cập nhật câu hỏi thành công!");
+            redirectAttributes.addFlashAttribute("message", "Cáº­p nháº­t cÃ¢u há»i thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật câu hỏi: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi cáº­p nháº­t cÃ¢u há»i: " + e.getMessage());
         }
 
         return "redirect:/courses/" + courseId + "/quizzes/" + quizId + "/questions";
@@ -406,14 +406,14 @@ public class LessonController {
             dto.setSolutionText(solution.getSolutionText());
 
             model.addAttribute("isUpdate", true);
-            model.addAttribute("pageTitle", "Cập nhật câu hỏi trả lời ngắn");
+            model.addAttribute("pageTitle", "Cáº­p nháº­t cÃ¢u há»i tráº£ lá»i ngáº¯n");
             model.addAttribute("quiz", quiz);
             model.addAttribute("courseId", courseId);
             model.addAttribute("questionId", questionId);
             model.addAttribute("shortAnswerQuestionFormDTO", dto);
             model.addAttribute("mediaTypes", Question.MediaType.values());
 
-            return "course/createShortAnswerQuestion"; // Tái sử dụng view create
+            return "course/createShortAnswerQuestion"; // TÃ¡i sá»­ dá»¥ng view create
         } catch (Exception e) {
             return "redirect:/courses/" + courseId + "/quizzes/" + quizId + "/questions";
         }
@@ -430,7 +430,7 @@ public class LessonController {
         if (bindingResult.hasErrors()) {
             Lesson quiz = lessonService.findById(quizId);
             model.addAttribute("isUpdate", true);
-            model.addAttribute("pageTitle", "Cập nhật câu hỏi trả lời ngắn");
+            model.addAttribute("pageTitle", "Cáº­p nháº­t cÃ¢u há»i tráº£ lá»i ngáº¯n");
             model.addAttribute("quiz", quiz);
             model.addAttribute("courseId", courseId);
             model.addAttribute("questionId", questionId);
@@ -456,9 +456,9 @@ public class LessonController {
             solution.setSolutionText(dto.getSolutionText());
             shortAnswerOptionService.save(solution);
 
-            redirectAttributes.addFlashAttribute("message", "Cập nhật câu hỏi thành công!");
+            redirectAttributes.addFlashAttribute("message", "Cáº­p nháº­t cÃ¢u há»i thÃ nh cÃ´ng!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật câu hỏi: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi cáº­p nháº­t cÃ¢u há»i: " + e.getMessage());
         }
 
         return "redirect:/courses/" + courseId + "/quizzes/" + quizId + "/questions";

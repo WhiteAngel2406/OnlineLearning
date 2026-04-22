@@ -35,7 +35,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void handleSave(long enrollmentId, FeedbackRequest feedbackRequest) {
         Enrollment enrollment = enrollmentRepository.findById(enrollmentId).orElseThrow(() -> new IllegalArgumentException("Enrollment not found"));
         Feedback fb = this.feedbackRepository.findByEnrollment(enrollment);
-        //nếu có rồi, k tạo mới nữa
+        //náº¿u cÃ³ rá»“i, k táº¡o má»›i ná»¯a
         if (fb != null) {
             fb.setRating(feedbackRequest.getRating());
             fb.setReview(feedbackRequest.getReview());

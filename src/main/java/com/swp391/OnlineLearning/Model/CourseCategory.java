@@ -16,13 +16,13 @@ public class CourseCategory extends BaseEntity{
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "NVARCHAR(100)")
-    @NotBlank(message = "Tên danh mục khóa học không được để trống.")
-    @Size(min = 5, max = 100, message = "Tên danh mục khóa học phải có độ dài từ 5 đến 100 ký tự.")
+    @NotBlank(message = "TÃªn danh má»¥c khÃ³a há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 5, max = 100, message = "TÃªn danh má»¥c khÃ³a há»c pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 5 Ä‘áº¿n 100 kÃ½ tá»±.")
     private String name;
 
     @Column(name = "description", nullable = false, columnDefinition = "NVARCHAR(MAX)")
-    @NotBlank(message = "Mô tả danh mục không được để trống.")
-    @Size(min = 10, max = 1000, message = "Mô tả danh mục phải có độ dài từ 10 đến 1000 ký tự.")
+    @NotBlank(message = "MÃ´ táº£ danh má»¥c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 10, max = 1000, message = "MÃ´ táº£ danh má»¥c pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 10 Ä‘áº¿n 1000 kÃ½ tá»±.")
     private String description;
 
     @Column(nullable = false, name = "active")

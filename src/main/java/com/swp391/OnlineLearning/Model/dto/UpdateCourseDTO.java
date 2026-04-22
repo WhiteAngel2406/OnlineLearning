@@ -5,32 +5,32 @@ import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UpdateCourseDTO {
-    @NotBlank(message = "Vui lòng nhập tên khóa học.")
-    @Size(min = 5, max = 100, message = "Tên khóa học phải từ 5 đến 100 ký tự.")
+    @NotBlank(message = "Vui lÃ²ng nháº­p tÃªn khÃ³a há»c.")
+    @Size(min = 5, max = 100, message = "TÃªn khÃ³a há»c pháº£i tá»« 5 Ä‘áº¿n 100 kÃ½ tá»±.")
     private String name;
 
-    @NotBlank(message = "Vui lòng nhập mô tả ngắn.")
-    @Size(min = 10, max = 200, message = "Mô tả ngắn phải từ 10 đến 200 ký tự.")
+    @NotBlank(message = "Vui lÃ²ng nháº­p mÃ´ táº£ ngáº¯n.")
+    @Size(min = 10, max = 200, message = "MÃ´ táº£ ngáº¯n pháº£i tá»« 10 Ä‘áº¿n 200 kÃ½ tá»±.")
     private String shortDescription;
 
-    @NotBlank(message = "Vui lòng nhập mô tả chi tiết.")
-    @Size(min = 10, max = 1000, message = "Mô tả chi tiết phải từ 10 đến 1000 ký tự.")
+    @NotBlank(message = "Vui lÃ²ng nháº­p mÃ´ táº£ chi tiáº¿t.")
+    @Size(min = 10, max = 1000, message = "MÃ´ táº£ chi tiáº¿t pháº£i tá»« 10 Ä‘áº¿n 1000 kÃ½ tá»±.")
     private String description;
 
-    @NotBlank(message = "Vui lòng nhập yêu cầu đầu vào (prerequisite).")
-    @Size(min = 10, max = 10000, message = "Yêu cầu đầu vào phải từ 10 đến 10000 ký tự.")
+    @NotBlank(message = "Vui lÃ²ng nháº­p yÃªu cáº§u Ä‘áº§u vÃ o (prerequisite).")
+    @Size(min = 10, max = 10000, message = "YÃªu cáº§u Ä‘áº§u vÃ o pháº£i tá»« 10 Ä‘áº¿n 10000 kÃ½ tá»±.")
     private String prerequisite;
 
-    @NotNull(message = "Vui lòng nhập giá khóa học.")
-    @DecimalMin(value = "0.0", message = "Giá khóa học phải lớn hơn hoặc bằng 0.")
+    @NotNull(message = "Vui lÃ²ng nháº­p giÃ¡ khÃ³a há»c.")
+    @DecimalMin(value = "0.0", message = "GiÃ¡ khÃ³a há»c pháº£i lá»›n hÆ¡n hoáº·c báº±ng 0.")
     private Double price;
 
-    @NotNull(message = "Vui lòng nhập mức giảm giá.")
-    @DecimalMin(value = "0.0", message = "Mức giảm giá không được âm.")
-    @DecimalMax(value = "100.0", message = "Mức giảm giá không được vượt quá 100%.")
+    @NotNull(message = "Vui lÃ²ng nháº­p má»©c giáº£m giÃ¡.")
+    @DecimalMin(value = "0.0", message = "Má»©c giáº£m giÃ¡ khÃ´ng Ä‘Æ°á»£c Ã¢m.")
+    @DecimalMax(value = "100.0", message = "Má»©c giáº£m giÃ¡ khÃ´ng Ä‘Æ°á»£c vÆ°á»£t quÃ¡ 100%.")
     private Double discount;
 
-    @NotNull(message = "Vui lòng chọn danh mục khóa học.")
+    @NotNull(message = "Vui lÃ²ng chá»n danh má»¥c khÃ³a há»c.")
     private Long categoryId;
 
     private MultipartFile thumbnailFile;

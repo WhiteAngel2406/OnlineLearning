@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 @Setter
 public class Order extends BaseEntity{
     public enum OrderStatus{
-        PENDING("Đang chờ"),
-        PAID("Đã thanh toán"),
-        FAILED("Thất bại"),
-        CANCELLED("Đã hủy");
+        PENDING("Äang chá»"),
+        PAID("ÄÃ£ thanh toÃ¡n"),
+        FAILED("Tháº¥t báº¡i"),
+        CANCELLED("ÄÃ£ há»§y");
         private final String displayName;
         OrderStatus(String displayName) {
             this.displayName = displayName;
@@ -35,17 +35,17 @@ public class Order extends BaseEntity{
     private double amount;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
-    private String orderInfo; //dùng cho vnp_OrderInfo
+    private String orderInfo; //dÃ¹ng cho vnp_OrderInfo
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
 
     @Column(length = 2)
-    private String vnpResponseCode; //mã phản hồi từ VNPay (vnp_ResponseCode) sau khi xử lí IPN/Return
+    private String vnpResponseCode; //mÃ£ pháº£n há»“i tá»« VNPay (vnp_ResponseCode) sau khi xá»­ lÃ­ IPN/Return
 
     @Column(length = 20)
-    private String vnpTransactionNo; //mã giao dịch của vnpay (vnp_TransactionNo)
+    private String vnpTransactionNo; //mÃ£ giao dá»‹ch cá»§a vnpay (vnp_TransactionNo)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

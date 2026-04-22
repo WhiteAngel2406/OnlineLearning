@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
 import com.swp391.OnlineLearning.model.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,13 +23,13 @@ public class SessionService {
         HttpSession session = request.getSession();
         String email = authentication.getName();
 
-        // Kiểm tra xem user đã có trong session chưa
+        // Kiá»ƒm tra xem user Ä‘Ã£ cÃ³ trong session chÆ°a
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null || !currentUser.getEmail().equals(email)) {
-            // Load user từ database và lưu vào session
+            // Load user tá»« database vÃ  lÆ°u vÃ o session
             User user = userService.findByEmailAndEnabledTrue(email).orElseThrow();
             session.setAttribute("currentUserId", user.getId());
-            System.out.println("✅ User stored in session: " + user.getEmail() +
+            System.out.println("âœ… User stored in session: " + user.getEmail() +
                     " (Auth type: " + getAuthenticationType(authentication) + ")");
         }
     }

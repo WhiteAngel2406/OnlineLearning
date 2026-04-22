@@ -1,15 +1,15 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Model.Course;
-import com.swp391.OnlineLearning.Model.CourseCategory;
-import com.swp391.OnlineLearning.Model.Order;
-import com.swp391.OnlineLearning.Model.User;
-import com.swp391.OnlineLearning.Model.UserRole;
-import com.swp391.OnlineLearning.Model.dto.OrderFilter;
-import com.swp391.OnlineLearning.Repository.CourseRepository;
-import com.swp391.OnlineLearning.Repository.EnrollmentRepository;
-import com.swp391.OnlineLearning.Repository.OrderRepository;
-import com.swp391.OnlineLearning.Service.*;
+import com.swp391.OnlineLearning.model.Course;
+import com.swp391.OnlineLearning.model.CourseCategory;
+import com.swp391.OnlineLearning.model.Order;
+import com.swp391.OnlineLearning.model.User;
+import com.swp391.OnlineLearning.model.UserRole;
+import com.swp391.OnlineLearning.model.dto.OrderFilter;
+import com.swp391.OnlineLearning.repository.CourseRepository;
+import com.swp391.OnlineLearning.repository.EnrollmentRepository;
+import com.swp391.OnlineLearning.repository.OrderRepository;
+import com.swp391.OnlineLearning.service.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -120,7 +120,7 @@ public class AdminController {
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("totalCourses", totalCourses);
         model.addAttribute("totalOrders", totalOrders);
-        model.addAttribute("totalRevenue", new DecimalFormat("#,###").format(totalRevenue) + "đ");
+        model.addAttribute("totalRevenue", new DecimalFormat("#,###").format(totalRevenue) + "Ä‘");
         model.addAttribute("monthlyRevenue", monthlyRevenue);
         model.addAttribute("popularCourses", popularCourses);
         model.addAttribute("recentOrders", recentOrders);
@@ -141,7 +141,7 @@ public class AdminController {
                            @RequestParam(value = "sort", defaultValue = "id") String sort,
                            @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
-        // Tạo Sort object
+        // Táº¡o Sort object
         Sort sortObj = createSort(sort, direction);
         Pageable pageable = PageRequest.of(page, size, sortObj);
 
@@ -225,10 +225,10 @@ public class AdminController {
             userService.save(user);
 
             // Send email notification
-            emailService.sendEmail(user.getEmail(), "Tài khoản đã được tạo bởi Quản trị viên",
+            emailService.sendEmail(user.getEmail(), "TÃ i khoáº£n Ä‘Ã£ Ä‘Æ°á»£c táº¡o bá»Ÿi Quáº£n trá»‹ viÃªn",
                     emailService.buildEmailContent(plainPassword));
 
-            redirectAttributes.addFlashAttribute("successMessage", "Tạo người dùng thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "Táº¡o ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
             return "redirect:/admin/users";
 
         } catch (IllegalArgumentException e) {
@@ -237,7 +237,7 @@ public class AdminController {
             model.addAttribute("roles", roleService.findAll());
             return "admin/createUser";
         } catch (Exception e) {
-            bindingResult.rejectValue("email", "error.user", "Đã xảy ra lỗi khi tạo người dùng: " + e.getMessage());
+            bindingResult.rejectValue("email", "error.user", "ÄÃ£ xáº£y ra lá»—i khi táº¡o ngÆ°á»i dÃ¹ng: " + e.getMessage());
             model.addAttribute("genders", User.Gender.values());
             model.addAttribute("roles", roleService.findAll());
             return "admin/createUser";
@@ -272,10 +272,10 @@ public class AdminController {
             currentUser.setEnabled(user.isEnabled());
             this.userService.save(currentUser);
 
-            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật người dùng thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "Cáº­p nháº­t ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
             return "redirect:/admin/users";
         }catch(Exception e){
-            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi cập nhật người dùng: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Lá»—i khi cáº­p nháº­t ngÆ°á»i dÃ¹ng: " + e.getMessage());
             return "redirect:/admin/users";
         }
     }
@@ -284,10 +284,10 @@ public class AdminController {
     public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try{
             this.userService.deleteById(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Xóa người dùng thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "XÃ³a ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng!");
             return "redirect:/admin/users";
         }catch(Exception e){
-            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa người dùng: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Lá»—i khi xÃ³a ngÆ°á»i dÃ¹ng: " + e.getMessage());
             return "redirect:/admin/users";
         }
     }
@@ -406,7 +406,7 @@ public class AdminController {
                 .mapToDouble(Order::getAmount)
                 .sum();
 
-        // Tính doanh thu theo tháng (YearMonth)
+        // TÃ­nh doanh thu theo thÃ¡ng (YearMonth)
         Map<YearMonth, Double> revenueByMonth = orders.stream()
                 .collect(Collectors.groupingBy(
                         order -> YearMonth.from(order.getUpdatedAt()),
@@ -414,7 +414,7 @@ public class AdminController {
                         Collectors.summingDouble(Order::getAmount)
                 ));
 
-        // Chuyển sang 2 danh sách để hiển thị trên biểu đồ
+        // Chuyá»ƒn sang 2 danh sÃ¡ch Ä‘á»ƒ hiá»ƒn thá»‹ trÃªn biá»ƒu Ä‘á»“
         List<String> monthLabels = revenueByMonth.keySet().stream()
                 .map(ym -> ym.toString())
                 .toList();

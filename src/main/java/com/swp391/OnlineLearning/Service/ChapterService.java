@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Controller.ChapterController;
-import com.swp391.OnlineLearning.Model.Chapter;
+import com.swp391.OnlineLearning.controller.ChapterController;
+import com.swp391.OnlineLearning.model.Chapter;
 
 import java.util.Optional;
 

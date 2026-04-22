@@ -5,10 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/Course.java
 import lombok.*;
-=======
->>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/Course.java
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +16,9 @@ import java.util.List;
 @Table(name = "courses")
 public class    Course extends BaseEntity{
     public enum CourseStatus {
-        PUBLISHED("Đã duyệt"),
-        DRAFT("Đang sửa"),
-        PENDING("Đang chờ duyệt");
+        PUBLISHED("ÄÃ£ duyá»‡t"),
+        DRAFT("Äang sá»­a"),
+        PENDING("Äang chá» duyá»‡t");
         private final String displayName;
         CourseStatus(String displayName) {
             this.displayName = displayName;
@@ -35,34 +32,34 @@ public class    Course extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(100)")
-    @NotBlank(message = "Tên khóa học không được để trống.")
-    @Size(min = 5, max = 100, message = "Tên khóa học phải có độ dài từ 5 đến 100 ký tự.")
+    @NotBlank(message = "TÃªn khÃ³a há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 5, max = 100, message = "TÃªn khÃ³a há»c pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 5 Ä‘áº¿n 100 kÃ½ tá»±.")
     private String name;
 
     @Column(name = "short_description", nullable = false, columnDefinition = "NVARCHAR(255)")
-    @NotBlank(message = "Mô tả ngắn không được để trống.")
-    @Size(min = 10, max = 200, message = "Mô tả ngắn phải có độ dài từ 10 đến 200 ký tự.")
+    @NotBlank(message = "MÃ´ táº£ ngáº¯n khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 10, max = 200, message = "MÃ´ táº£ ngáº¯n pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 10 Ä‘áº¿n 200 kÃ½ tá»±.")
     private String shortDescription;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
-    @NotBlank(message = "Mô tả chi tiết không được để trống.")
-    @Size(min = 10, message = "Mô tả chi tiết phải có độ dài từ 10 ký tự.")
+    @NotBlank(message = "MÃ´ táº£ chi tiáº¿t khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 10, message = "MÃ´ táº£ chi tiáº¿t pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 10 kÃ½ tá»±.")
     private String description;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
-    @NotBlank(message = "Yêu cầu đầu vào không được để trống.")
+    @NotBlank(message = "YÃªu cáº§u Ä‘áº§u vÃ o khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     private String prerequisite;
 
-    @NotNull(message = "Ảnh bìa khóa học không được để trống.")
+    @NotNull(message = "áº¢nh bÃ¬a khÃ³a há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     private String thumbnail;
 
-    @NotNull(message = "Giá khóa học không được để trống.")
-    @DecimalMin(value = "0.0", message = "Giá khóa học phải là số dương.")
+    @NotNull(message = "GiÃ¡ khÃ³a há»c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @DecimalMin(value = "0.0", message = "GiÃ¡ khÃ³a há»c pháº£i lÃ  sá»‘ dÆ°Æ¡ng.")
     private Double price;
 
-    @NotNull(message = "Giá trị giảm giá không được để trống.")
-    @DecimalMin(value = "0.0", message = "Giảm giá không được âm.")
-    @DecimalMax(value = "100.0", message = "Giảm giá không được vượt quá 100%.")
+    @NotNull(message = "GiÃ¡ trá»‹ giáº£m giÃ¡ khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @DecimalMin(value = "0.0", message = "Giáº£m giÃ¡ khÃ´ng Ä‘Æ°á»£c Ã¢m.")
+    @DecimalMax(value = "100.0", message = "Giáº£m giÃ¡ khÃ´ng Ä‘Æ°á»£c vÆ°á»£t quÃ¡ 100%.")
     private Double discount;
 
     private boolean featured;
@@ -81,7 +78,7 @@ public class    Course extends BaseEntity{
     @JoinColumn(name = "author_id")
     private User author;
 
-    // Constructors - ĐÃ ĐƯỢC TỐI ƯU
+    // Constructors - ÄÃƒ ÄÆ¯á»¢C Tá»I Æ¯U
     public Course() {
         this.status = CourseStatus.DRAFT;
         this.featured = false;
@@ -92,7 +89,7 @@ public class    Course extends BaseEntity{
     public Course(String name, String description, String prerequisite,
                   String thumbnail, double price, double discount,
                   boolean featured, CourseStatus status) {
-        this(); // Gọi constructor mặc định
+        this(); // Gá»i constructor máº·c Ä‘á»‹nh
         this.name = name;
         this.description = description;
         this.prerequisite = prerequisite;
@@ -116,7 +113,7 @@ public class    Course extends BaseEntity{
         this.category = category;
     }
 
-    // Thêm constructor tiện ích
+    // ThÃªm constructor tiá»‡n Ã­ch
     public Course(String name, String description, double price) {
         this();
         this.name = name;
@@ -124,110 +121,5 @@ public class    Course extends BaseEntity{
         this.price = price;
     }
 
-<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/Course.java
-=======
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPrerequisite() {
-        return prerequisite;
-    }
-
-    public void setPrerequisite(String prerequisite) {
-        this.prerequisite = prerequisite;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
-    public boolean isFeatured() {
-        return featured;
-    }
-
-    public void setFeatured(boolean featured) {
-        this.featured = featured;
-    }
-
-    public CourseStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CourseStatus status) {
-        this.status = status;
-    }
-
-    public CourseCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(CourseCategory category) {
-        this.category = category;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
-
-    public void setChapters(List<Chapter> chapters) {
-        this.chapters = chapters;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
->>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/Course.java
 }

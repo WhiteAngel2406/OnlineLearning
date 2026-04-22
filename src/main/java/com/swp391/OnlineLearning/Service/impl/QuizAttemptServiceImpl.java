@@ -1,10 +1,10 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.QuestionRepository;
-import com.swp391.OnlineLearning.Repository.QuizAttemptRepository;
-import com.swp391.OnlineLearning.Service.QuizAttemptService;
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Model.dto.AnsweredOption;
+import com.swp391.OnlineLearning.repository.QuestionRepository;
+import com.swp391.OnlineLearning.repository.QuizAttemptRepository;
+import com.swp391.OnlineLearning.service.QuizAttemptService;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.AnsweredOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,24 +41,24 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
 
     @Override
     public QuizAttempt startQuizAttempt(User user, Lesson lesson) {
-        // 1️⃣ Create attempt
+        // 1ï¸âƒ£ Create attempt
         QuizAttempt attempt = new QuizAttempt();
         attempt.setUser(user);
         attempt.setLesson(lesson);
         attempt.setStartTime(LocalDateTime.now());
         attempt.setEndTime(LocalDateTime.now().plusMinutes(lesson.getTimeLimitInMinutes()));
 
-        // 2️⃣ Get all questions for this lesson
+        // 2ï¸âƒ£ Get all questions for this lesson
         List<Question> allQuestions = lesson.getQuestions();
         int numberOfQuestions = lesson.getNumberOfQuestions();
         Collections.shuffle(allQuestions);
 
-        // 3️⃣ Limit random subset
+        // 3ï¸âƒ£ Limit random subset
         List<Question> selected = allQuestions.stream()
                 .limit(numberOfQuestions)
                 .collect(Collectors.toList());
 
-        // 4️⃣ Map to attempt question
+        // 4ï¸âƒ£ Map to attempt question
         int index = 1;
         for (Question q : selected) {
             QuizAttemptQuestion aq = new QuizAttemptQuestion();
@@ -68,7 +68,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
             attempt.getQuestions().add(aq);
         }
 
-        // 5️⃣ Save all
+        // 5ï¸âƒ£ Save all
         return quizAttemptRepository.save(attempt);
     }
 
@@ -127,7 +127,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
                         .map(AnswerOption::getId)
                         .toList();
 
-                // user’s selected answers (stored as String IDs)
+                // userâ€™s selected answers (stored as String IDs)
                 List<Long> selectedIds = userAnswer.getAnswer()
                         .stream()
                         .map(Long::parseLong)
@@ -146,7 +146,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
                     aq.getSelectedOptions().add(sao);
                 }
 
-                // correctness check — compare sets of IDs
+                // correctness check â€” compare sets of IDs
                 isCorrect = new HashSet<>(selectedIds).equals(new HashSet<>(correctIds));
             }
             else if (question.getQuestionType() == Question.QuestionType.SHORT_ANSWER) {

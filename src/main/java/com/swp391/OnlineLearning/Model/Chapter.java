@@ -19,13 +19,13 @@ public class Chapter {
     private Long id;
 
     @Column(nullable = false, unique = true, columnDefinition = "NVARCHAR(100)")
-    @NotBlank(message = "Tên chương không được để trống.")
-    @Size(min = 5, max = 100, message = "Tên chương phải có độ dài từ 5 đến 100 ký tự.")
+    @NotBlank(message = "TÃªn chÆ°Æ¡ng khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 5, max = 100, message = "TÃªn chÆ°Æ¡ng pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 5 Ä‘áº¿n 100 kÃ½ tá»±.")
     private String name;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(255)")
-    @NotBlank(message = "Mô tả ngắn không được để trống.")
-    @Size(min = 10, max = 200, message = "Mô tả ngắn phải có độ dài từ 10 đến 200 ký tự.")
+    @NotBlank(message = "MÃ´ táº£ ngáº¯n khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(min = 10, max = 200, message = "MÃ´ táº£ ngáº¯n pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 10 Ä‘áº¿n 200 kÃ½ tá»±.")
     private String shortDescription;
 
     @Column(nullable = false, name = "order_number")

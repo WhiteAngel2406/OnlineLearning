@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Model.AnswerOption;
-import com.swp391.OnlineLearning.Model.Question;
+import com.swp391.OnlineLearning.model.AnswerOption;
+import com.swp391.OnlineLearning.model.Question;
 
 public interface AnswerOptionService {
     void save(AnswerOption answerOption);

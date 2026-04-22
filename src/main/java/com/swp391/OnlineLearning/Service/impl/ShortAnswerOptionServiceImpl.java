@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.ShortAnswerOptionRepository;
-import com.swp391.OnlineLearning.Service.ShortAnswerOptionService;
-import com.swp391.OnlineLearning.Model.ShortAnswerOption;
+import com.swp391.OnlineLearning.repository.ShortAnswerOptionRepository;
+import com.swp391.OnlineLearning.service.ShortAnswerOptionService;
+import com.swp391.OnlineLearning.model.ShortAnswerOption;
 import org.springframework.stereotype.Service;
 
 @Service

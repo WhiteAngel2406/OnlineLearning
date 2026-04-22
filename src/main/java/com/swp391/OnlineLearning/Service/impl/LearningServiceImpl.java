@@ -34,31 +34,31 @@ public class LearningServiceImpl implements LearningService {
     @Transactional(readOnly = true)
     public List<ChapterLearningDTO> prepareLearningViewData(long userId, long enrollmentId) {
         User currentUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        // 1. Lấy cấu trúc chính (Enrollment -> Course -> Chapters -> Lessons)
+        // 1. Láº¥y cáº¥u trÃºc chÃ­nh (Enrollment -> Course -> Chapters -> Lessons)
         Enrollment enrollment = enrollmentRepository.findByIdAndUserIdWithCourse(enrollmentId, userId)
-                .orElseThrow(() -> new IllegalArgumentException("Resource not found!")); // Ném exception cụ thể
+                .orElseThrow(() -> new IllegalArgumentException("Resource not found!")); // NÃ©m exception cá»¥ thá»ƒ
 
         Course course = enrollment.getCourse();
         List<Chapter> chapters = course.getChapters();
 
-        // 2. Lấy tất cả tiến độ học của user cho enrollment này
+        // 2. Láº¥y táº¥t cáº£ tiáº¿n Ä‘á»™ há»c cá»§a user cho enrollment nÃ y
         List<UserLesson> userProgressList = userLessonRepository.findAllByEnrollmentIdAndUserIdWithLesson(enrollmentId, userId);
 
-        // 3. Tạo Map để tra cứu tiến độ nhanh chóng (Key: lessonId, Value: UserLesson)
+        // 3. Táº¡o Map Ä‘á»ƒ tra cá»©u tiáº¿n Ä‘á»™ nhanh chÃ³ng (Key: lessonId, Value: UserLesson)
         Map<Long, UserLesson> progressMap = userProgressList.stream()
                 .collect(Collectors.toMap(ul -> ul.getLesson().getId(), Function.identity()));
 
-        // 4. Xây dựng cấu trúc DTO trả về
+        // 4. XÃ¢y dá»±ng cáº¥u trÃºc DTO tráº£ vá»
         List<ChapterLearningDTO> chapterLearningDTOs = new ArrayList<>();
         if (chapters != null) {
-            // Sắp xếp chapter theo orderNumber nếu cần
+            // Sáº¯p xáº¿p chapter theo orderNumber náº¿u cáº§n
             chapters.sort(Comparator.comparingInt(Chapter::getOrderNumber));
 
             for (Chapter chapter : chapters) {
                 List<UserLessonLearningDTO> lessonDTOs = new ArrayList<>();
-                List<Lesson> lessons = chapter.getLessons(); // Đã được fetch EAGERLY
+                List<Lesson> lessons = chapter.getLessons(); // ÄÃ£ Ä‘Æ°á»£c fetch EAGERLY
                 if (lessons != null) {
-                    // Sắp xếp lesson theo orderNumber nếu cần
+                    // Sáº¯p xáº¿p lesson theo orderNumber náº¿u cáº§n
                     lessons.sort(Comparator.comparingInt(Lesson::getOrderNumber));
 
                     for (Lesson lesson : lessons) {
@@ -66,7 +66,7 @@ public class LearningServiceImpl implements LearningService {
                         lessonDTOs.add(new UserLessonLearningDTO(progress));
                     }
                 }
-                // Giả sử ChapterLearningDTO có constructor phù hợp
+                // Giáº£ sá»­ ChapterLearningDTO cÃ³ constructor phÃ¹ há»£p
                 chapterLearningDTOs.add(new ChapterLearningDTO(chapter, lessonDTOs));
             }
         }

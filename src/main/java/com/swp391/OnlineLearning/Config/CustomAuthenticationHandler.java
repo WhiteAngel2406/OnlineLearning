@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Config;
+package com.swp391.OnlineLearning.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +20,11 @@ public class CustomAuthenticationHandler implements AuthenticationFailureHandler
         String errorMessage;
 
         if (exception instanceof DisabledException) {
-            errorMessage = "Tài khoản đã bị vô hiệu hóa";
+            errorMessage = "TÃ i khoáº£n Ä‘Ã£ bá»‹ vÃ´ hiá»‡u hÃ³a";
         } else if (exception instanceof BadCredentialsException) {
-            errorMessage = "Email hoặc mật khẩu không đúng";
+            errorMessage = "Email hoáº·c máº­t kháº©u khÃ´ng Ä‘Ãºng";
         } else {
-            errorMessage = "Đăng nhập thất bại: " + exception.getMessage();
+            errorMessage = "ÄÄƒng nháº­p tháº¥t báº¡i: " + exception.getMessage();
         }
 
         response.sendRedirect("/login?error=" + java.net.URLEncoder.encode(errorMessage, java.nio.charset.StandardCharsets.UTF_8));

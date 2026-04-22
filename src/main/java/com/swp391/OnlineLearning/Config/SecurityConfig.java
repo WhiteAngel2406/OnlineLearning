@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Config;
+package com.swp391.OnlineLearning.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +19,7 @@ public class SecurityConfig {
         return new MySimpleUrlAuthenticationSuccessHandler();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,10 +32,10 @@ public class SecurityConfig {
                                 "/uploads/**",
                                 "/chats").permitAll()
                         .requestMatchers("/marketing/**").hasRole("MARKETING")
-                        // --- 2. QUYỀN CỦA EXPERT (Các rule chỉ Expert có) ---
+                        // --- 2. QUYá»€N Cá»¦A EXPERT (CÃ¡c rule chá»‰ Expert cÃ³) ---
                         .requestMatchers(HttpMethod.POST, "/courses/{id}/submit-review").hasRole("EXPERT")
 
-                        // Gom nhóm các API của Expert
+                        // Gom nhÃ³m cÃ¡c API cá»§a Expert
                         .requestMatchers(HttpMethod.PUT,
                                 "/api/chapters/{chapterId}",
                                 "/api/lectures/{lectureId}",
@@ -56,7 +53,7 @@ public class SecurityConfig {
                                 "/api/chapters/{chapterId}/quizzes"
                         ).hasRole("EXPERT")
 
-                        // Gom nhóm các đường dẫn tạo/cập nhật Question
+                        // Gom nhÃ³m cÃ¡c Ä‘Æ°á»ng dáº«n táº¡o/cáº­p nháº­t Question
                         .requestMatchers(
                                 "/courses/{courseId}/quizzes/{quizId}/questions/multiple-choice/create",
                                 "/courses/{courseId}/quizzes/{quizId}/questions/short-answer/create",
@@ -65,7 +62,7 @@ public class SecurityConfig {
                                 "/courses/{courseId}/quizzes/{quizId}/questions/{questionId}/short-answer/update"
                         ).hasRole("EXPERT")
 
-                        // --- 3. QUYỀN CHUNG (Cả ADMIN và EXPERT đều có) ---
+                        // --- 3. QUYá»€N CHUNG (Cáº£ ADMIN vÃ  EXPERT Ä‘á»u cÃ³) ---
                         .requestMatchers(HttpMethod.GET,
                                 "/courses/{id}",
                                 "/courses/create",
@@ -80,24 +77,24 @@ public class SecurityConfig {
                                 "/courses/{id}/delete"
                         ).hasAnyRole("ADMIN", "EXPERT")
 
-                        // --- QUYỀN CỦA ADMIN (Ưu tiên các rule cụ thể nhất) ---
+                        // --- QUYá»€N Cá»¦A ADMIN (Æ¯u tiÃªn cÃ¡c rule cá»¥ thá»ƒ nháº¥t) ---
                         .requestMatchers("/quiz/*").hasRole("ADMIN")
                         .requestMatchers("/admin/**", "/courses/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/courses/{courseId}").hasRole("ADMIN") // Change status
-                        .requestMatchers("/api/{courseId}/toggle-featured").hasRole("ADMIN") // Giả sử là POST/PUT, nếu rõ method thì nên ghi
+                        .requestMatchers("/api/{courseId}/toggle-featured").hasRole("ADMIN") // Giáº£ sá»­ lÃ  POST/PUT, náº¿u rÃµ method thÃ¬ nÃªn ghi
 
-                        // Tất cả các request còn lại đều cần phải xác thực
+                        // Táº¥t cáº£ cÃ¡c request cÃ²n láº¡i Ä‘á»u cáº§n pháº£i xÃ¡c thá»±c
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/login")   // chỗ này phải đúng action form
+                        .loginProcessingUrl("/login")   // chá»— nÃ y pháº£i Ä‘Ãºng action form
                         .defaultSuccessUrl("/", true)
-                        .successHandler(myAuthenticationSuccessHandler())// true = luôn luôn redirect về /home
+                        .successHandler(myAuthenticationSuccessHandler())// true = luÃ´n luÃ´n redirect vá» /home
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.disable()); // Tắt CSRF cho POST requests
+                .csrf(csrf -> csrf.disable()); // Táº¯t CSRF cho POST requests
 
         return http.build();
     }

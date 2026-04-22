@@ -6,13 +6,13 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ValidMediaTypeValidator.class) // Liên kết với logic validator
-@Target({ElementType.TYPE}) // Quan trọng: Chỉ định annotation này dùng cho CLASS
+@Constraint(validatedBy = ValidMediaTypeValidator.class) // LiÃªn káº¿t vá»›i logic validator
+@Target({ElementType.TYPE}) // Quan trá»ng: Chá»‰ Ä‘á»‹nh annotation nÃ y dÃ¹ng cho CLASS
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidMediaType {
 
-    // Thông báo lỗi mặc định
-    String message() default "Loại file upload không khớp với MediaType đã chọn.";
+    // ThÃ´ng bÃ¡o lá»—i máº·c Ä‘á»‹nh
+    String message() default "Loáº¡i file upload khÃ´ng khá»›p vá»›i MediaType Ä‘Ã£ chá»n.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

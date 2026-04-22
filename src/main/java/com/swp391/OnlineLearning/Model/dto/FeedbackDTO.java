@@ -12,11 +12,11 @@ public class FeedbackDTO {
     private String userAvatarUrl;
 
     @NotNull
-    @Min(value = 1, message = "Vui lòng đánh giá từ 1-5 sao.")
-    @Max(value = 5, message = "Vui lòng đánh giá từ 1-5 sao.")
+    @Min(value = 1, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
+    @Max(value = 5, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
     private Integer rating;
 
-    @NotNull(message = "Vui lòng nhập nội dung đánh giá.")
+    @NotNull(message = "Vui lÃ²ng nháº­p ná»™i dung Ä‘Ã¡nh giÃ¡.")
     private String review;
 
     private int helpfulCount;

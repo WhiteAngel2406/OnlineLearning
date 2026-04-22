@@ -97,7 +97,7 @@ public class CourseController {
                                       @RequestParam(required = false) Course.CourseStatus status,
                                       @RequestParam(required = false) Long categoryId,
                                       @RequestParam(required = false) String keyword,
-                                      // tự động lấy tham số page, size, sort từ URL
+                                      // tá»± Ä‘á»™ng láº¥y tham sá»‘ page, size, sort tá»« URL
                                       @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                       Model model){
         Page<Course> coursePage = this.courseService.findCoursesByAuthorAndFilters(expertId, status, categoryId, keyword, pageable);
@@ -118,7 +118,7 @@ public class CourseController {
             @RequestParam(required = false) Course.CourseStatus status,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String keyword,
-            // tự động lấy tham số page, size, sort từ URL
+            // tá»± Ä‘á»™ng láº¥y tham sá»‘ page, size, sort tá»« URL
             @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             Model model) { // Inject Model to pass data to the view
 
@@ -193,10 +193,10 @@ public class CourseController {
     public String showUpdateCourseForm(@PathVariable Long id, Model model) {
         Course course = courseService.findById(id);
 
-        // Tạo UpdateDTO từ Course entity
+        // Táº¡o UpdateDTO tá»« Course entity
         UpdateCourseDTO updateDto = new UpdateCourseDTO(course);
 
-        model.addAttribute("courseDTO", updateDto); // Dùng tên chung để form tái sử dụng
+        model.addAttribute("courseDTO", updateDto); // DÃ¹ng tÃªn chung Ä‘á»ƒ form tÃ¡i sá»­ dá»¥ng
         model.addAttribute("isUpdate", true);
         model.addAttribute("isReadOnly", updateDto.getStatus() != Course.CourseStatus.DRAFT);
         model.addAttribute("courseId", id);
@@ -231,7 +231,7 @@ public class CourseController {
                                    HttpSession session, RedirectAttributes redirectAttributes){
         try{
             this.courseService.sendSubmitReview(courseId);
-            redirectAttributes.addFlashAttribute("message", "Gửi phê duyệt thành công!");
+            redirectAttributes.addFlashAttribute("message", "Gá»­i phÃª duyá»‡t thÃ nh cÃ´ng!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -244,7 +244,7 @@ public class CourseController {
                                    HttpSession session, RedirectAttributes redirectAttributes){
         try{
             this.courseService.cancelReview(courseId);
-            redirectAttributes.addFlashAttribute("message", "Hủy phê duyệt thành công!");
+            redirectAttributes.addFlashAttribute("message", "Há»§y phÃª duyá»‡t thÃ nh cÃ´ng!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -256,7 +256,7 @@ public class CourseController {
                                RedirectAttributes redirectAttributes){
         try{
             Course courseToDelete = this.courseService.deleteById(courseId);
-            redirectAttributes.addFlashAttribute("message", "Xóa khóa học thành công!");
+            redirectAttributes.addFlashAttribute("message", "XÃ³a khÃ³a há»c thÃ nh cÃ´ng!");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -269,7 +269,7 @@ public class CourseController {
                                      RedirectAttributes redirectAttributes){
         try{
             Course courseToHandle = this.courseService.handleChangingCourseStatus(courseId, respondToPublish);
-            redirectAttributes.addFlashAttribute("message", "Xử lý trạng thái khóa học thành công!");
+            redirectAttributes.addFlashAttribute("message", "Xá»­ lÃ½ tráº¡ng thÃ¡i khÃ³a há»c thÃ nh cÃ´ng!");
             return "redirect:/courses/admin";
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -283,17 +283,17 @@ public class CourseController {
                                                             @RequestBody Map<String, Boolean> featuredStatus){
         Boolean featured = featuredStatus.get("featured");
         if (featured == null) {
-            // Trả về lỗi nếu không có trạng thái 'featured' trong request body
+            // Tráº£ vá» lá»—i náº¿u khÃ´ng cÃ³ tráº¡ng thÃ¡i 'featured' trong request body
             ApiResponse<Void> response = new ApiResponse<>(HttpStatus.BAD_REQUEST, "Missing 'featured' status in request body", null, "BAD_REQUEST");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         try {
-            this.courseService.updateFeaturedStatus(courseId, featured); // Gọi service để cập nhật
-            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.OK, "Cập nhật trạng thái featured thành công", null, null);
+            this.courseService.updateFeaturedStatus(courseId, featured); // Gá»i service Ä‘á»ƒ cáº­p nháº­t
+            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.OK, "Cáº­p nháº­t tráº¡ng thÃ¡i featured thÃ nh cÃ´ng", null, null);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.BAD_REQUEST, "Cập nhật trạng thái featured không thành công!", null, e.getMessage());
+            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.BAD_REQUEST, "Cáº­p nháº­t tráº¡ng thÃ¡i featured khÃ´ng thÃ nh cÃ´ng!", null, e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
@@ -313,7 +313,7 @@ public class CourseController {
             model.addAttribute("newTotalPages", feedbacks.getTotalPages());
             return "components/_feedback_cards :: feedbackCardList";
         }catch (Exception e){
-            return ""; //tạm thời
+            return ""; //táº¡m thá»i
         }
     }
 }

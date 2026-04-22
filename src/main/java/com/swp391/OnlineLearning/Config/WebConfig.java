@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Config;
+package com.swp391.OnlineLearning.config;
 
 
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Expose folder uploads
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/"); // đường dẫn tới folder uploads
+                .addResourceLocations("file:uploads/"); // Ä‘Æ°á»ng dáº«n tá»›i folder uploads
     }
 }

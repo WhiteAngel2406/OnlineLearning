@@ -8,16 +8,16 @@ import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 public class CreateLectureRequest {
-    @NotBlank(message = "Vui lòng nhập tên bài học")
-    @Size(min = 5, max = 200, message = "Tên bài học trong khoảng 5-200 kí tự")
+    @NotBlank(message = "Vui lÃ²ng nháº­p tÃªn bÃ i há»c")
+    @Size(min = 5, max = 200, message = "TÃªn bÃ i há»c trong khoáº£ng 5-200 kÃ­ tá»±")
     private String title;
 
     // --- Lecture fields ---
-    @NotNull(message = "Vui lòng nhập thời lượng ước tính")
-    @Positive(message = "Vui lòng nhập thời lượng ước tính hợp lệ")
+    @NotNull(message = "Vui lÃ²ng nháº­p thá»i lÆ°á»£ng Æ°á»›c tÃ­nh")
+    @Positive(message = "Vui lÃ²ng nháº­p thá»i lÆ°á»£ng Æ°á»›c tÃ­nh há»£p lá»‡")
     private Integer estimatedTime;
 
-    @NotBlank(message = "Nội dung bài giảng không được để trống")
+    @NotBlank(message = "Ná»™i dung bÃ i giáº£ng khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng")
     private String htmlContent;
 
     private MultipartFile video;

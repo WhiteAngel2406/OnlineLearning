@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-    private final Path rootStorageLocation;//thư mục gốc
+    private final Path rootStorageLocation;//thÆ° má»¥c gá»‘c
     private final StorageProperties storageProperties;
 
     private static final Set<String> ALLOWED_IMAGE_EXTENSIONS = Set.of("jpg", "jpeg", "png", "gif", "bmp", "webp");
@@ -54,7 +54,7 @@ public class UploadServiceImpl implements UploadService {
             Files.createDirectories(targetDirectory);
             Path targetLocation = targetDirectory.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            //trả về đường dẫn tương đối (subfolder/filename)
+            //tráº£ vá» Ä‘Æ°á»ng dáº«n tÆ°Æ¡ng Ä‘á»‘i (subfolder/filename)
             return Paths.get(subFolderPath).resolve(fileName).toString().replace("\\", "/");
         }catch (IOException e){
             throw new RuntimeException("Could not store file. Please try again!", e);

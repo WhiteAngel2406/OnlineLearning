@@ -15,9 +15,9 @@ public class Slider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Quan hệ N-1: Mỗi Slider thuộc về 1 User
+    // Quan há»‡ N-1: Má»—i Slider thuá»™c vá» 1 User
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)  // liên kết với khóa ngoại users.id
+    @JoinColumn(name = "user_id", nullable = false)  // liÃªn káº¿t vá»›i khÃ³a ngoáº¡i users.id
     private User user;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(100)")
@@ -47,7 +47,7 @@ public class Slider {
     @Column(name = "view_count")
     private Long viewCount = 0L;
 
-    // --- Optional: cập nhật thời gian mỗi khi thay đổi ---
+    // --- Optional: cáº­p nháº­t thá»i gian má»—i khi thay Ä‘á»•i ---
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();

@@ -1,7 +1,7 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
-import com.swp391.OnlineLearning.Config.VNPayConfig;
-import com.swp391.OnlineLearning.Model.Order;
+import com.swp391.OnlineLearning.config.VNPayConfig;
+import com.swp391.OnlineLearning.model.Order;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -58,10 +58,10 @@ public class VNPayService {
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
-        //tạo hashData để chuẩn bị gán vào vnp_SecureHash
+        //táº¡o hashData Ä‘á»ƒ chuáº©n bá»‹ gÃ¡n vÃ o vnp_SecureHash
         String hashData = VNPayConfig.buildHashData(vnp_Params);
 
-        //tạo query gửi sang vnpay
+        //táº¡o query gá»­i sang vnpay
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);
         StringBuilder query = new StringBuilder();

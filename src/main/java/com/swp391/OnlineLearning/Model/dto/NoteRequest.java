@@ -3,10 +3,10 @@ package com.swp391.OnlineLearning.model.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class NoteRequest {
-    @NotBlank(message = "Chưa có thời gian!")
+    @NotBlank(message = "ChÆ°a cÃ³ thá»i gian!")
     private String timeAtLesson;
 
-    @NotBlank(message = "Vui lòng nhập nội dung ghi chú!")
+    @NotBlank(message = "Vui lÃ²ng nháº­p ná»™i dung ghi chÃº!")
     private String content;
 
     public String getTimeAtLesson() {

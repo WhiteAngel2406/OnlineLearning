@@ -15,10 +15,10 @@ public class ShortAnswerOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Đáp án không được để trống.")
-    @Size(max = 255, message = "Đáp án không được vượt quá 255 ký tự.")
+    @NotBlank(message = "ÄÃ¡p Ã¡n khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
+    @Size(max = 255, message = "ÄÃ¡p Ã¡n khÃ´ng Ä‘Æ°á»£c vÆ°á»£t quÃ¡ 255 kÃ½ tá»±.")
     @Column(nullable = false, columnDefinition = "NVARCHAR(255)")
-    private String solutionText; // Nội dung đáp án đúng
+    private String solutionText; // Ná»™i dung Ä‘Ã¡p Ã¡n Ä‘Ãºng
 
     @OneToOne
     @JoinColumn(name = "question_id")

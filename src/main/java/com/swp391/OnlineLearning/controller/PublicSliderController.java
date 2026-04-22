@@ -18,10 +18,10 @@ public class PublicSliderController {
     @Autowired
     private SliderService sliderService;
 
-    // Hiển thị slider cho trang chủ
+    // Hiá»ƒn thá»‹ slider cho trang chá»§
     @GetMapping("")
     public String getPublicSliders(Model model) {
-        // Lấy tất cả slider có status = SHOW, sắp xếp theo orderNumber
+        // Láº¥y táº¥t cáº£ slider cÃ³ status = SHOW, sáº¯p xáº¿p theo orderNumber
         List<Slider> sliders = sliderService.getActiveSliders();
         model.addAttribute("sliders", sliders);
         return "components/slider";

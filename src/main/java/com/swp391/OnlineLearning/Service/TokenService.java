@@ -1,4 +1,4 @@
-package com.swp391.OnlineLearning.Service;
+package com.swp391.OnlineLearning.service;
 
 import com.swp391.OnlineLearning.model.Token;
 import com.swp391.OnlineLearning.model.User;

@@ -1,13 +1,13 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Model.Enrollment;
-import com.swp391.OnlineLearning.Model.Order;
-import com.swp391.OnlineLearning.Model.UserLesson;
-import com.swp391.OnlineLearning.Model.dto.EnrollmentInfoDTO;
-import com.swp391.OnlineLearning.Model.dto.EnrollmentLearningDTO;
-import com.swp391.OnlineLearning.Repository.EnrollmentRepository;
-import com.swp391.OnlineLearning.Service.EnrollmentService;
-import com.swp391.OnlineLearning.Service.WishlistService;
+import com.swp391.OnlineLearning.model.Enrollment;
+import com.swp391.OnlineLearning.model.Order;
+import com.swp391.OnlineLearning.model.UserLesson;
+import com.swp391.OnlineLearning.model.dto.EnrollmentInfoDTO;
+import com.swp391.OnlineLearning.model.dto.EnrollmentLearningDTO;
+import com.swp391.OnlineLearning.repository.EnrollmentRepository;
+import com.swp391.OnlineLearning.service.EnrollmentService;
+import com.swp391.OnlineLearning.service.WishlistService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,12 +29,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         Long userId = order.getUser().getId();
         Long courseId = order.getCourse().getId();
 
-        // Check đã enroll chưa
+        // Check Ä‘Ã£ enroll chÆ°a
         if (enrollmentRepository.existsByUserAndCourse(userId, courseId)) {
-            throw new IllegalArgumentException("Bạn đã đăng ký khóa học này rồi!");
+            throw new IllegalArgumentException("Báº¡n Ä‘Ã£ Ä‘Äƒng kÃ½ khÃ³a há»c nÃ y rá»“i!");
         }
 
-        // Tạo enrollment
+        // Táº¡o enrollment
         Enrollment enrollment = enrollmentRepository.save(
                 new Enrollment(order.getUser(), order.getCourse())
         );

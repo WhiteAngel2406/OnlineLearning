@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Controller;
+package com.swp391.OnlineLearning.controller;
 
-import com.swp391.OnlineLearning.Service.*;
-import com.swp391.OnlineLearning.Model.*;
-import com.swp391.OnlineLearning.Model.dto.AnsweredOption;
+import com.swp391.OnlineLearning.service.*;
+import com.swp391.OnlineLearning.model.*;
+import com.swp391.OnlineLearning.model.dto.AnsweredOption;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -211,10 +211,10 @@ public class QuizController {
                 .filter(QuizAttemptQuestion::getCorrect)
                 .count();
 
-        // Độ chính xác (score làm tròn xuống theo yêu cầu)
+        // Äá»™ chÃ­nh xÃ¡c (score lÃ m trÃ²n xuá»‘ng theo yÃªu cáº§u)
         int accuracy = (int) Math.floor((double) correctAnswers * 100 / totalQuestions);
 
-        // Tính thời gian làm bài (tính phút và giây)
+        // TÃ­nh thá»i gian lÃ m bÃ i (tÃ­nh phÃºt vÃ  giÃ¢y)
         Duration duration = Duration.between(quizAttempt.getStartTime(), quizAttempt.getCompletedTime());
         long minutes = duration.toMinutes();
         long seconds = duration.getSeconds() % 60;

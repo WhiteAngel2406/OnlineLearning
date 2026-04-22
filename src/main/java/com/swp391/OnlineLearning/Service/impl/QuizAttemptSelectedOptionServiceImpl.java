@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Repository.QuizAttemptSelectedOptionRepository;
-import com.swp391.OnlineLearning.Service.QuizAttemptSelectedOptionService;
-import com.swp391.OnlineLearning.Model.QuizAttemptSelectedOption;
+import com.swp391.OnlineLearning.repository.QuizAttemptSelectedOptionRepository;
+import com.swp391.OnlineLearning.service.QuizAttemptSelectedOptionService;
+import com.swp391.OnlineLearning.model.QuizAttemptSelectedOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

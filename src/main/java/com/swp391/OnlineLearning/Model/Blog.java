@@ -19,33 +19,33 @@ public class Blog extends BaseEntity{
     private Long id;
 
     @Column(name = "title", nullable = false, columnDefinition = "NVARCHAR(100)")
-    @Size(min = 5, max = 100, message = "Tiêu đề phải có độ dài từ 5 đến 100 ký tự.")
+    @Size(min = 5, max = 100, message = "TiÃªu Ä‘á» pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 5 Ä‘áº¿n 100 kÃ½ tá»±.")
     private String title;
 
     @Column(name = "thumbnail_url")
-    @NotNull(message = "Ảnh bìa bài viết không được để trống.")
+    @NotNull(message = "áº¢nh bÃ¬a bÃ i viáº¿t khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     private String thumbnail;
 
     @Column(name = "short_description", columnDefinition = "NVARCHAR(255)")
-    @Size(min=10, max=200, message = "Mô tả ngắn phải có độ dài từ 10 đến 200 ký tự.")
+    @Size(min=10, max=200, message = "MÃ´ táº£ ngáº¯n pháº£i cÃ³ Ä‘á»™ dÃ i tá»« 10 Ä‘áº¿n 200 kÃ½ tá»±.")
     private String shortDescription;
 
     @Column(name = "content", columnDefinition = "NVARCHAR(MAX)")
-    @Size(min=10, message = "Nội dung bài viết tối thiểu 10 kí tự.")
+    @Size(min=10, message = "Ná»™i dung bÃ i viáº¿t tá»‘i thiá»ƒu 10 kÃ­ tá»±.")
     private String content;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    @NotNull(message = "Trạng thái bài viết không được để trống.")
+    @NotNull(message = "Tráº¡ng thÃ¡i bÃ i viáº¿t khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng.")
     private BlogStatus status = BlogStatus.DRAFT;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_category_id")
     private BlogCategory blogCategory;
 
-    // 2. Liên kết với Tác giả
+    // 2. LiÃªn káº¿t vá»›i TÃ¡c giáº£
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id") // Tên cột Foreign Key trong CSDL
+    @JoinColumn(name = "author_id") // TÃªn cá»™t Foreign Key trong CSDL
     private User author;
 
     public Blog() {

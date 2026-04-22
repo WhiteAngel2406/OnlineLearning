@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package com.swp391.OnlineLearning.Service.Specification;
-=======
 package com.swp391.OnlineLearning.service.specification;
->>>>>>> main
 
 import com.swp391.OnlineLearning.model.User;
 import com.swp391.OnlineLearning.model.User.Gender;

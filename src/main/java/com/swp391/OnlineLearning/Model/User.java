@@ -2,7 +2,7 @@ package com.swp391.OnlineLearning.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import com.swp391.OnlineLearning.util.ValidEmail;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,15 +40,15 @@ public class User extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ValidEmail(message = "Email không hợp lệ")
+    @Email(message = "Email khÃ´ng há»£p lá»‡")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Password không được để trống!")
+    @NotBlank(message = "Password khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng!")
     @Column(nullable = false)
     private String password;
 
-    @NotBlank(message = "Fullname không được để trống")
+    @NotBlank(message = "Fullname khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng")
     @Column(nullable = false, name = "full_name", columnDefinition = "NVARCHAR(100)")
     private String fullName;
 
@@ -76,12 +76,8 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "author")
     private List<Blog> blogs = new ArrayList<>();
 
-<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/User.java
-=======
     public User() {
     }
-
->>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/User.java
     public User(String email,
                 String password,
                 String fullName,
@@ -104,33 +100,6 @@ public class User extends BaseEntity implements UserDetails {
 
     public User(Long id) {
         this.id = id;
-    }
-
-<<<<<<< HEAD:src/main/java/com/swp391/OnlineLearning/Model/User.java
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
-        return List.of(authority);
-=======
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
->>>>>>> main:src/main/java/com/swp391/OnlineLearning/model/User.java
     }
 
     @Override

@@ -9,15 +9,15 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "feedbacks") // Hoặc "reviews"
+@Table(name = "feedbacks") // Hoáº·c "reviews"
 @Getter
 @Setter
 public class Feedback extends BaseEntity{
 
     public enum FeedbackStatus {
-        PENDING,    // Chờ duyệt
-        APPROVED,   // Đã duyệt
-        REJECTED    // Bị từ chối
+        PENDING,    // Chá» duyá»‡t
+        APPROVED,   // ÄÃ£ duyá»‡t
+        REJECTED    // Bá»‹ tá»« chá»‘i
     }
 
     @Id
@@ -25,18 +25,18 @@ public class Feedback extends BaseEntity{
     private Long id;
 
     @NotNull
-    @Min(value = 1, message = "Vui lòng đánh giá từ 1-5 sao.")
-    @Max(value = 5, message = "Vui lòng đánh giá từ 1-5 sao.")
+    @Min(value = 1, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
+    @Max(value = 5, message = "Vui lÃ²ng Ä‘Ã¡nh giÃ¡ tá»« 1-5 sao.")
     @Column(nullable = false)
     private Integer rating;
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
-    @NotNull(message = "Vui lòng nhập nội dung đánh giá.")
+    @NotNull(message = "Vui lÃ²ng nháº­p ná»™i dung Ä‘Ã¡nh giÃ¡.")
     private String review;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private FeedbackStatus status; // Để kiểm duyệt
+    private FeedbackStatus status; // Äá»ƒ kiá»ƒm duyá»‡t
 
     @Column(name = "helpful_count", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int helpfulCount = 0;
@@ -45,14 +45,14 @@ public class Feedback extends BaseEntity{
     private int notHelpfulCount = 0;
 
     /*
-     * optional = false: Một feedback BẮT BUỘC phải gắn với 1 enrollment.
+     * optional = false: Má»™t feedback Báº®T BUá»˜C pháº£i gáº¯n vá»›i 1 enrollment.
      */
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "enrollment_id", nullable = false, unique = true)
     private Enrollment enrollment;
 
     public Feedback() {
-        this.status = FeedbackStatus.APPROVED; // Mặc định là duyệt
+        this.status = FeedbackStatus.APPROVED; // Máº·c Ä‘á»‹nh lÃ  duyá»‡t
     }
 
     public Feedback(FeedbackRequest feedbackRequest, Enrollment enrollment) {
@@ -126,7 +126,7 @@ public class Feedback extends BaseEntity{
         this.notHelpfulCount = notHelpfulCount;
     }
 
-    // (Đừng quên thêm equals() và hashCode() dựa trên ID!)
+    // (Äá»«ng quÃªn thÃªm equals() vÃ  hashCode() dá»±a trÃªn ID!)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,11 +1,11 @@
-package com.swp391.OnlineLearning.Service.impl;
+package com.swp391.OnlineLearning.service.impl;
 
-import com.swp391.OnlineLearning.Controller.ChapterController;
-import com.swp391.OnlineLearning.Repository.ChapterRepository;
-import com.swp391.OnlineLearning.Repository.CourseRepository;
-import com.swp391.OnlineLearning.Service.ChapterService;
-import com.swp391.OnlineLearning.Model.Chapter;
-import com.swp391.OnlineLearning.Model.Course;
+import com.swp391.OnlineLearning.controller.ChapterController;
+import com.swp391.OnlineLearning.repository.ChapterRepository;
+import com.swp391.OnlineLearning.repository.CourseRepository;
+import com.swp391.OnlineLearning.service.ChapterService;
+import com.swp391.OnlineLearning.model.Chapter;
+import com.swp391.OnlineLearning.model.Course;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,19 +51,19 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     @Transactional
     public void deleteChapterAndReorder(Long courseId, Long chapterId) {
-        // 1. Kiểm tra sự tồn tại (quan trọng!)
+        // 1. Kiá»ƒm tra sá»± tá»“n táº¡i (quan trá»ng!)
         if (!chapterRepository.existsById(chapterId)) {
-            throw new NoSuchElementException("Không tìm thấy Chapter với id: " + chapterId);
+            throw new NoSuchElementException("KhÃ´ng tÃ¬m tháº¥y Chapter vá»›i id: " + chapterId);
         }
 
-        // 2. Xóa chapter
+        // 2. XÃ³a chapter
         chapterRepository.deleteById(chapterId);
 
-        // 3. Cập nhật lại thứ tự (logic này nên nằm trong service hoặc repository)
+        // 3. Cáº­p nháº­t láº¡i thá»© tá»± (logic nÃ y nÃªn náº±m trong service hoáº·c repository)
         List<Chapter> remainingChapters = chapterRepository.findByCourseIdOrderByOrderNumberAsc(courseId);
         for (int i = 0; i < remainingChapters.size(); i++) {
             Chapter chapter = remainingChapters.get(i);
-            chapter.setOrderNumber(i + 1); // Cập nhật lại order number thành 1, 2, 3...
+            chapter.setOrderNumber(i + 1); // Cáº­p nháº­t láº¡i order number thÃ nh 1, 2, 3...
             chapterRepository.save(chapter);
         }
     }

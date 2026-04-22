@@ -1,8 +1,8 @@
-package com.swp391.OnlineLearning.Service.Specification;
+package com.swp391.OnlineLearning.service.Specification;
 
-import com.swp391.OnlineLearning.Model.Lesson_;
-import com.swp391.OnlineLearning.Model.Question;
-import com.swp391.OnlineLearning.Model.Question_;
+import com.swp391.OnlineLearning.model.Lesson_;
+import com.swp391.OnlineLearning.model.Question;
+import com.swp391.OnlineLearning.model.Question_;
 import org.springframework.data.jpa.domain.Specification;
 
 public class QuestionSpecs {

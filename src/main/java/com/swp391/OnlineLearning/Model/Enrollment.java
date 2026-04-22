@@ -21,9 +21,9 @@ import java.util.List;
 public class Enrollment {
 
     public enum EnrollmentStatus {
-        ENROLLED("Đã đăng kí"),
-        COMPLETED("Hoàn thành"),
-        CANCELLED("Hủy đăng kí")
+        ENROLLED("ÄÃ£ Ä‘Äƒng kÃ­"),
+        COMPLETED("HoÃ n thÃ nh"),
+        CANCELLED("Há»§y Ä‘Äƒng kÃ­")
         ;
         private final String displayName;
         EnrollmentStatus(String displayName) {
@@ -59,7 +59,7 @@ public class Enrollment {
     private LocalDateTime lastAccessAt;
 
     @NotNull
-    @Enumerated(EnumType.STRING) //lưu tên Enum (ENROLLED, COMPLETED) vào db
+    @Enumerated(EnumType.STRING) //lÆ°u tÃªn Enum (ENROLLED, COMPLETED) vÃ o db
     @Column(nullable = false)
     private EnrollmentStatus status;
 

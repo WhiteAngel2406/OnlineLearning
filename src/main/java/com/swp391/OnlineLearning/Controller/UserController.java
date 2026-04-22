@@ -98,16 +98,16 @@ public class UserController {
             user.setAddress(updatedUser.getAddress());
 
             if (avatarFile != null && !avatarFile.isEmpty()){
-                // Upload avatar mới
+                // Upload avatar má»›i
                 String avatarFileName = uploadService.uploadImage(avatarFile, "avatars");
                 user.setAvatar(avatarFileName);
             }
 
             userService.save(user);
-            redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin thành công!");
+            redirectAttributes.addFlashAttribute("message", "Cáº­p nháº­t thÃ´ng tin thÃ nh cÃ´ng!");
             return "redirect:/viewProfile";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lá»—i khi cáº­p nháº­t: " + e.getMessage());
             return "user/updateProfile";
         }
     }
@@ -155,13 +155,13 @@ public class UserController {
     }
 
     // ====================================== GET LEARNING VIEW ===========================================
-    //lấy thanh bar bên phải trên trang học bài
+    //láº¥y thanh bar bÃªn pháº£i trÃªn trang há»c bÃ i
     @GetMapping("/users/{userId}/enrollments/{enrollmentId}/navbar")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<ChapterLearningDTO>>> getLearningView(
             @PathVariable("enrollmentId") long enrollmentId,
             @PathVariable("userId") long userId
-            /* Bỏ HttpSession nếu không dùng trực tiếp ở đây nữa */
+            /* Bá» HttpSession náº¿u khÃ´ng dÃ¹ng trá»±c tiáº¿p á»Ÿ Ä‘Ã¢y ná»¯a */
     ) {
         try {
             List<ChapterLearningDTO> chapterLearningDTOS = learningService.prepareLearningViewData(userId, enrollmentId);
@@ -169,17 +169,17 @@ public class UserController {
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.OK,
                     "Get learning view successfully!", chapterLearningDTOS, null), HttpStatus.OK);
 
-        } catch (IllegalArgumentException e) { // Bắt lỗi cụ thể
+        } catch (IllegalArgumentException e) { // Báº¯t lá»—i cá»¥ thá»ƒ
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.NOT_FOUND,
                     e.getMessage(), null, null), HttpStatus.NOT_FOUND);
-        } catch (Exception e) { // Bắt lỗi chung
-            // Nên log lỗi chi tiết ở đây: log.error("...", e);
-            return new ResponseEntity<>(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, // Dùng 500
+        } catch (Exception e) { // Báº¯t lá»—i chung
+            // NÃªn log lá»—i chi tiáº¿t á»Ÿ Ä‘Ã¢y: log.error("...", e);
+            return new ResponseEntity<>(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, // DÃ¹ng 500
                     "Get learning view failed!", null, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //lấy thông tin cho lesson hiện tại trên trang học bài
+    //láº¥y thÃ´ng tin cho lesson hiá»‡n táº¡i trÃªn trang há»c bÃ i
     @GetMapping("/users/{userId}/learning/lessons/{lessonId}")
     @ResponseBody
     public ResponseEntity<ApiResponse<LessonLearningDTO>> getLessonLearningView(@PathVariable("lessonId") long lessonId){
@@ -194,7 +194,7 @@ public class UserController {
         }
     }
 
-    //lấy thông tin cho header trên trang học bài
+    //láº¥y thÃ´ng tin cho header trÃªn trang há»c bÃ i
     @GetMapping("/api/enrollments/{enrollmentId}/progress")
     @ResponseBody
     public ResponseEntity<ApiResponse<EnrollmentLearningDTO>> getHeaderEnrollmentLearningView(@PathVariable("enrollmentId") long enrollmentId){
@@ -209,7 +209,7 @@ public class UserController {
         }
     }
 
-    // api cập nhật isCompleted cho UserLesson
+    // api cáº­p nháº­t isCompleted cho UserLesson
     @PutMapping("/api/lessons/{lessonId}/complete")
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> updateIsCompleted(@PathVariable("lessonId") long lessonId,
@@ -230,7 +230,7 @@ public class UserController {
                                   HttpSession session, Model model){
         try{
             Long userId = (Long) session.getAttribute("currentUserId");
-            //thanh bên phải
+            //thanh bÃªn pháº£i
             List<ChapterLearningDTO> chapterLearningDTOS = learningService.prepareLearningViewData(userId, enrollmentId);
             //header
             EnrollmentLearningDTO enrollmentLearningDTO = this.enrollmentService.createEnrollmentDTO(enrollmentId);
@@ -244,7 +244,7 @@ public class UserController {
         }
     }
 
-    //nhận note và lưu
+    //nháº­n note vÃ  lÆ°u
     @PostMapping("/api/lessons/{lessonId}/notes")
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> takeNotes(@Valid @RequestBody NoteRequest noteRequest,
@@ -262,7 +262,7 @@ public class UserController {
         }
     }
 
-    //lấy notes theo tiêu chí
+    //láº¥y notes theo tiÃªu chÃ­
     @GetMapping("/api/enrollments/{enrollmentId}/chapters/{chapterId}/notes")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<NoteDTO>>> getNotes(@PathVariable("enrollmentId") long enrollmentId,
@@ -281,7 +281,7 @@ public class UserController {
         }
     }
 
-    //xóa note
+    //xÃ³a note
     @DeleteMapping("/api/notes/{noteId}")
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> deleteNote(@PathVariable("noteId") long noteId,

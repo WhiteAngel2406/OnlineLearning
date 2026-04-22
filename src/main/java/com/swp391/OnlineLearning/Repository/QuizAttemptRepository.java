@@ -1,6 +1,6 @@
-package com.swp391.OnlineLearning.Repository;
+package com.swp391.OnlineLearning.repository;
 
-import com.swp391.OnlineLearning.Model.QuizAttempt;
+import com.swp391.OnlineLearning.model.QuizAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuizAttemptRepository extends JpaRepository <QuizAttempt, Long>{
