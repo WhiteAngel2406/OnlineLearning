@@ -14,9 +14,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MySimpleUrlAuthenticationSuccessHandler();
+    private final MySimpleUrlAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    public SecurityConfig(MySimpleUrlAuthenticationSuccessHandler myAuthenticationSuccessHandler) {
+        this.myAuthenticationSuccessHandler = myAuthenticationSuccessHandler;
     }
 
 
@@ -90,7 +91,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")   // chá»— nÃ y pháº£i Ä‘Ãºng action form
                         .defaultSuccessUrl("/", true)
-                        .successHandler(myAuthenticationSuccessHandler())// true = luÃ´n luÃ´n redirect vá» /home
+                        .successHandler(myAuthenticationSuccessHandler)// true = luÃ´n luÃ´n redirect vá» /home
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
