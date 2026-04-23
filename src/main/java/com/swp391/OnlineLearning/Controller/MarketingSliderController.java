@@ -89,4 +89,20 @@ public class MarketingSliderController {
         }
         return "redirect:/marketing/sliders";
     }
+
+    @GetMapping("/{id}")
+    public String viewSliderDetails(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            com.swp391.OnlineLearning.Model.Slider slider = sliderService.getSliderById(id);
+            if (slider == null) {
+                redirectAttributes.addFlashAttribute("error", "Không tìm thấy slider!");
+                return "redirect:/marketing/sliders";
+            }
+            model.addAttribute("slider", slider);
+            return "marketing/slider/details";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Lỗi: " + e.getMessage());
+            return "redirect:/marketing/sliders";
+        }
+    }
 }
