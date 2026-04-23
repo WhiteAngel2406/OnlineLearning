@@ -57,4 +57,21 @@ public class MarketingController {
 
         return "marketing/dashboard";
     }
+
+    @GetMapping("/blogs")
+    public String viewBlogList(Model model) {
+        java.util.List<com.swp391.OnlineLearning.Model.Blog> blogs = blogRepository.findAll();
+        model.addAttribute("blogs", blogs);
+        return "marketing/blogList";
+    }
+
+    @GetMapping("/blogs/{id}")
+    public String viewBlogDetails(@org.springframework.web.bind.annotation.PathVariable Long id, Model model) {
+        com.swp391.OnlineLearning.Model.Blog blog = blogRepository.findById(id).orElse(null);
+        if (blog == null) {
+            return "redirect:/marketing/blogs";
+        }
+        model.addAttribute("blog", blog);
+        return "marketing/blogDetails";
+    }
 }
