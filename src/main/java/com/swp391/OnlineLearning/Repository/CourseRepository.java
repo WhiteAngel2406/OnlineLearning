@@ -14,4 +14,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsByName(String name);
 
     List<Course> findAllByFeaturedTrue();
+
+    @org.springframework.data.jpa.repository.Query("SELECT c.category.name, COUNT(c) FROM Course c GROUP BY c.category.name")
+    List<Object[]> countCoursesByCategory();
+
+    List<Course> findTop5ByOrderByCreatedAtDesc();
 }

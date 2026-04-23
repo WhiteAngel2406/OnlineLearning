@@ -14,4 +14,7 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
     Order findByOrderCode(String orderCode);
+
+    @Query("SELECT SUM(o.amount) FROM Order o WHERE o.status = 'SUCCESS'")
+    Double getTotalRevenue();
 }
