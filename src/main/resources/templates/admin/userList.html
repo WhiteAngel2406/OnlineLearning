@@ -92,6 +92,16 @@
             </div>
         </div>
 
+        <!-- Success message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span th:text="${successMessage}"></span>
+        </div>
+
+        <!-- Error message -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
         <div class="table-container">
             <table id="usersTable">
                 <thead>
@@ -206,7 +216,7 @@
                 <tr th:each="user : ${userPage.content}" th:unless="${userPage.content == null or userPage.content.isEmpty()}">
                     <td th:text="${user.id}"></td>
                     <td th:text="${user.fullName}"></td>
-                    <td th:text="${user.gender.displayName}"></td>
+                    <td th:text="${user.gender != null ? user.gender.displayName : 'N/A'}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.mobile ?: 'N/A'}"></td>
                     <td th:text="${user.role.name}"></td>

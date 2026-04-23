@@ -13,6 +13,7 @@ import com.swp391.OnlineLearning.Service.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.management.relation.Role;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -200,48 +199,102 @@ public class AdminController {
                              RedirectAttributes redirectAttributes,
                              Model model) {
 
+        // 🔥 validate annotation (email, password, fullname...)
         if (bindingResult.hasErrors()) {
             model.addAttribute("genders", User.Gender.values());
+
             List<UserRole> roles = roleService.findAll();
             roles.removeIf(role -> role.getName().equals("ROLE_USER"));
             model.addAttribute("roles", roles);
+
+            return "admin/createUser";
+        }
+
+        // 🔥 validate thủ công
+
+        // gender
+        if (user.getGender() == null) {
+            bindingResult.rejectValue("gender", "error.user", "Vui lòng chọn giới tính");
+        }
+
+        // role
+        if (user.getRole() == null) {
+            bindingResult.rejectValue("role", "error.user", "Vui lòng chọn vai trò");
+        }
+
+        // mobile
+        if (user.getMobile() != null && !user.getMobile().isEmpty()) {
+            if (!user.getMobile().matches("^\\d{10}$")) {
+                bindingResult.rejectValue("mobile", "error.user", "Số điện thoại phải có 10 chữ số");
+            }
+        }
+
+        // avatar (optional check)
+        if (avatarFile != null && !avatarFile.isEmpty()) {
+            String contentType = avatarFile.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                bindingResult.rejectValue("avatar", "error.user", "File phải là ảnh");
+            }
+        }
+
+        // nếu có lỗi → return lại form
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("genders", User.Gender.values());
+
+            List<UserRole> roles = roleService.findAll();
+            roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+            model.addAttribute("roles", roles);
+
             return "admin/createUser";
         }
 
         try {
+            // 🔥 check email trùng
             userService.ensureEmailNotExists(user.getEmail());
 
+            // avatar upload
             if (avatarFile != null && !avatarFile.isEmpty()) {
                 String avatarFileName = uploadService.uploadImage(avatarFile, "avatars");
                 user.setAvatar(avatarFileName);
             }
+
+            // password
             String plainPassword = user.getPassword();
-            // Encode password and set default values
-            String encodedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(encodedPassword);
+            user.setPassword(passwordEncoder.encode(plainPassword));
+
+            // default
             user.setEnabled(true);
 
-            // Save user
+            // save
             userService.save(user);
 
-            // Send email notification
-            emailService.sendEmail(user.getEmail(), "Tài khoản đã được tạo bởi Quản trị viên",
-                    emailService.buildEmailContent(plainPassword));
+            // gửi email
+            emailService.sendEmail(
+                    user.getEmail(),
+                    "Tài khoản đã được tạo bởi Quản trị viên",
+                    emailService.buildEmailContent(plainPassword)
+            );
 
             redirectAttributes.addFlashAttribute("successMessage", "Tạo người dùng thành công!");
             return "redirect:/admin/users";
 
         } catch (IllegalArgumentException e) {
+
             bindingResult.rejectValue("email", "error.user", e.getMessage());
-            model.addAttribute("genders", User.Gender.values());
-            model.addAttribute("roles", roleService.findAll());
-            return "admin/createUser";
+
         } catch (Exception e) {
-            bindingResult.rejectValue("email", "error.user", "Đã xảy ra lỗi khi tạo người dùng: " + e.getMessage());
-            model.addAttribute("genders", User.Gender.values());
-            model.addAttribute("roles", roleService.findAll());
-            return "admin/createUser";
+
+            bindingResult.rejectValue("email", "error.user", "Đã xảy ra lỗi khi tạo người dùng");
         }
+
+        // 🔥 fallback khi có lỗi trong try-catch
+        model.addAttribute("genders", User.Gender.values());
+
+        List<UserRole> roles = roleService.findAll();
+        roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+        model.addAttribute("roles", roles);
+
+        return "admin/createUser";
     }
 
     //===================== UPDATE USER ========================
@@ -262,31 +315,66 @@ public class AdminController {
     @PostMapping("/users/update")
     public String updateUser(@Valid @ModelAttribute("user") User user,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes,
+                             Authentication authentication) {
+
         if(bindingResult.hasErrors()){
             return "admin/updateUser";
         }
-        try{
+
+        try {
+            // 🔥 lấy email user đang login
+            String currentEmail = authentication.getName();
+
+            // 🔥 lấy user hiện tại
+            User currentUserLogin = userService.findByEmailAndEnabledTrue(currentEmail)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            // 🚫 CHẶN tự sửa chính mình
+            if (currentUserLogin.getId().equals(user.getId())) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Bạn không thể tự cập nhật chính mình!");
+                return "redirect:/admin/users";
+            }
+
+            // update bình thường
             User currentUser = this.userService.getUserById(user.getId());
             currentUser.setRole(user.getRole());
             currentUser.setEnabled(user.isEnabled());
+
             this.userService.save(currentUser);
 
             redirectAttributes.addFlashAttribute("successMessage", "Cập nhật người dùng thành công!");
             return "redirect:/admin/users";
-        }catch(Exception e){
+
+        } catch(Exception e){
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi cập nhật người dùng: " + e.getMessage());
             return "redirect:/admin/users";
         }
     }
 
     @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
-        try{
+    public String deleteUser(@PathVariable("id") Long id,
+                             RedirectAttributes redirectAttributes,
+                             Authentication authentication) {
+        try {
+            // 🔥 lấy email user đang login
+            String currentEmail = authentication.getName();
+
+            // 🔥 lấy user hiện tại từ DB
+            Optional<User> currentUser = userService.findByEmailAndEnabledTrue(currentEmail);
+
+            // 🚫 chặn tự xóa chính mình
+            if (currentUser.get().getId().equals(id)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Bạn không thể tự xóa chính mình!");
+                return "redirect:/admin/users";
+            }
+
             this.userService.deleteById(id);
+
             redirectAttributes.addFlashAttribute("successMessage", "Xóa người dùng thành công!");
             return "redirect:/admin/users";
-        }catch(Exception e){
+
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa người dùng: " + e.getMessage());
             return "redirect:/admin/users";
         }
