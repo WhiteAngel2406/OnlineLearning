@@ -29,3 +29,15 @@ buildNumber.properties
 *.iws
 *.iml
 *.ipr
+
+*.drawio
+test.txt
+HELP.md
+openspec/
+.agents/
+.agent/
+.codex/
+.gitnexus/
+.claude/
+
+diagram/
