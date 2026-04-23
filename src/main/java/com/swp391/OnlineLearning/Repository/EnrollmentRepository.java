@@ -12,6 +12,9 @@ import java.util.Optional;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     Enrollment findByCourseId(Long courseId);
 
+    @Query("SELECT COUNT(e) FROM Enrollment e WHERE e.course.id = :courseId")
+    long countByCourseId(@Param("courseId") Long courseId);
+
     @Query("SELECT e FROM Enrollment e JOIN FETCH e.course WHERE e.user = :user")
     List<Enrollment> findByUserWithCourse(@Param("user") User user);
 

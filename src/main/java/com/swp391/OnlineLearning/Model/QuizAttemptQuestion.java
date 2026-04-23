@@ -35,5 +35,12 @@ public class QuizAttemptQuestion {
         this.selectedOptions = selectedOptions;
     }
 
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
 }
 

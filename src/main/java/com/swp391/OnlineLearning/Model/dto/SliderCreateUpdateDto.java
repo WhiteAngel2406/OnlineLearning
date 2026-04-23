@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class SliderCreateUpdateDto {
 
+    private Long id;
+
     @NotBlank(message = "Title is required")
     private String title;
 
@@ -13,7 +15,7 @@ public class SliderCreateUpdateDto {
     private Integer orderNumber;
     private String status; // SHOW / HIDE
     private String linkUrl;
-
+    private String imageUrl;
 
     private MultipartFile imageFile;
 
@@ -64,6 +66,22 @@ public class SliderCreateUpdateDto {
 
     public void setImageFile(MultipartFile imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 }

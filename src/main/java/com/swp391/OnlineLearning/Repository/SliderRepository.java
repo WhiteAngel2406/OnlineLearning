@@ -14,8 +14,8 @@ public interface SliderRepository extends JpaRepository<Slider, Long> {
 
     // Tìm kiếm theo tiêu đề hoặc linkUrl
     @Query("SELECT s FROM Slider s WHERE " +
-            "(LOWER(s.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(s.linkUrl) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
+            "(LOWER(s.title) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%')) OR " +
+            "LOWER(s.linkUrl) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%'))) AND " +
             "(:status IS NULL OR s.status = :status)")
     Page<Slider> searchSliders(@Param("keyword") String keyword,
                                @Param("status") String status,

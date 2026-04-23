@@ -27,7 +27,6 @@ public class UserController {
     private final CourseService courseSerive;
     private final WishlistService wishlistService;
     private final EnrollmentService enrollmentService;
-    private final WishlistService wishlistServiceImpl;
     private final UserLessonService userLessonService;
     private final LearningService learningService;
     private final LessonService lessonService;
@@ -41,7 +40,6 @@ public class UserController {
         this.courseSerive = courseSerive;
         this.wishlistService = wishlistService;
         this.enrollmentService = enrollmentService;
-        this.wishlistServiceImpl = wishlistServiceImpl;
         this.learningService = learningService;
         this.userLessonService = userLessonService;
         this.lessonService = lessonService;
@@ -106,10 +104,10 @@ public class UserController {
             }
 
             userService.save(user);
-            redirectAttributes.addFlashAttribute("message", "Update profile successfully");
+            redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin thành công!");
             return "redirect:/viewProfile";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Update failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Lỗi khi cập nhật: " + e.getMessage());
             return "user/updateProfile";
         }
     }

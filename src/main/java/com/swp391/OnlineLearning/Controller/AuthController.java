@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -104,14 +105,14 @@ public class AuthController {
     @PostMapping("/forgotPassword")
     public String processForgotPasswordForm(@RequestParam("email") String email,
                                             RedirectAttributes redirectAttributes) {
-        try{
+        try {
             User user = userService.findByEmailAndEnabledTrue(email).orElseThrow();
             Token token = tokenService.create(user);
             emailService.sendTokenEmail(user.getEmail(), token.getToken(), EmailService.EmailType.FORGOT_PASSWORD);
             redirectAttributes.addFlashAttribute("message",
                     "Please check your email for resetting your password!");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error",
                     "Email is not registered or not activated!");
         }
@@ -155,5 +156,36 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/changePassword")
+    public String showChangePasswordForm(Model model) {
+        return "auth/changePassword";
+    }
 
+    @PostMapping("/changePassword")
+    public String processChangePasswordForm(@RequestParam("oldPassword") String oldPassword,
+                                            @RequestParam("newPassword") String newPassword,
+                                            @RequestParam("confirmedPassword") String confirmedPassword,
+                                            RedirectAttributes redirectAttributes,
+                                            Principal principal,
+                                            Model model) {
+        try {
+            if (!newPassword.equals(confirmedPassword)) {
+                throw new IllegalArgumentException("Passwords do not match!");
+            }
+            User currentUser = userService.findByEmailAndEnabledTrue(principal.getName()).orElseThrow();
+            if (!userService.isOldPasswordCorrect(currentUser, oldPassword)) {
+                throw new IllegalArgumentException("Old password is incorrect!");
+            }
+            ;
+            userService.updatePassword(currentUser, newPassword);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "Password updated successfully. Please login with your new password.");
+            return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/changePassword";
+        }
+
+    }
 }
