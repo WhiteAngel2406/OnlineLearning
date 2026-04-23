@@ -47,6 +47,33 @@
                 <span class="block sm:inline" th:text="${error}"></span>
             </div>
 
+            <!-- Search & Filter Bar -->
+            <form method="get" th:action="@{/marketing/sliders}" class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-6 flex flex-wrap items-end gap-4">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-xs font-medium text-slate-500 mb-1.5">Tìm kiếm</label>
+                    <div class="relative">
+                        <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" name="keyword" th:value="${keyword}" placeholder="Nhập tiêu đề slider..."
+                               class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow">
+                    </div>
+                </div>
+                <div class="min-w-[180px]">
+                    <label class="block text-xs font-medium text-slate-500 mb-1.5">Trạng thái</label>
+                    <select name="status"
+                            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow bg-white">
+                        <option value="">Tất cả</option>
+                        <option th:each="s : ${statuses}" th:value="${s.name()}" th:text="${s.name()}" th:selected="${status == s.name()}"></option>
+                    </select>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors flex items-center gap-1.5">
+                        <i class="ph ph-funnel text-base"></i> Lọc
+                    </button>
+                    <a th:href="@{/marketing/sliders}" class="bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">Xóa lọc</a>
+                </div>
+            </form>
+
+            <!-- Slider Table -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <table class="min-w-full divide-y divide-slate-200">
                     <thead class="bg-slate-50">
@@ -92,6 +119,48 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="flex items-center justify-between mt-6">
+                <p class="text-sm text-slate-500">
+                    Trang <span th:text="${currentPage + 1}">1</span> / <span th:text="${totalPages > 0 ? totalPages : 1}">1</span>
+                    &mdash; Tổng <span th:text="${sliders.totalElements}">0</span> slider
+                </p>
+                <nav th:if="${totalPages > 1}" class="flex items-center gap-1">
+                    <!-- Previous -->
+                    <a th:if="${currentPage > 0}"
+                       th:href="@{/marketing/sliders(page=${currentPage - 1}, keyword=${keyword}, status=${status})}"
+                       class="px-3 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+                        <i class="ph ph-caret-left"></i>
+                    </a>
+                    <span th:if="${currentPage == 0}"
+                          class="px-3 py-2 text-sm font-medium text-slate-300 bg-slate-50 border border-slate-200 rounded-lg cursor-not-allowed">
+                        <i class="ph ph-caret-left"></i>
+                    </span>
+
+                    <!-- Page numbers -->
+                    <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a th:if="${i != currentPage}"
+                           th:href="@{/marketing/sliders(page=${i}, keyword=${keyword}, status=${status})}"
+                           th:text="${i + 1}"
+                           class="px-3 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"></a>
+                        <span th:if="${i == currentPage}"
+                              th:text="${i + 1}"
+                              class="px-3 py-2 text-sm font-medium text-white bg-indigo-600 border border-indigo-600 rounded-lg"></span>
+                    </th:block>
+
+                    <!-- Next -->
+                    <a th:if="${currentPage < totalPages - 1}"
+                       th:href="@{/marketing/sliders(page=${currentPage + 1}, keyword=${keyword}, status=${status})}"
+                       class="px-3 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+                        <i class="ph ph-caret-right"></i>
+                    </a>
+                    <span th:if="${currentPage >= totalPages - 1}"
+                          class="px-3 py-2 text-sm font-medium text-slate-300 bg-slate-50 border border-slate-200 rounded-lg cursor-not-allowed">
+                        <i class="ph ph-caret-right"></i>
+                    </span>
+                </nav>
             </div>
         </div>
     </main>

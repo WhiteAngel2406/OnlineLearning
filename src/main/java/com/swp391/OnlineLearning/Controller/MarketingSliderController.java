@@ -31,9 +31,13 @@ public class MarketingSliderController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model) {
-        model.addAttribute("sliders", sliderService.getSliders(keyword, status, page, size));
+        var sliderPage = sliderService.getSliders(keyword, status, page, size);
+        model.addAttribute("sliders", sliderPage);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sliderPage.getTotalPages());
+        model.addAttribute("statuses", com.swp391.OnlineLearning.Model.enums.SliderStatus.values());
         return "marketing/slider/list";
     }
 

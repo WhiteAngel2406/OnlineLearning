@@ -37,7 +37,8 @@ public class MarketingController {
 
     @GetMapping("/dashboard")
     public String marketingDashboard(Model model) {
-        long totalUsers = userRepository.count();
+        long totalLearners = userRepository.countByRole_Name("ROLE_USER");
+        long totalExperts = userRepository.countByRole_Name("ROLE_EXPERT");
         long totalCourses = courseRepository.count();
         long totalBlogs = blogRepository.count();
 
@@ -57,7 +58,8 @@ public class MarketingController {
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 5, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "createdAt"));
         java.util.List<com.swp391.OnlineLearning.Model.dto.BlogDTO> recentBlogs = blogRepository.findLatestPublishedBlogs(pageable);
 
-        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalLearners", totalLearners);
+        model.addAttribute("totalExperts", totalExperts);
         model.addAttribute("totalCourses", totalCourses);
         model.addAttribute("totalBlogs", totalBlogs);
         model.addAttribute("totalRevenue", totalRevenue);
@@ -70,9 +72,32 @@ public class MarketingController {
     }
 
     @GetMapping("/blogs")
-    public String viewBlogList(Model model) {
-        java.util.List<com.swp391.OnlineLearning.Model.Blog> blogs = blogRepository.findAll();
-        model.addAttribute("blogs", blogs);
+    public String viewBlogList(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        // Normalize empty strings to null
+        if (keyword != null && keyword.trim().isEmpty()) {
+            keyword = null;
+        }
+        com.swp391.OnlineLearning.Model.Blog.BlogStatus blogStatus = null;
+        if (status != null && !status.trim().isEmpty()) {
+            try {
+                blogStatus = com.swp391.OnlineLearning.Model.Blog.BlogStatus.valueOf(status);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(
+                page, size, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "createdAt"));
+        org.springframework.data.domain.Page<com.swp391.OnlineLearning.Model.Blog> blogPage = blogRepository.searchBlogs(keyword, blogStatus, pageable);
+        model.addAttribute("blogs", blogPage);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", status);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", blogPage.getTotalPages());
+        model.addAttribute("statuses", com.swp391.OnlineLearning.Model.Blog.BlogStatus.values());
         return "marketing/blogList";
     }
 
