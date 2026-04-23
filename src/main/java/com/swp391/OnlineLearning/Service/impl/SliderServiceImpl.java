@@ -7,7 +7,9 @@ import com.swp391.OnlineLearning.Model.enums.SliderStatus;
 import com.swp391.OnlineLearning.Repository.SliderRepository;
 import com.swp391.OnlineLearning.Service.SliderService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +25,14 @@ public class SliderServiceImpl implements SliderService {
 
     @Override
     public Page<Slider> getSliders(String keyword, String status, int page, int size) {
-        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        // Chuyển chuỗi rỗng thành null để JPQL "IS NULL" hoạt động đúng
+        if (keyword != null && keyword.trim().isEmpty()) {
+            keyword = null;
+        }
+        if (status != null && status.trim().isEmpty()) {
+            status = null;
+        }
         return sliderRepository.searchSliders(keyword, status, pageable);
     }
 

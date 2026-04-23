@@ -70,4 +70,11 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
         where b.status = 'PUBLISHED'
     """)
     List<BlogDTO> findLatestPublishedBlogs(Pageable pageable);
+
+    @Query("SELECT b FROM Blog b WHERE " +
+            "(LOWER(b.title) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%'))) AND " +
+            "(:status IS NULL OR b.status = :status)")
+    Page<Blog> searchBlogs(@Param("keyword") String keyword,
+                           @Param("status") Blog.BlogStatus status,
+                           Pageable pageable);
 }
