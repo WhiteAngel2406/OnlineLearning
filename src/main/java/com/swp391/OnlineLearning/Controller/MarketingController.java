@@ -37,7 +37,8 @@ public class MarketingController {
 
     @GetMapping("/dashboard")
     public String marketingDashboard(Model model) {
-        long totalUsers = userRepository.count();
+        long totalLearners = userRepository.countByRole_Name("ROLE_USER");
+        long totalExperts = userRepository.countByRole_Name("ROLE_EXPERT");
         long totalCourses = courseRepository.count();
         long totalBlogs = blogRepository.count();
 
@@ -57,7 +58,8 @@ public class MarketingController {
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 5, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "createdAt"));
         java.util.List<com.swp391.OnlineLearning.Model.dto.BlogDTO> recentBlogs = blogRepository.findLatestPublishedBlogs(pageable);
 
-        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalLearners", totalLearners);
+        model.addAttribute("totalExperts", totalExperts);
         model.addAttribute("totalCourses", totalCourses);
         model.addAttribute("totalBlogs", totalBlogs);
         model.addAttribute("totalRevenue", totalRevenue);
