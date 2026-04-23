@@ -14,15 +14,12 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MySimpleUrlAuthenticationSuccessHandler();
+    private final AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    public SecurityConfig(MySimpleUrlAuthenticationSuccessHandler myAuthenticationSuccessHandler) {
+        this.myAuthenticationSuccessHandler = myAuthenticationSuccessHandler;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -93,7 +90,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")   // chỗ này phải đúng action form
                         .defaultSuccessUrl("/", true)
-                        .successHandler(myAuthenticationSuccessHandler())// true = luôn luôn redirect về /home
+                        .successHandler(myAuthenticationSuccessHandler)// true = luôn luôn redirect về /home
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
