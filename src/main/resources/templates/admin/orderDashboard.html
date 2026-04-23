@@ -111,7 +111,15 @@
             </div>
 
 
-            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-filter"></i> Lọc</button>
+            <div style="display:flex; gap:10px;">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-filter"></i> Lọc
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                    🔄 Reset
+                </button>
+            </div>
         </form>
 
         <div class="table-container">
@@ -309,6 +317,14 @@
             });
         }
         /*]]>*/
+        function resetFilters() {
+            // reset toàn bộ input/select trong form
+            const form = document.querySelector('.filters');
+            form.reset();
+
+            // reset về URL gốc (xoá query params)
+            window.location.href = '/admin/orders';
+        }
     </script>
 </th:block>
 

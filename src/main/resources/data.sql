@@ -404,13 +404,13 @@ INSERT INTO orders (
     course_id,
     created_at,
     updated_at
-) VALUES
-      ('ORD001', 1990000, N'Khóa học Java cơ bản', 'PAID', '00', '123456789', 1, 1, '02/11/2025', GETDATE()),
-      ('ORD002', 2490000, N'Khóa học Spring Boot nâng cao', 'PAID', '00', '123456790', 2, 2, '03/11/2025', GETDATE()),
-      ('ORD003', 990000, N'Khóa học SQL cho người mới bắt đầu', 'PENDING', NULL, NULL, 3, 3, GETDATE(), GETDATE()),
-      ('ORD004', 2990000, N'Khóa học ReactJS chuyên sâu', 'FAILED', '99', '123456791', 4, 4, GETDATE(), GETDATE()),
-      ('ORD005', 1590000, N'Khóa học Python thực hành', 'PAID', '00', '123456792', 5, 5, GETDATE(), GETDATE()),
-      ('ORD006', 3490000, N'Khóa học Machine Learning cơ bản', 'CANCELLED', NULL, NULL, 6, 6, GETDATE(), GETDATE());
+) VALUES      ('ORD001', 1990000, N'Khóa học Java cơ bản', 'PAID', '00', '123456789', 1, 1, '11/11/2025', '11/11/2025'),
+              ('ORD002', 2490000, N'Khóa học Spring Boot nâng cao', 'PAID', '00', '123456790', 2, 2, '12/11/2025', '12/11/2025'),
+              ('ORD003', 990000, N'Khóa học SQL cho người mới bắt đầu', 'PENDING', NULL, NULL, 3, 3, '1/11/2026', '1/11/2026'),
+              ('ORD004', 2990000, N'Khóa học ReactJS chuyên sâu', 'FAILED', '99', '123456791', 4, 4, GETDATE(), GETDATE()),
+              ('ORD005', 1590000, N'Khóa học Python thực hành', 'PAID', '00', '123456792', 5, 5, GETDATE(), GETDATE()),
+              ('ORD006', 3490000, N'Khóa học Machine Learning cơ bản', 'CANCELLED', NULL, NULL, 6, 6, GETDATE(), GETDATE());
+
 
 SET IDENTITY_INSERT blog_categories ON;
 INSERT INTO blog_categories (id, name, slug) VALUES
