@@ -21,6 +21,9 @@ public class MarketingSliderController {
     @Autowired
     private UploadService uploadService;
 
+    @Autowired
+    private com.swp391.OnlineLearning.Service.UserService userService;
+
     @GetMapping
     public String listSliders(
             @RequestParam(required = false) String keyword,
@@ -43,20 +46,24 @@ public class MarketingSliderController {
     @PostMapping("/create")
     public String createSlider(@ModelAttribute("slider") SliderCreateUpdateDto dto,
                                @RequestParam("imageFile") MultipartFile imageFile,
+                               jakarta.servlet.http.HttpSession session,
                                RedirectAttributes redirectAttributes) {
         try {
+            Long userId = (Long) session.getAttribute("currentUserId");
+            if (userId == null) {
+                redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập lại.");
+                return "redirect:/marketing/sliders";
+            }
+            com.swp391.OnlineLearning.Model.User currentUser = userService.getUserById(userId);
+
             if (imageFile != null && !imageFile.isEmpty()) {
-                String imageUrl = uploadService.uploadImage(imageFile);
-                dto.setImageUrl(imageUrl);
+                String imageUrl = uploadService.uploadImage(imageFile, "sliders");
+                dto.setImageUrl("/uploads/" + imageUrl);
             }
             // Mặc định ép trạng thái PENDING
             dto.setStatus(SliderStatus.PENDING.name());
-            sliderService.createSlider(dto);
-            // Save slider explicitly
-            // Wait, createSlider in SliderServiceImpl just creates the object but doesn't save it!
-            // I need to check if SliderController does sliderService.save().
-            // Wait, let's look at SliderServiceImpl.
             com.swp391.OnlineLearning.Model.Slider slider = sliderService.createSlider(dto);
+            slider.setUser(currentUser);
             sliderService.save(slider);
             
             redirectAttributes.addFlashAttribute("success", "Đã tạo slider chờ duyệt thành công!");
