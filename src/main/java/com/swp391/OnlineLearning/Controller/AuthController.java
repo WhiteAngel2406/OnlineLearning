@@ -30,11 +30,6 @@ public class AuthController {
         this.emailService = emailService;
     }
 
-    // ---------------- HOME ----------------
-    @GetMapping("/")
-    public String home(Model model) {
-        return "home";
-    }
 
     // ---------------- LOGIN ----------------
 
