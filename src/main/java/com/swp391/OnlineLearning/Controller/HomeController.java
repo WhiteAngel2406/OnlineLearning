@@ -51,4 +51,15 @@ public class HomeController {
 
         return "home";
     }
+
+    @GetMapping("/sliders/view/{id}")
+    public String viewSlider(@org.springframework.web.bind.annotation.PathVariable Long id, Model model) {
+        Slider slider = sliderService.getSliderById(id);
+        if (slider == null) {
+            return "redirect:/";
+        }
+        sliderService.incrementViewCount(id);
+        model.addAttribute("slider", slider);
+        return "sliderDetail";
+    }
 }

@@ -11,6 +11,7 @@
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -34,10 +35,10 @@
             <a href="/marketing/dashboard" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg bg-indigo-50 text-indigo-700">
                 <i class="ph ph-squares-four text-lg mr-3"></i> Dashboard
             </a>
-            <a href="/sliders" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100">
+            <a href="/marketing/sliders" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100">
                 <i class="ph ph-image text-lg mr-3"></i> Quản lý Slider
             </a>
-            <a href="/admin/blogs" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100">
+            <a href="/marketing/blogs" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100">
                 <i class="ph ph-article text-lg mr-3"></i> Quản lý Bài viết
             </a>
         </nav>
@@ -65,7 +66,7 @@
         <div class="flex-1 overflow-y-auto p-8">
             
             <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 <!-- Card 1 -->
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
@@ -74,7 +75,8 @@
                             <i class="ph-fill ph-users text-blue-600 text-xl"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-bold text-slate-900" th:text="${totalUsers}">0</div>
+                    <div class="text-3xl font-bold text-slate-900" th:text="${totalLearners}">0</div>
+                    <p class="text-xs text-slate-400 mt-1"><span th:text="${totalExperts}">0</span> giảng viên</p>
                 </div>
 
                 <!-- Card 2 -->
@@ -98,6 +100,99 @@
                     </div>
                     <div class="text-3xl font-bold text-slate-900" th:text="${totalBlogs}">0</div>
                 </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-medium text-slate-500">Tổng Doanh Thu</h3>
+                        <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center">
+                            <i class="ph-fill ph-currency-circle-dollar text-rose-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900" th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT')} + ' $'">0</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Bar Chart (Revenue/Enrollment simulation) -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm col-span-1 lg:col-span-2">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-4">Khóa Học Theo Danh Mục</h3>
+                    <div class="h-64">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doughnut Chart -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-4">Tỷ Lệ Danh Mục</h3>
+                    <div class="h-64 flex justify-center">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Tables Section -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                <!-- Top Courses -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 bg-slate-50/50">
+                        <h3 class="text-lg font-semibold text-slate-900">Khóa Học Mới Nhất</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">Khóa Học</th>
+                                    <th class="px-6 py-3 font-medium">Danh Mục</th>
+                                    <th class="px-6 py-3 font-medium">Giá</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                <tr th:each="course : ${topCourses}" class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-medium text-slate-900" th:text="${course.name}">Course Name</td>
+                                    <td class="px-6 py-4 text-slate-600">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800" th:text="${course.category.name}">Category</span>
+                                    </td>
+                                    <td class="px-6 py-4 font-semibold text-emerald-600" th:text="${course.price > 0 ? course.price + ' $' : 'Free'}">0 $</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(topCourses)}">
+                                    <td colspan="3" class="px-6 py-4 text-center text-slate-500">Chưa có khóa học nào</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Blogs -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 bg-slate-50/50">
+                        <h3 class="text-lg font-semibold text-slate-900">Bài Viết Gần Đây</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">Tiêu đề</th>
+                                    <th class="px-6 py-3 font-medium">Tác Giả</th>
+                                    <th class="px-6 py-3 font-medium">Ngày Tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                <tr th:each="blog : ${recentBlogs}" class="hover:bg-slate-50">
+                                    <td class="px-6 py-4">
+                                        <p class="font-medium text-slate-900 truncate max-w-[200px]" th:title="${blog.title}" th:text="${blog.title}">Blog Title</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-600" th:text="${blog.authorName}">Author</td>
+                                    <td class="px-6 py-4 text-slate-500" th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}">Date</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(recentBlogs)}">
+                                    <td colspan="3" class="px-6 py-4 text-center text-slate-500">Chưa có bài viết nào</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- Quick Actions & Info -->
@@ -106,11 +201,11 @@
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-semibold text-slate-900 mb-4">Lối tắt thao tác</h3>
                     <div class="grid grid-cols-2 gap-4">
-                        <a href="/sliders" class="flex flex-col items-center justify-center p-6 rounded-xl border border-slate-200 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors group">
+                        <a href="/marketing/sliders" class="flex flex-col items-center justify-center p-6 rounded-xl border border-slate-200 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors group">
                             <i class="ph ph-images text-3xl text-slate-400 group-hover:text-indigo-600 mb-2"></i>
                             <span class="font-medium text-sm text-slate-700 group-hover:text-indigo-700 mt-2">Cập nhật Slider</span>
                         </a>
-                        <a href="/admin/blogs" class="flex flex-col items-center justify-center p-6 rounded-xl border border-slate-200 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors group">
+                        <a href="/marketing/blogs" class="flex flex-col items-center justify-center p-6 rounded-xl border border-slate-200 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors group">
                             <i class="ph ph-pen-nib text-3xl text-slate-400 group-hover:text-indigo-600 mb-2"></i>
                             <span class="font-medium text-sm text-slate-700 group-hover:text-indigo-700 mt-2">Quản lý Bài Viết</span>
                         </a>
@@ -136,5 +231,85 @@
         </div>
     </main>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const categoryLabels = /*[[${categoryLabels}]]*/ [];
+        const categoryData = /*[[${categoryData}]]*/ [];
+        
+        // Cấu hình chung
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#64748b';
+
+        // 1. Biểu đồ Bar
+        const barCtx = document.getElementById('barChart');
+        if(barCtx) {
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: categoryLabels.length > 0 ? categoryLabels : ['No Data'],
+                    datasets: [{
+                        label: 'Số lượng khóa học',
+                        data: categoryData.length > 0 ? categoryData : [0],
+                        backgroundColor: '#6366f1',
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f1f5f9' },
+                            border: { display: false }
+                        },
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 2. Biểu đồ Doughnut
+        const doughnutCtx = document.getElementById('doughnutChart');
+        if(doughnutCtx) {
+            new Chart(doughnutCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: categoryLabels.length > 0 ? categoryLabels : ['No Data'],
+                    datasets: [{
+                        data: categoryData.length > 0 ? categoryData : [1],
+                        backgroundColor: [
+                            '#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>

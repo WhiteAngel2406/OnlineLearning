@@ -1,3 +1,13 @@
+:root {
+    --primary-color: #6c63ff;
+    --primary-hover: #5b54d6;
+    --secondary-color: #f50057;
+    --bg-color: #ffffff;
+    --bg-light: #f8f9fa;
+    --text-color: #333333;
+    --text-light: #6c757d;
+    --border-color: #e9ecef;
+}
 
 header {
     background: var(--bg-color);
