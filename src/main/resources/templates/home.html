@@ -7,555 +7,207 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #6c63ff;
-            --primary-hover: #5a54d6;
-            --secondary-color: #4ecdc4;
-            --text-color: #333;
-            --text-light: #666;
-            --bg-color: #fff;
-            --bg-light: #f8f9fa;
-            --border-color: #e9ecef;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --radius: 12px;
+    
+    <!-- Premium Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (Anti-Emoji, High-end Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'diffusion': '0 20px 40px -15px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .liquid-glass {
+                @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)];
+            }
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-light);
-        }
-
-        /* Header */
-
-
-        /* Main Content */
-        .container {
-            max-width: 1400px;
-            margin: 0 5%;
-            padding: 2rem 0;
-        }
-
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            height: 500px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 3rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            color: white;
-        }
-
-        .slide-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .slide-content p {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-        }
-
-        .slide-btn {
-            background: var(--primary-color);
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .slide-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .slider-nav {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .slider-dot.active {
-            background: white;
-        }
-
-        /* Featured Sections */
-        .section {
-            margin-bottom: 4rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .view-all {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .view-all:hover {
-            color: var(--primary-hover);
-        }
-
-        /* Courses Grid */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .course-card {
-            background: var(--bg-color);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .course-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .course-content {
-            padding: 1.5rem;
-        }
-
-        .course-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .course-tagline {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        .course-meta {
-            display: flex;
-            /*justify-content: space-between;*/
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* Posts Grid */
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .post-card {
-            background: var(--bg-color);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .post-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .post-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .post-content {
-            padding: 1.5rem;
-        }
-
-        .post-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .post-date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* Layout */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 3rem;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: var(--bg-color);
-            border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-
-        .sidebar-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .sidebar-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .sidebar-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-color);
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .latest-posts {
-            list-style: none;
-        }
-
-        .latest-post {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .latest-post:hover {
-            background: var(--bg-light);
-            margin: 0 -1rem;
-            padding: 1rem;
-        }
-
-        .latest-post:last-child {
-            border-bottom: none;
-        }
-
-        .post-small-thumb {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .post-small-content {
-            flex: 1;
-        }
-
-        .post-small-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-        }
-
-        .post-small-date {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        .contact-info {
-            list-style: none;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 0;
-            color: var(--text-light);
-        }
-
-        .contact-item i {
-            width: 20px;
-            color: var(--primary-color);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-
-        .post-link {
-            text-decoration: none;
+        
+        /* Reset Bootstrap's aggressive link styling */
+        a, a:hover {
+            text-decoration: none !important;
             color: inherit;
-            display: flex;
-            flex-direction: column
         }
-        .post-link:hover {
-            opacity: 0.8;
-        }
-
-        .chat-float-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: #1e90ff;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: 0.2s;
-            z-index: 9999;
-        }
-
-        .chat-float-btn:hover {
-            background-color: #0d6efd;
-            transform: scale(1.1);
-        }
-
-        /* Footer */
-
     </style>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
-<body>
+<body class="bg-zinc-50 text-zinc-900 font-sans antialiased selection:bg-zinc-900 selection:text-white">
 <!-- Header -->
 <div th:replace="~{components/header :: header}"></div>
 
 <!-- Main Content -->
-<div class="container">
-    <!-- Hero Slider -->
-    <div class="hero-slider" th:if="${sliders != null and !sliders.isEmpty()}">
-
-        <div th:each="slider, iter : ${sliders}"
-             class="slide"
-             th:classappend="${iter.first} ? ' active' : ''"
-             th:style="|background-image: url('${slider.imageUrl}');|">
-
-            <div class="slide-content">
-                <h2 th:text="${slider.title}"></h2>
-                <p th:text="${slider.description}"></p>
-
-                <a th:href="${slider.linkUrl != null ? ('/sliders/view/' + slider.id) : '#'}">
-                    <button class="slide-btn">Xem chi tiết</button>
-                </a>
-            </div>
-        </div>
-
-        <!-- Dots -->
-        <div class="slider-nav">
-            <div th:each="slider, iter : ${sliders}"
-                 class="slider-dot"
-                 th:classappend="${iter.first} ? ' active' : ''"
-                 th:onclick="|showSlide(${iter.index})|">
-            </div>
-        </div>
-    </div>
-
-    <div class="hero-slider"  th:if="${sliders == null or sliders.isEmpty()}">
-        <div class="slide active">
-            <div class="slide-content">
-                <h2>Học Tiếng Anh Hiệu Quả</h2>
-                <p>Khám phá phương pháp học tập hiện đại với OELS</p>
-                <button class="slide-btn">Bắt đầu ngay</button>
-            </div>
-        </div>
-        <div class="slide">
-            <div class="slide-content">
-                <h2>Khóa Học Chất Lượng Cao</h2>
-                <p>Đội ngũ giảng viên giàu kinh nghiệm và phương pháp giảng dạy tiên tiến</p>
-                <button class="slide-btn">Xem khóa học</button>
-            </div>
-        </div>
-        <div class="slide">
-            <div class="slide-content">
-                <h2>Cộng Đồng Học Tập</h2>
-                <p>Kết nối và học hỏi cùng hàng ngàn học viên khác</p>
-                <button class="slide-btn">Tham gia ngay</button>
-            </div>
-        </div>
-        <div class="slider-nav">
-            <div class="slider-dot active"></div>
-            <div class="slider-dot"></div>
-            <div class="slider-dot"></div>
-        </div>
-    </div>
-
-    <div class="main-layout">
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Featured Courses -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Khóa Học Nổi Bật</h2>
-                    <a th:href="@{/courses/learner}" class="view-all">Xem tất cả</a> </div>
-                <div class="courses-grid">
-                    <a th:each="course : ${featuredCourses}" th:href="@{'/courses/' + ${course.id} + '/learner'}" class="course-card">
-                        <img th:src="@{'/uploads/' + ${course.thumbnail}}" alt="Course Thumbnail" class="course-thumbnail">
-                        <div class="course-content">
-                            <h3 class="course-title" th:text="${course.name}">Course Title</h3>
-                            <p class="course-tagline" th:text="${course.shortDescription}">Course Tagline</p>
-                            <div class="course-meta">
-                                <i class="fas fa-star text-warning"></i>
-                                <span th:text="${courseFeedbackStatsMap.get(course.id).averageRating}"> 4.8</span>
-                            </div>
-                        </div>
-                    </a>
-                    <p th:if="${#lists.isEmpty(featuredCourses)}" class="text-muted w-100 text-center">Chưa có khóa học nổi bật nào.</p>
+<main class="pt-8 pb-20">
+    <div class="max-w-7xl mx-auto px-6 relative h-[650px] mb-16">
+        
+        <!-- Multiple Sliders -->
+        <div th:if="${sliders != null and !sliders.isEmpty()}" class="w-full h-full">
+            <div th:each="slider, iter : ${sliders}" class="modern-slide absolute inset-0 grid md:grid-cols-12 gap-12 items-center opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none" th:classappend="${iter.first} ? ' opacity-100 pointer-events-auto active-slide' : ''">
+                <!-- Cột trái: Text lớn -->
+                <div class="md:col-span-7 space-y-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white text-xs font-medium text-zinc-600 shadow-sm">
+                        <i class="ph ph-sparkle text-zinc-900"></i> OELS Online Learning
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.05]" th:text="${slider.title}"></h1>
+                    
+                    <p class="text-lg text-zinc-500 max-w-[45ch] leading-relaxed" th:text="${slider.description}"></p>
+                    
+                    <div class="flex items-center gap-4 pt-4">
+                        <a th:href="${slider.linkUrl != null ? ('/sliders/view/' + slider.id) : '#'}" class="bg-zinc-900 text-white px-8 py-4 rounded-full text-base font-semibold hover:scale-[0.98] transition-transform flex items-center gap-2 shadow-diffusion no-underline">
+                            Xem chi tiết <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-            </section>
+                
+                <!-- Cột phải: Image Masking / Bento Hero -->
+                <div class="md:col-span-5 relative h-[500px] w-full rounded-[2.5rem] overflow-hidden liquid-glass">
+                    <img th:src="${slider.imageUrl}" alt="Hero Image" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+            </div>
 
+            <!-- Dots -->
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+                <button th:each="slider, iter : ${sliders}" class="modern-dot w-3 h-3 rounded-full bg-zinc-300 transition-colors" th:classappend="${iter.first} ? ' !bg-zinc-900' : ''" th:onclick="|showModernSlide(${iter.index})|"></button>
+            </div>
+        </div>
+
+        <!-- Default Static Hero (Nếu không có slider) -->
+        <div th:unless="${sliders != null and !sliders.isEmpty()}" class="absolute inset-0 grid md:grid-cols-12 gap-12 items-center w-full">
+            <!-- Cột trái: Text lớn -->
+            <div class="md:col-span-7 space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white text-xs font-medium text-zinc-600 shadow-sm">
+                    <i class="ph ph-sparkle text-zinc-900"></i> Phương pháp giảng dạy mới 2026
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.05]">
+                    Làm chủ ngôn ngữ. <br/>
+                    <span class="text-zinc-400">Kiến tạo tương lai.</span>
+                </h1>
+                
+                <p class="text-lg text-zinc-500 max-w-[45ch] leading-relaxed">
+                    Hệ thống học tiếng Anh trực tuyến được thiết kế chuyên biệt để bứt phá giới hạn giao tiếp. Trải nghiệm không gian học tập liền mạch, không khoảng cách.
+                </p>
+                
+                <div class="flex items-center gap-4 pt-4">
+                    <a href="#" class="bg-zinc-900 text-white px-8 py-4 rounded-full text-base font-semibold hover:scale-[0.98] transition-transform flex items-center gap-2 shadow-diffusion no-underline">
+                        Bắt đầu ngay <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Cột phải: Image Masking / Bento Hero -->
+            <div class="md:col-span-5 relative h-[500px] w-full rounded-[2.5rem] overflow-hidden liquid-glass">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hero Default" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Main Content -->
+        <div class="lg:col-span-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold tracking-tight">Khóa Học Nổi Bật</h2>
+                <a th:href="@{/courses/learner}" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors no-underline">Xem tất cả <i class="ph ph-arrow-right"></i></a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <a th:each="course : ${featuredCourses}" th:href="@{'/courses/' + ${course.id} + '/learner'}" class="group bg-white rounded-[2rem] border border-zinc-200/50 overflow-hidden hover:scale-[0.98] transition-transform shadow-sm hover:shadow-diffusion no-underline flex flex-col">
+                    <div class="relative aspect-video w-full overflow-hidden">
+                        <img th:src="@{'/uploads/' + ${course.thumbnail}}" alt="Course Thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-zinc-900 mb-2" th:text="${course.name}">Course Title</h3>
+                        <p class="text-sm text-zinc-500 line-clamp-2 mb-4 flex-1" th:text="${course.shortDescription}">Course Tagline</p>
+                        <div class="flex items-center gap-1 text-sm font-medium text-zinc-700">
+                            <i class="ph-fill ph-star text-amber-400"></i>
+                            <span th:text="${courseFeedbackStatsMap.get(course.id).averageRating}"> 4.8</span>
+                        </div>
+                    </div>
+                </a>
+                <p th:if="${#lists.isEmpty(featuredCourses)}" class="col-span-full text-zinc-500 text-center py-12 border border-dashed border-zinc-200 rounded-[2rem]">Chưa có khóa học nổi bật nào.</p>
+            </div>
         </div>
 
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="lg:col-span-4 space-y-8">
             <!-- Latest Posts -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Bài Viết Gần Đây</h3>
-                <ul class="latest-posts">
-                    <li class="latest-post" th:each="blog : ${latestBlogs}">
-                        <a th:href="@{'/blogs/' + ${blog.id}}" class="post-link"><img th:src="'/uploads/' + ${blog.thumbnail}" alt="Mẹo học từ vựng" class="post-small-thumb"></a>
-                        <div class="post-small-content">
-                            <h4 class="post-small-title" th:text="${blog.title}">5 Mẹo Học Từ Vựng Hiệu Quả</h4>
-                            <p class="post-small-date" th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}">30/09/2024</p>
+            <div class="bg-white rounded-[2rem] border border-zinc-200/50 p-8 shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">Bài Viết Gần Đây</h3>
+                    <i class="ph ph-article text-zinc-400 text-xl"></i>
+                </div>
+                <div class="space-y-6">
+                    <div class="group flex gap-4" th:each="blog : ${latestBlogs}">
+                        <a th:href="@{'/blogs/' + ${blog.id}}" class="shrink-0 overflow-hidden rounded-2xl w-20 h-20 bg-zinc-100">
+                            <img th:src="'/uploads/' + ${blog.thumbnail}" alt="Thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </a>
+                        <div class="flex flex-col justify-center">
+                            <a th:href="@{'/blogs/' + ${blog.id}}" class="font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors line-clamp-2 leading-snug mb-1 !no-underline" th:text="${blog.title}">5 Mẹo Học Từ Vựng Hiệu Quả</a>
+                            <p class="text-xs font-medium text-zinc-500" th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}">30/09/2024</p>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
 
-            <!-- Contact Info -->
-
-            <a href="/chats/consultant" class="chat-float-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-               data-bs-custom-class="custom-tooltip"
-               data-bs-title="Chat với tôi">
-                <i class="bi bi-chat-right-dots" ></i>
+            <a href="/chats/consultant" class="fixed bottom-8 right-8 w-14 h-14 bg-zinc-900 text-white rounded-full flex items-center justify-center text-2xl shadow-diffusion hover:scale-110 transition-transform z-50 no-underline" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chat với tôi">
+                <i class="ph ph-chat-circle-dots"></i>
             </a>
 
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Liên Hệ</h3>
-                <ul class="contact-info">
-                    <li class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>contact@oels.edu.vn</span>
+            <div class="bg-white rounded-[2rem] border border-zinc-200/50 p-8 shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">Liên Hệ</h3>
+                    <i class="ph ph-address-book text-zinc-400 text-xl"></i>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3 text-zinc-600">
+                        <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center border border-zinc-100 shrink-0">
+                            <i class="ph ph-envelope text-zinc-900"></i>
+                        </div>
+                        <span class="text-sm font-medium">contact@oels.edu.vn</span>
                     </li>
-                    <li class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+84 123 456 789</span>
+                    <li class="flex items-center gap-3 text-zinc-600">
+                        <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center border border-zinc-100 shrink-0">
+                            <i class="ph ph-phone text-zinc-900"></i>
+                        </div>
+                        <span class="text-sm font-medium">+84 123 456 789</span>
                     </li>
-                    <li class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Hà Nội, Việt Nam</span>
+                    <li class="flex items-center gap-3 text-zinc-600">
+                        <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center border border-zinc-100 shrink-0">
+                            <i class="ph ph-map-pin text-zinc-900"></i>
+                        </div>
+                        <span class="text-sm font-medium">Hà Nội, Việt Nam</span>
                     </li>
                 </ul>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                <div class="flex gap-2 mt-8">
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors border border-zinc-100 no-underline"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors border border-zinc-100 no-underline"><i class="ph ph-youtube-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors border border-zinc-100 no-underline"><i class="ph ph-tiktok-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors border border-zinc-100 no-underline"><i class="ph ph-linkedin-logo"></i></a>
                 </div>
             </div>
         </aside>
     </div>
-</div>
+</main>
 
 <!-- Footer -->
 <div th:replace="~{components/footer :: footer}"></div>
@@ -563,30 +215,37 @@
 <script>
     // Slider functionality
     let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slider-dot');
+    const slides = document.querySelectorAll('.modern-slide');
+    const dots = document.querySelectorAll('.modern-dot');
 
-    function showSlide(n) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
+    window.showModernSlide = function(n) {
+        if (!slides.length) return;
+        
+        slides.forEach(slide => {
+            slide.classList.remove('opacity-100', 'pointer-events-auto', 'active-slide');
+            slide.classList.add('opacity-0', 'pointer-events-none');
+        });
+        
+        dots.forEach(dot => {
+            dot.classList.remove('!bg-zinc-900');
+        });
 
         currentSlide = (n + slides.length) % slides.length;
 
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
+        slides[currentSlide].classList.remove('opacity-0', 'pointer-events-none');
+        slides[currentSlide].classList.add('opacity-100', 'pointer-events-auto', 'active-slide');
+        
+        if (dots[currentSlide]) {
+            dots[currentSlide].classList.add('!bg-zinc-900');
+        }
+    };
+
+    if (slides.length > 0) {
+        // Auto slide
+        setInterval(() => {
+            showModernSlide(currentSlide + 1);
+        }, 5000);
     }
-
-    // Auto slide
-    setInterval(() => {
-        showSlide(currentSlide + 1);
-    }, 5000);
-
-    // Dot click events
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            showSlide(index);
-        });
-    });
     //
     document.addEventListener("DOMContentLoaded", function () {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
