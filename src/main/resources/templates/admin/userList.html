@@ -6,6 +6,28 @@
         pageScripts = ~{::.page-scripts-wrapper}
       )}">
 <head>
+    <style>
+        .search-group {
+            flex: 100%;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            flex-wrap: nowrap; /* 🔥 đảm bảo không xuống dòng */
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            min-width: 0; /* 🔥 fix bị tràn hoặc đẩy nút xuống */
+        }
+
+        .search-wrapper button {
+            white-space: nowrap; /* 🔥 nút không bị xuống dòng */
+        }
+    </style>
     <title>Quản lý Người dùng</title>
 </head>
 <body>
@@ -21,7 +43,7 @@
         <div class="filters">
             <div class="filter-group">
                 <label>Giới tính</label>
-                <select id="genderFilter" onchange="applyFilters()">
+                <select id="genderFilter">
                     <option value="ALL">Tất cả giới tính</option>
                     <option th:each="gender : ${genders}"
                             th:value="${gender}"
@@ -32,7 +54,7 @@
 
             <div class="filter-group">
                 <label>Vai trò</label>
-                <select id="roleFilter" onchange="applyFilters()">
+                <select id="roleFilter">
                     <option value="ALL">Tất cả vai trò</option>
                     <option th:each="role : ${roles}"
                             th:value="${role.name}"
@@ -43,20 +65,29 @@
 
             <div class="filter-group">
                 <label>Trạng thái</label>
-                <select id="enabledFilter" onchange="applyFilters()">
+                <select id="enabledFilter">
                     <option value="ALL">Tất cả trạng thái</option>
                     <option value="true" th:selected="${param.enabled == 'true'}">Đang hoạt động</option>
                     <option value="false" th:selected="${param.enabled == 'false'}">Không hoạt động</option>
                 </select>
             </div>
 
-            <div class="filter-group">
+            <div class="filter-group search-group">
                 <label>Tìm kiếm</label>
-                <div style="display: flex; gap: 10px;">
+
+                <div class="search-wrapper">
                     <input type="text"
                            id="searchInput"
-                           placeholder="Tìm theo tên, email hoặc số điện thoại..."
+                           placeholder="Nhập tên, email hoặc số điện thoại..."
                            th:value="${param.search}">
+
+                    <button type="button" class="btn btn-primary" onclick="applyFilters()">
+                        🔍 Tìm kiếm
+                    </button>
+
+                    <button type="button" class="btn btn-outline" onclick="resetFilters()">
+                        🔄 Đặt lại
+                    </button>
                 </div>
             </div>
         </div>
@@ -246,12 +277,6 @@
             window.location.href = '/admin/users?' + urlParams.toString();
         }
 
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                applyFilters();
-            }
-        });
-
         // Auto-select current filter values from URL
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -267,6 +292,10 @@
             if (enabled) document.getElementById('enabledFilter').value = enabled;
             if (search) document.getElementById('searchInput').value = search;
         });
+
+        function resetFilters() {
+            window.location.href = '/admin/users';
+        }
     </script>
 </th:block>
 </body>
