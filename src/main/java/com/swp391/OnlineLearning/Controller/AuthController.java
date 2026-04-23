@@ -127,16 +127,38 @@ public class AuthController {
     }
 
     @PostMapping("/resetPassword")
-    public String processReset(@RequestParam("token") String tokenValue,
-                               @RequestParam("password") String password,
-                               @RequestParam("confirmedPassword") String confirmedPassword,
-                               RedirectAttributes redirectAttributes,
-                               Model model) {
+    public String processReset(
+            @RequestParam("token") String tokenValue,
+            @RequestParam("password") String password,
+            @RequestParam("confirmedPassword") String confirmedPassword,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ) {
         try {
-            if (!password.equals(confirmedPassword)) {
-                throw new IllegalArgumentException("Passwords do not match!");
+
+            // ❌ password rỗng
+            if (password == null || password.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mật khẩu không được để trống");
             }
+
+            // ❌ độ dài
+            if (password.length() < 6 || password.length() > 20) {
+                throw new IllegalArgumentException("Mật khẩu phải từ 6-20 ký tự");
+            }
+
+            // ❌ phải có chữ + số
+            if (!password.matches("^(?=.*[A-Za-z])(?=.*\\d).+$")) {
+                throw new IllegalArgumentException("Mật khẩu phải có chữ và số");
+            }
+
+            // ❌ confirm password
+            if (!password.equals(confirmedPassword)) {
+                throw new IllegalArgumentException("Mật khẩu nhập lại không giống");
+            }
+
+            // token
             Token token = tokenService.checkValidToken(tokenValue);
+
             token.setConfirmed_at(LocalDateTime.now());
             tokenService.save(token);
 
@@ -148,7 +170,9 @@ public class AuthController {
 
             redirectAttributes.addFlashAttribute("message",
                     "Password updated successfully. Please login with your new password.");
+
             return "redirect:/login";
+
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("token", tokenValue);
