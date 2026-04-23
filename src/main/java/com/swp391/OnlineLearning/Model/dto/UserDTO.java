@@ -3,20 +3,38 @@ package com.swp391.OnlineLearning.Model.dto;
 import com.swp391.OnlineLearning.Util.PasswordMatches;
 import com.swp391.OnlineLearning.Util.ValidEmail;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 @PasswordMatches(message = "Mật khẩu nhập lại không giống")
 public class UserDTO {
+
     @NotBlank(message = "Vui lòng nhập tên đầy đủ")
+    @Size(min = 2, max = 50, message = "Tên phải từ 2 đến 50 ký tự")
+    @Pattern(
+            regexp = "^[A-Za-zÀ-ỹ\\s]+$",
+            message = "Tên chỉ được chứa chữ cái và khoảng trắng"
+    )
+    @Pattern(
+            regexp = ".*\\S.*",
+            message = "Tên không được chỉ chứa khoảng trắng"
+    )
     private String fullName;
 
-    @ValidEmail(message = "Email không hợp lệ")
     @NotBlank(message = "Email không được để trống")
+    @ValidEmail(message = "Email không hợp lệ")
     private String email;
 
     @NotBlank(message = "Vui lòng nhập mật khẩu")
+    @Size(min = 6, max = 20, message = "Mật khẩu phải từ 6 đến 20 ký tự")
+    @Pattern(
+            regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$",
+            message = "Mật khẩu phải chứa ít nhất 1 chữ và 1 số"
+    )
     private String password;
-    private String confirmedPassword;
 
+    @NotBlank(message = "Vui lòng nhập lại mật khẩu")
+    private String confirmedPassword;
 
     public UserDTO() {
     }
