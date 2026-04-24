@@ -187,7 +187,7 @@ public class AdminController {
         model.addAttribute("user", new User());
         model.addAttribute("genders", User.Gender.values());
         List<UserRole> roles = roleService.findAll();
-        roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+        //roles.removeIf(role -> role.getName().equals("ROLE_USER"));
         model.addAttribute("roles", roles);
         return "admin/createUser";
     }
@@ -304,7 +304,7 @@ public class AdminController {
             User user = this.userService.getUserById(id);
             model.addAttribute("user", user);
             List<UserRole> roles = roleService.findAll();
-            roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+            //roles.removeIf(role -> role.getName().equals("ROLE_USER"));
             model.addAttribute("roles", roles);
             return "admin/updateUser";
         }catch(Exception e){
