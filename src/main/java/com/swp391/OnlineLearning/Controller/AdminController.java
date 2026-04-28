@@ -204,7 +204,7 @@ public class AdminController {
             model.addAttribute("genders", User.Gender.values());
 
             List<UserRole> roles = roleService.findAll();
-            roles.removeIf(role -> role.getName().equals("ROLE_USER"));
+            //roles.removeIf(role -> role.getName().equals("ROLE_USER"));
             model.addAttribute("roles", roles);
 
             return "admin/createUser";
