@@ -137,12 +137,12 @@
                             </a>
                         </div>
 
-                        <form th:action="@{'/courses/' + ${course.id} + '?admin-respond=true'}" method="post"
+                        <form th:if="${course.status.name() == 'DRAFT' or course.status.name() == 'PENDING'}" th:action="@{'/courses/' + ${course.id} + '?admin-respond=true'}" method="post"
                               onsubmit="return confirm('Sau khi phê duyệt thì thông tin và nội dung của khóa học sẽ được public và không thể sửa đổi! Bạn có chắc muốn phê duyệt khóa học này không?');" class="d-grid">
                             <button type="submit" class="btn btn-sm btn-warning w-100"> <i class="fas fa-paper-plane"></i> Phê duyệt
                             </button>
                         </form>
-                        <form th:action="@{'/courses/' + ${course.id} + '?admin-respond=false'}" method="post"
+                        <form th:if="${course.status.name() == 'DRAFT' or course.status.name() == 'PENDING'}" th:action="@{'/courses/' + ${course.id} + '?admin-respond=false'}" method="post"
                               onsubmit="return confirm('Khóa học sẽ lưu ở trạng thái DRAFT và gửi về cho chuyên gia. Bạn có chắc chắn không phê duyệt khóa học này không?');" class="d-grid">
                             <button type="submit" class="btn btn-sm btn-danger w-100"> <i class="fas fa-paper-plane"></i> Không phê duyệt
                             </button>
