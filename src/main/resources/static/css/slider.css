@@ -418,7 +418,8 @@
 
 .slider-file-preview img {
     max-width: 200px;
-    max-height: 150px;
+    max-height: 200px;
+    object-fit: contain;
     border-radius: var(--radius);
     border: 2px solid var(--border-color);
 }
