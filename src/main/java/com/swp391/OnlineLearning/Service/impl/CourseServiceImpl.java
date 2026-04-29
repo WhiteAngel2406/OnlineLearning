@@ -134,13 +134,17 @@ public class CourseServiceImpl implements CourseService {
         Course course = this.courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("Course not found"));
         switch (respondToPublish) {
             case "true":
+                // Approve: DRAFT or PENDING -> PUBLISHED
                 if (course.getStatus() == Course.CourseStatus.PUBLISHED) throw new IllegalArgumentException("Course is already published");
-                else if (course.getStatus() == Course.CourseStatus.DRAFT) throw new IllegalArgumentException("Course is already draft");
                 course.setStatus(Course.CourseStatus.PUBLISHED);
                 return this.courseRepository.save(course);
             case "false":
-                if (course.getStatus() == Course.CourseStatus.DRAFT) throw new IllegalArgumentException("Course is already draft");
-                else if (course.getStatus() == Course.CourseStatus.PUBLISHED) throw new IllegalArgumentException("Course was published, cannot be drafted");
+                // Reject: PENDING -> DRAFT (send back to expert), DRAFT stays DRAFT
+                if (course.getStatus() == Course.CourseStatus.PUBLISHED) throw new IllegalArgumentException("Course was published, cannot be rejected");
+                if (course.getStatus() == Course.CourseStatus.DRAFT) {
+                    // Already draft, just return without changes
+                    return course;
+                }
                 course.setStatus(Course.CourseStatus.DRAFT);
                 return this.courseRepository.save(course);
         }

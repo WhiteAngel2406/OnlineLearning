@@ -174,7 +174,8 @@
 
         .file-preview img {
             max-width: 200px;
-            max-height: 150px;
+            max-height: 200px;
+            object-fit: contain;
             border-radius: var(--radius);
             border: 2px solid var(--border-color);
         }
@@ -359,7 +360,7 @@
 
                 imagePreview.innerHTML = `
                     <div style="margin-bottom: 10px; font-weight: 600;">Xem trước:</div>
-                    <img src="${e.target.result}" alt="Preview" style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid var(--border-color);">
+                    <img src="${e.target.result}" alt="Preview" style="max-width: 200px; max-height: 200px; object-fit: contain; border-radius: 8px; border: 2px solid var(--border-color);">
                 `;
             };
             reader.readAsDataURL(file);
